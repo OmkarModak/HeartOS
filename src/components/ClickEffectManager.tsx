@@ -1,0 +1,94 @@
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+interface ClickEffect {
+  id: number;
+  x: number;
+  y: number;
+  type: 'heart' | 'boop';
+}
+
+export const ClickEffectManager = () => {
+  const [effects, setEffects] = useState<ClickEffect[]>([]);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      
+      // Ignore clicks on interactive elements
+      if (target.closest('button, a, input')) return;
+      // Also ignore clicks on our cute sticker mascot
+      if (target.closest('img') && target.closest('img')?.src.includes('sticker')) return;
+
+      const isInsideCard = !!target.closest('.glass-panel');
+      
+      const newEffect: ClickEffect = {
+        id: Date.now() + Math.random(),
+        x: e.clientX,
+        y: e.clientY,
+        type: isInsideCard ? 'boop' : 'heart'
+      };
+
+      setEffects(prev => [...prev, newEffect]);
+
+      // Remove after 1 second
+      setTimeout(() => {
+        setEffects(prev => prev.filter(eff => eff.id !== newEffect.id));
+      }, 1000);
+    };
+
+    // Use capture phase to ensure it catches everything
+    window.addEventListener('click', handleClick, true);
+    return () => window.removeEventListener('click', handleClick, true);
+  }, []);
+
+  return (
+    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 9999 }}>
+      <AnimatePresence>
+        {effects.map((effect) => (
+          <motion.div
+            key={effect.id}
+            initial={{ opacity: 0, scale: 0.5, y: 0, x: '-50%' }}
+            animate={{ opacity: 1, scale: 1, y: -40, x: '-50%' }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ type: 'spring', damping: 15, stiffness: 200, opacity: { duration: 0.5 } }}
+            style={{
+              position: 'absolute',
+              left: effect.x,
+              top: effect.y,
+              fontSize: '1.5rem',
+              fontWeight: 600,
+              pointerEvents: 'none',
+              textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+              color: effect.type === 'boop' ? 'var(--text-secondary)' : 'inherit'
+            }}
+          >
+            {effect.type === 'heart' ? (
+              <motion.div
+                animate={{ rotate: [-10, 10, -10, 10, 0] }}
+                transition={{ duration: 0.5 }}
+                style={{ fontSize: '2rem' }}
+              >
+                ❤️
+              </motion.div>
+            ) : (
+              <div style={{ 
+                fontSize: '0.9rem', 
+                background: 'rgba(255,255,255,0.1)', 
+                backdropFilter: 'blur(10px)',
+                padding: '4px 10px', 
+                borderRadius: '12px', 
+                border: '1px solid rgba(255,255,255,0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.25rem'
+              }}>
+                boop! 🔒
+              </div>
+            )}
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </div>
+  );
+};
