@@ -12,6 +12,15 @@ export interface PollQuestion {
   options: PollOption[];
 }
 
+export const interPoll: PollQuestion = {
+  id: "poll-inter",
+  question: "Do you agree with everything so far and want to continue to the final chapter?",
+  options: [
+    { id: "opt-y", label: "Yes, continue! ❤️", emoji: "✅", isPositive: true, reactionEmoji: "🥰" },
+    { id: "opt-n", label: "No, let's stop.", emoji: "❌", isPositive: false, reactionEmoji: "🥺" }
+  ]
+};
+
 export const polls: PollQuestion[] = [
   {
     id: "poll-1",

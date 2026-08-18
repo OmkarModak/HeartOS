@@ -9,9 +9,9 @@ import { FinalReveal } from './components/FinalReveal';
 import { FloatingHearts } from './components/FloatingHearts';
 import { ClickEffectManager } from './components/ClickEffectManager';
 import { storyChapters } from './data/story';
-import { polls } from './data/polls';
+import { polls, interPoll } from './data/polls';
 
-type AppState = 'BOOT' | 'WELCOME' | 'DENIED' | 'STORY' | 'POLLS' | 'FINAL';
+type AppState = 'BOOT' | 'WELCOME' | 'DENIED' | 'STORY' | 'INTER_POLL' | 'POLLS' | 'FINAL';
 
 function App() {
   const [appState, setAppState] = useState<AppState>('BOOT');
@@ -19,11 +19,18 @@ function App() {
   const [currentPollIndex, setCurrentPollIndex] = useState(0);
 
   const handleNextChapter = () => {
-    if (currentChapterIndex < storyChapters.length - 1) {
+    if (currentChapterIndex === 3) {
+      setAppState('INTER_POLL');
+    } else if (currentChapterIndex < storyChapters.length - 1) {
       setCurrentChapterIndex(prev => prev + 1);
     } else {
       setAppState('POLLS');
     }
+  };
+
+  const handleInterPollComplete = () => {
+    setCurrentChapterIndex(4);
+    setAppState('STORY');
   };
 
   const handleNextPoll = () => {
@@ -68,6 +75,14 @@ function App() {
               index={currentChapterIndex}
               totalChapters={storyChapters.length}
               onNext={handleNextChapter} 
+            />
+          )}
+
+          {appState === 'INTER_POLL' && (
+            <PollSystem 
+              key="inter-poll"
+              question={interPoll}
+              onComplete={handleInterPollComplete}
             />
           )}
 
