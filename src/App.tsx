@@ -26,6 +26,10 @@ function App() {
       "%c[QA ALERT] Hello Shraddha! The developer has left a backdoor open for you. ❤️",
       "color: #ff5f56; font-size: 16px; font-weight: bold; background: #2d2d2d; padding: 8px; border-radius: 4px;"
     );
+    console.log(
+      "%cHint: Try clicking on the print statement string in the code editor! 😉",
+      "color: #27c93f; font-size: 14px; font-style: italic;"
+    );
   }, []);
 
   const handleNextChapter = () => {

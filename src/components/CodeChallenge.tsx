@@ -19,7 +19,7 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
       setTerminalOutput(prev => [
         ...prev, 
         '> Error: Automated run script failed.', 
-        '> Hint: Look closely... the manual override is hidden in plain sight within the code.'
+        '> Hint: The developer left a backdoor open. Press F12 or right-click -> Inspect to check the browser console for a clue! 🕵️‍♀️'
       ]);
     } else {
       setTerminalOutput(prev => [
