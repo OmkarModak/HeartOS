@@ -14,7 +14,7 @@ import { QASignoff } from './components/QASignoff';
 import { storyChapters } from './data/story';
 import { polls, interPoll } from './data/polls';
 
-type AppState = 'BOOT' | 'WELCOME' | 'QA_SIGNOFF' | 'DENIED' | 'STORY' | 'PERSONAL_WARNING' | 'INTER_POLL' | 'POLLS' | 'CODE_CHALLENGE' | 'FINAL';
+type AppState = 'BOOT' | 'WELCOME' | 'QA_SIGNOFF' | 'DENIED' | 'QUIT' | 'STORY' | 'PERSONAL_WARNING' | 'INTER_POLL' | 'POLLS' | 'CODE_CHALLENGE' | 'FINAL';
 
 function App() {
   const [appState, setAppState] = useState<AppState>('BOOT');
@@ -90,7 +90,19 @@ function App() {
           )}
 
           {appState === 'DENIED' && (
-            <SadScreen key="denied" onTryAgain={() => setAppState('STORY')} />
+            <SadScreen key="denied" onTryAgain={() => setAppState('STORY')} onQuit={() => setAppState('QUIT')} />
+          )}
+
+          {appState === 'QUIT' && (
+            <motion.div
+              key="quit"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              style={{ textAlign: 'center', color: 'var(--text-secondary)', fontFamily: 'monospace' }}
+            >
+              <p>{'> System shutting down...'}</p>
+              <p style={{ marginTop: '1rem', fontSize: '1.2rem', color: 'var(--accent-pink)' }}>Fine. Goodbye, Shraddha. 💔</p>
+            </motion.div>
           )}
 
           {appState === 'PERSONAL_WARNING' && (

@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Sticker } from './Sticker';
 import sadSticker from '../assets/sticker-sad.png';
 
-export const SadScreen = ({ onTryAgain }: { onTryAgain: () => void }) => {
+export const SadScreen = ({ onTryAgain, onQuit }: { onTryAgain: () => void, onQuit?: () => void }) => {
   return (
     <motion.div
       className="glass-panel"
@@ -17,14 +17,27 @@ export const SadScreen = ({ onTryAgain }: { onTryAgain: () => void }) => {
         But you came here so far... please continue? 🥺❤️
       </p>
       
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="btn-primary glow-button"
-        onClick={onTryAgain}
-      >
-        Okay, let's continue! 😄
-      </motion.button>
+      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="btn-primary glow-button"
+          onClick={onTryAgain}
+        >
+          Okay, let's continue! 😄
+        </motion.button>
+
+        {onQuit && (
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="btn-secondary"
+            onClick={onQuit}
+          >
+            No, let me out. 🚪
+          </motion.button>
+        )}
+      </div>
     </motion.div>
   );
 };
