@@ -34,7 +34,11 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
     if (isSuccess) return;
     setIsSuccess(true);
     
-    setTerminalOutput(prev => [...prev, '> Executing query...']);
+    if (runClicks === 0) {
+      setTerminalOutput(prev => [...prev, '> Good eye! 😉 You found the override without even clicking Run.', '> Executing query...']);
+    } else {
+      setTerminalOutput(prev => [...prev, '> Executing query...']);
+    }
     
     setTimeout(() => {
       setTerminalOutput(prev => [...prev, '> Downloading YOU database...']);
