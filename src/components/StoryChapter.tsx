@@ -11,14 +11,9 @@ interface StoryChapterProps {
 
 export const StoryChapter = ({ chapter, index, totalChapters, onNext }: StoryChapterProps) => {
   return (
-    <motion.div
+    <div
       className="glass-panel"
-      style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
-      key={chapter.id}
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -50 }}
-      transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+      style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%', maxWidth: '600px', margin: '0 auto' }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontSize: '0.9rem', color: 'var(--accent-pink)', fontWeight: 600, letterSpacing: '0.05em' }}>
@@ -54,6 +49,6 @@ export const StoryChapter = ({ chapter, index, totalChapters, onNext }: StoryCha
       >
         {index < totalChapters - 1 ? 'Continue' : 'Continue'} <ArrowRight size={18} />
       </motion.button>
-    </motion.div>
+    </div>
   );
 };

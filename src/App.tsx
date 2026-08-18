@@ -77,13 +77,21 @@ function App() {
           )}
 
           {appState === 'STORY' && (
-            <StoryChapter 
-              key={`story-${currentChapterIndex}`} 
-              chapter={storyChapters[currentChapterIndex]} 
-              index={currentChapterIndex}
-              totalChapters={storyChapters.length}
-              onNext={handleNextChapter} 
-            />
+            <motion.div
+              key={`story-${currentChapterIndex}`}
+              initial={{ opacity: 0, x: 40, filter: 'blur(5px)' }}
+              animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, x: -40, filter: 'blur(5px)' }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+            >
+              <StoryChapter 
+                chapter={storyChapters[currentChapterIndex]} 
+                index={currentChapterIndex}
+                totalChapters={storyChapters.length}
+                onNext={handleNextChapter} 
+              />
+            </motion.div>
           )}
 
           {appState === 'INTER_POLL' && (
