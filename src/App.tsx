@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { BootScreen } from './components/BootScreen';
 import { WelcomeScreen } from './components/WelcomeScreen';
@@ -6,17 +6,25 @@ import { SadScreen } from './components/SadScreen';
 import { StoryChapter } from './components/StoryChapter';
 import { PollSystem } from './components/PollSystem';
 import { FinalReveal } from './components/FinalReveal';
+import { CodeChallenge } from './components/CodeChallenge';
 import { FloatingHearts } from './components/FloatingHearts';
 import { ClickEffectManager } from './components/ClickEffectManager';
 import { storyChapters } from './data/story';
 import { polls, interPoll } from './data/polls';
 
-type AppState = 'BOOT' | 'WELCOME' | 'DENIED' | 'STORY' | 'INTER_POLL' | 'POLLS' | 'FINAL';
+type AppState = 'BOOT' | 'WELCOME' | 'DENIED' | 'STORY' | 'INTER_POLL' | 'POLLS' | 'CODE_CHALLENGE' | 'FINAL';
 
 function App() {
   const [appState, setAppState] = useState<AppState>('BOOT');
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
   const [currentPollIndex, setCurrentPollIndex] = useState(0);
+
+  useEffect(() => {
+    console.log(
+      "%c[QA ALERT] Hello Shraddha! The developer has left a backdoor open for you. ❤️",
+      "color: #ff5f56; font-size: 16px; font-weight: bold; background: #2d2d2d; padding: 8px; border-radius: 4px;"
+    );
+  }, []);
 
   const handleNextChapter = () => {
     if (currentChapterIndex === 3) {
@@ -37,7 +45,7 @@ function App() {
     if (currentPollIndex < polls.length - 1) {
       setCurrentPollIndex(prev => prev + 1);
     } else {
-      setAppState('FINAL');
+      setAppState('CODE_CHALLENGE');
     }
   };
 
@@ -92,6 +100,10 @@ function App() {
               question={polls[currentPollIndex]}
               onComplete={handleNextPoll}
             />
+          )}
+
+          {appState === 'CODE_CHALLENGE' && (
+            <CodeChallenge key="code-challenge" onComplete={() => setAppState('FINAL')} />
           )}
 
           {appState === 'FINAL' && (
