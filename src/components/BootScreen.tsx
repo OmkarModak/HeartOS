@@ -9,12 +9,12 @@ const introSequence = [
 ];
 
 const checklistItems = [
-  "Verify personality matrix",
-  "Load memories module",
-  "Initialize life story",
-  "Calibrate compatibility engine",
-  "Detect cute bugs",
-  "Prepare something special"
+  "Mounting WHOAMI module...",
+  "Loading LIFE.EXE resources...",
+  "Running RECOVERY protocols...",
+  "Executing WHY_SHAADI() script...",
+  "Initializing YOU.EXE...",
+  "Preparing something special ❤️"
 ];
 
 export const BootScreen = ({ onComplete }: { onComplete: () => void }) => {
