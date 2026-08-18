@@ -19,7 +19,7 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
       setTerminalOutput(prev => [
         ...prev, 
         '> Error: Automated run script failed.', 
-        '> Hint: The developer left a backdoor open.  Inspect to check the browser console for a clue! 🕵️‍♀️'
+        '> Hint: The developer left a backdoor open. Inspect to check the browser console for a clue! 🕵️‍♀️'
       ]);
     } else {
       setTerminalOutput(prev => [
