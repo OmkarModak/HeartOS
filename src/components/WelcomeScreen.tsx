@@ -47,7 +47,7 @@ export const WelcomeScreen = ({ onAgree, onDisagree }: WelcomeScreenProps) => {
             transition={{ duration: 0.3 }}
             style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}
           >
-            <Sticker src={greetingSticker} alt="Greeting Mascot" delay={0.2} position="bottom-left" message="Hi.. 👋" />
+            <Sticker src={greetingSticker} alt="Greeting Mascot" delay={0.2} position="bottom-left" message="Hi.." />
 
             <motion.div
               initial={{ y: -20, opacity: 0 }}

@@ -22,9 +22,11 @@ export const storyChapters: Chapter[] = [
     title: "LIFE.EXE",
     emoji: "🏠",
     content: [
-      "My parents aren't perfect and sometimes things at home can be difficult, but we've been together through everything and I'm grateful for them.",
-      "My father is someone I look up to.",
-      "I want to grow into someone who carries himself with the qualities I admire in my father."
+      "Family can be difficult sometimes, and we've been through some tough times together.",
+      "But we have a pretty decent home—a 1 floor, 2 BHK house with an underground 1 BHK and a really nice garden.",
+      "My father is retired now. He used to be a teacher, and he is someone I deeply look up to.",
+      "My mom takes home tuitions, and I also have a pretty cool elder sister.",
+      "Despite the ups and downs, I'm grateful for them, and I want to grow into someone who carries the qualities I admire in my father."
     ]
   },
   {
