@@ -23,10 +23,11 @@ export const storyChapters: Chapter[] = [
     emoji: "🏠",
     content: [
       "Family can be difficult sometimes, and we've been through some tough times together.",
-      "But we have a pretty decent home—a 1 floor, 2 BHK house with an underground 1 BHK and a really nice garden.",
+      "But we have a pretty decent home - a 1 floor, 2 BHK house with an underground 1 BHK and a really nice garden.",
       "My father is retired now. He used to be a teacher, and he is someone I deeply look up to.",
       "My mom takes home tuitions, and I also have a pretty cool elder sister.",
-      "Despite the ups and downs, I'm grateful for them, and I want to grow into someone who carries the qualities I admire in my father."
+      "I'm grateful for them, but I also know I don't want to repeat the ways my parents behave sometimes.",
+      "I want to take the good qualities I admire in my dad, learn from their flaws, and focus on becoming the coolest version of myself."
     ]
   },
   {
