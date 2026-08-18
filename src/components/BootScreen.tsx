@@ -121,7 +121,7 @@ export const BootScreen = ({ onComplete }: { onComplete: () => void }) => {
           animate={{ opacity: 1 }}
           style={{ marginTop: '1rem', color: 'var(--success)', fontWeight: 'bold' }}
         >
-          > {checkedItems.filter(Boolean).length} passed...
+          {'>'} {checkedItems.filter(Boolean).length} passed...
         </motion.div>
       )}
 
