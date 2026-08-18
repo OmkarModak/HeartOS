@@ -201,7 +201,7 @@ export const FinalReveal = () => {
                   ALL TEST CASES PASSED! 🎉
                 </h2>
                 <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
-                  I'll start looking for bike accessories. 😉<br/><br/>
+                  I didn't get the bike yet.. time to plan the trip! 😉<br/><br/>
                   Thank you for taking the time to experience this little project of mine, Shraddha. ❤️
                 </p>
               </>

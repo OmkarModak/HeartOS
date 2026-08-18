@@ -13,18 +13,17 @@ export const SadScreen = ({ onTryAgain }: { onTryAgain: () => void }) => {
     >
       <Sticker src={sadSticker} alt="Sad Mascot" position="top-right" />
       <p style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>
-        Aww...<br /><br />
-        Looks like the test can't continue just yet.<br />
-        But hey... no pressure. ❤️
+        Wow, you actually managed to click it! 😲<br /><br />
+        But you came here so far... please continue? 🥺❤️
       </p>
       
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="btn-secondary"
+        className="btn-primary glow-button"
         onClick={onTryAgain}
       >
-        Try Again 😄
+        Okay, let's continue! 😄
       </motion.button>
     </motion.div>
   );

@@ -10,10 +10,11 @@ import { FinalReveal } from './components/FinalReveal';
 import { CodeChallenge } from './components/CodeChallenge';
 import { FloatingHearts } from './components/FloatingHearts';
 import { ClickEffectManager } from './components/ClickEffectManager';
+import { QASignoff } from './components/QASignoff';
 import { storyChapters } from './data/story';
 import { polls, interPoll } from './data/polls';
 
-type AppState = 'BOOT' | 'WELCOME' | 'DENIED' | 'STORY' | 'PERSONAL_WARNING' | 'INTER_POLL' | 'POLLS' | 'CODE_CHALLENGE' | 'FINAL';
+type AppState = 'BOOT' | 'WELCOME' | 'QA_SIGNOFF' | 'DENIED' | 'STORY' | 'PERSONAL_WARNING' | 'INTER_POLL' | 'POLLS' | 'CODE_CHALLENGE' | 'FINAL';
 
 function App() {
   const [appState, setAppState] = useState<AppState>('BOOT');
@@ -79,13 +80,17 @@ function App() {
           {appState === 'WELCOME' && (
             <WelcomeScreen 
               key="welcome"
-              onAgree={() => setAppState('STORY')} 
+              onAgree={() => setAppState('QA_SIGNOFF')} 
               onDisagree={() => setAppState('DENIED')} 
             />
           )}
 
+          {appState === 'QA_SIGNOFF' && (
+            <QASignoff key="qa-signoff" onComplete={() => setAppState('STORY')} />
+          )}
+
           {appState === 'DENIED' && (
-            <SadScreen key="denied" onTryAgain={() => setAppState('WELCOME')} />
+            <SadScreen key="denied" onTryAgain={() => setAppState('STORY')} />
           )}
 
           {appState === 'PERSONAL_WARNING' && (
