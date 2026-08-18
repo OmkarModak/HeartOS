@@ -5,6 +5,7 @@ import loveSticker from '../assets/sticker-love.png';
 
 export const FinalReveal = () => {
   const [phase, setPhase] = useState(0);
+  const [testPassed, setTestPassed] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (phase === 0) {
@@ -169,6 +170,7 @@ export const FinalReveal = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-primary glow-button"
+                onClick={() => { setTestPassed(true); setPhase(4); }}
               >
                 Yes, absolutely! ❤️
               </motion.button>
@@ -176,10 +178,44 @@ export const FinalReveal = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-secondary"
+                onClick={() => { setTestPassed(false); setPhase(4); }}
               >
                 Let me think about it 😅
               </motion.button>
             </div>
+          </motion.div>
+        )}
+
+        {phase === 4 && (
+          <motion.div
+            key="reveal4"
+            className="glass-panel"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
+          >
+            {testPassed ? (
+              <>
+                <h2 className="glow-text" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--success)' }}>
+                  ALL TEST CASES PASSED! 🎉
+                </h2>
+                <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
+                  I'll start looking for bike accessories. 😉<br/><br/>
+                  Thank you for taking the time to experience this little project of mine, Shraddha. ❤️
+                </p>
+              </>
+            ) : (
+              <>
+                <h2 className="glow-text" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
+                  TEST CASES PENDING... ⏳
+                </h2>
+                <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
+                  Take all the time you need! The bike isn't bought yet anyway. 😂<br/><br/>
+                  Thank you for taking the time to experience this little project of mine, Shraddha. ❤️
+                </p>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
