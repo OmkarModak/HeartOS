@@ -81,6 +81,13 @@ export const PollSystem = ({ question, onComplete }: PollSystemProps) => {
             >
               {selectedOption.reactionEmoji}
             </motion.div>
+
+            {!selectedOption.isPositive && (
+              <p style={{ color: 'var(--text-secondary)' }}>
+                But you came here so far... please try again! 🥺
+              </p>
+            )}
+
             <motion.button
               className="btn-primary glow-button"
               onClick={selectedOption.isPositive ? onComplete : () => {
