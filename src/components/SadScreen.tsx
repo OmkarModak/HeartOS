@@ -6,7 +6,7 @@ export const SadScreen = ({ onTryAgain }: { onTryAgain: () => void }) => {
   return (
     <motion.div
       className="glass-panel"
-      style={{ padding: '2.5rem', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center' }}
+      style={{ position: 'relative', padding: '2.5rem', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center' }}
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
