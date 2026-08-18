@@ -9,7 +9,7 @@ export const FinalReveal = () => {
 
   useEffect(() => {
     if (phase === 0) {
-      const t = setTimeout(() => setPhase(1), 3000);
+      const t = setTimeout(() => setPhase(1), 4500); // Wait longer so she can read it
       return () => clearTimeout(t);
     }
     if (phase === 1) {
@@ -34,9 +34,15 @@ export const FinalReveal = () => {
               initial={{ width: 0 }}
               animate={{ width: '100%' }}
               transition={{ duration: 2.5 }}
-              style={{ background: 'var(--success)', height: '20px', marginTop: '1rem' }}
+              style={{ background: 'var(--success)', height: '20px', marginTop: '1rem', marginBottom: '0.5rem' }}
             />
-            <p style={{ marginTop: '0.5rem' }}>100% - Deployment successful.</p>
+            <motion.p 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              transition={{ delay: 2.5 }}
+            >
+              100% - Deployment successful. ❤️
+            </motion.p>
           </motion.div>
         )}
 
