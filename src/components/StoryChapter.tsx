@@ -13,15 +13,22 @@ interface StoryChapterProps {
 export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
   const [visibleCount, setVisibleCount] = useState(1);
   const [clickCount, setClickCount] = useState(0);
+  const [startIndex, setStartIndex] = useState(0);
 
   useEffect(() => {
     setVisibleCount(1);
     setClickCount(0);
+    setStartIndex(0);
   }, [chapter.id]);
 
   const handleNextLine = () => {
     if (visibleCount < chapter.content.length) {
-      setVisibleCount(prev => prev + 1);
+      if (chapter.content[visibleCount] === "---") {
+        setStartIndex(visibleCount + 1);
+        setVisibleCount(prev => prev + 2);
+      } else {
+        setVisibleCount(prev => prev + 1);
+      }
     } else {
       if (index === 3) {
         if (clickCount < 3) {
@@ -58,8 +65,8 @@ export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
       </h2>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', flexGrow: 1, minHeight: '200px' }}>
-        <AnimatePresence>
-          {chapter.content.slice(0, visibleCount).map((paragraph, idx) => (
+        <AnimatePresence mode="popLayout">
+          {chapter.content.slice(startIndex, visibleCount).map((paragraph, idx) => (
             <motion.p
               key={idx}
               initial={{ opacity: 0, y: 20, filter: 'blur(5px)' }}

@@ -67,6 +67,7 @@ export const storyChapters: Chapter[] = [
       "Basically, I went into full developer debugging mode. 👀",
       "I started searching for you online and eventually found you on LinkedIn.",
       "Please know that my intentions are not bad... I just fell in love. 🥺",
+      "---",
       "And well... here we are. ❤️",
       "Though I have noticed that we don't really talk much...",
       "To be honest, I find myself eagerly waiting for your text every single day. 😅",
