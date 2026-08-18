@@ -10,7 +10,7 @@ interface StoryChapterProps {
   onNext: () => void;
 }
 
-export const StoryChapter = ({ chapter, index, totalChapters, onNext }: StoryChapterProps) => {
+export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
   const [visibleCount, setVisibleCount] = useState(1);
   const [clickCount, setClickCount] = useState(0);
 
