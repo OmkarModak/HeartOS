@@ -15,7 +15,7 @@ export const storyChapters: Chapter[] = [
       "On weekdays, I'm a Full Stack Developer. Outside of that, I'm a singer, gamer, and vlogger.",
       "I used to work out a lot... and honestly, if you ask me to, I'll definitely start again. 🏋️‍♂️",
       "I have an incredible amount of patience, but fair warning: once it finally runs out, I can be the most 'chidchida' person in the room.",
-      "I don't get emotional easily in real life, but put on a sad movie and I am absolutely tearing up. 🎬"
+      "I don't get emotional easily in real life, but any emotional scene in a movie will definitely make me tear up. 🎬"
     ]
   },
   {
