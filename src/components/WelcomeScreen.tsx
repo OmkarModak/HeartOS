@@ -13,6 +13,13 @@ export const WelcomeScreen = ({ onAgree, onDisagree }: WelcomeScreenProps) => {
   const [isAgreed, setIsAgreed] = useState(false);
   const [disagreePosition, setDisagreePosition] = useState({ x: 0, y: 0 });
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning";
+    if (hour < 18) return "Good afternoon";
+    return "Good evening";
+  };
+
   const handleAgree = () => {
     setIsAgreed(true);
     setTimeout(() => {
@@ -55,7 +62,7 @@ export const WelcomeScreen = ({ onAgree, onDisagree }: WelcomeScreenProps) => {
               transition={{ delay: 0.4 }}
             >
               <h1 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1rem' }}>
-                Welcome back to my heart, Shraddha. ❤️
+                {getGreeting()}, Shraddha. Welcome back to my heart. ❤️
               </h1>
               <p style={{ color: 'var(--text-secondary)' }}>
                 Before we continue, I need to run a small test.
