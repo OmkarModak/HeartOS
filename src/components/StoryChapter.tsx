@@ -14,6 +14,7 @@ export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
   const [visibleCount, setVisibleCount] = useState(1);
   const [clickCount, setClickCount] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
+  const [isClearing, setIsClearing] = useState(false);
 
   useEffect(() => {
     setVisibleCount(1);
@@ -22,10 +23,16 @@ export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
   }, [chapter.id]);
 
   const handleNextLine = () => {
+    if (isClearing) return;
+
     if (visibleCount < chapter.content.length) {
       if (chapter.content[visibleCount] === "---") {
-        setStartIndex(visibleCount + 1);
-        setVisibleCount(prev => prev + 2);
+        setIsClearing(true);
+        setTimeout(() => {
+          setStartIndex(visibleCount + 1);
+          setVisibleCount(prev => prev + 2);
+          setIsClearing(false);
+        }, 1500);
       } else {
         setVisibleCount(prev => prev + 1);
       }
@@ -45,7 +52,7 @@ export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
   return (
     <div
       className="glass-panel"
-      style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%', maxWidth: '600px', margin: '0 auto' }}
+      style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%', maxWidth: '600px', margin: '0 auto', minHeight: '550px' }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontSize: '0.9rem', color: 'var(--accent-pink)', fontWeight: 600, letterSpacing: '0.05em' }}>
@@ -64,7 +71,7 @@ export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
         {chapter.title}
       </h2>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', flexGrow: 1, minHeight: '200px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', flexGrow: 1, minHeight: '200px', justifyContent: 'center' }}>
         <AnimatePresence mode="popLayout">
           {chapter.content.slice(startIndex, visibleCount).map((paragraph, idx) => (
             <motion.p
@@ -76,6 +83,17 @@ export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
               {paragraph}
             </motion.p>
           ))}
+          {isClearing && (
+            <motion.p
+              key="clear-command"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{ fontSize: '1.1rem', color: 'var(--success)', fontFamily: 'monospace', fontWeight: 'bold' }}
+            >
+              {'> system.clear()'}
+            </motion.p>
+          )}
         </AnimatePresence>
       </div>
 
@@ -89,10 +107,12 @@ export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
           alignItems: 'center', 
           gap: '0.5rem', 
           marginTop: '2rem',
-          opacity: (index === 3 && visibleCount >= chapter.content.length && clickCount > 0 && clickCount < 3) ? 0.6 : 1,
-          transform: (index === 3 && visibleCount >= chapter.content.length && clickCount > 0 && clickCount < 3) ? 'translateX(2px)' : 'none'
+          opacity: isClearing ? 0 : (index === 3 && visibleCount >= chapter.content.length && clickCount > 0 && clickCount < 3) ? 0.6 : 1,
+          transform: (index === 3 && visibleCount >= chapter.content.length && clickCount > 0 && clickCount < 3) ? 'translateX(2px)' : 'none',
+          pointerEvents: isClearing ? 'none' : 'auto'
         }}
         onClick={handleNextLine}
+        disabled={isClearing}
       >
         {visibleCount < chapter.content.length ? (
           <>Next <ChevronDown size={18} /></>

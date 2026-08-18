@@ -9,7 +9,7 @@ export const FinalReveal = () => {
 
   useEffect(() => {
     if (phase === 0) {
-      const t = setTimeout(() => setPhase(1), 4500); // Wait longer so she can read it
+      const t = setTimeout(() => setPhase(1), 3000);
       return () => clearTimeout(t);
     }
     if (phase === 1) {
@@ -34,15 +34,9 @@ export const FinalReveal = () => {
               initial={{ width: 0 }}
               animate={{ width: '100%' }}
               transition={{ duration: 2.5 }}
-              style={{ background: 'var(--success)', height: '20px', marginTop: '1rem', marginBottom: '0.5rem' }}
+              style={{ background: 'var(--success)', height: '20px', marginTop: '1rem' }}
             />
-            <motion.p 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              transition={{ delay: 2.5 }}
-            >
-              100% - Deployment successful. ❤️
-            </motion.p>
+            <p style={{ marginTop: '0.5rem' }}>100% - Deployment successful.</p>
           </motion.div>
         )}
 
@@ -207,7 +201,7 @@ export const FinalReveal = () => {
                   ALL TEST CASES PASSED! 🎉
                 </h2>
                 <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
-                  I didn't get the bike yet.. time to plan the trip! 😉<br/><br/>
+                  I'll start looking for bike accessories. 😉<br/><br/>
                   Thank you for taking the time to experience this little project of mine, Shraddha. ❤️
                 </p>
               </>
