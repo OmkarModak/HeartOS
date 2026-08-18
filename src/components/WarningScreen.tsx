@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { AlertTriangle, ArrowRight } from 'lucide-react';
+import { AlertTriangle, ArrowRight, CheckSquare, Square } from 'lucide-react';
 
 interface WarningScreenProps {
   onProceed: () => void;
 }
 
 export const WarningScreen = ({ onProceed }: WarningScreenProps) => {
+  const [agreed, setAgreed] = useState(false);
+
   return (
     <motion.div
       className="glass-panel"
@@ -46,17 +49,42 @@ export const WarningScreen = ({ onProceed }: WarningScreenProps) => {
       </motion.div>
 
       <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+        style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'flex-start', gap: '0.75rem', textAlign: 'left', background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '8px', cursor: 'pointer' }}
+        onClick={() => setAgreed(!agreed)}
+      >
+        <div style={{ marginTop: '2px', color: agreed ? 'var(--accent-purple)' : '#888' }}>
+          {agreed ? <CheckSquare size={20} /> : <Square size={20} />}
+        </div>
+        <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+          I agree to not screenshot the following content and use it as blackmail material in future arguments.
+        </p>
+      </motion.div>
+
+      <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6 }}
+        transition={{ delay: 1 }}
         style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center' }}
       >
         <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="btn-primary glow-button"
-          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-purple)' }}
-          onClick={onProceed}
+          whileHover={agreed ? { scale: 1.05 } : {}}
+          whileTap={agreed ? { scale: 0.95 } : {}}
+          className={agreed ? "btn-primary glow-button" : "btn-secondary"}
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.5rem', 
+            background: agreed ? 'var(--accent-purple)' : 'transparent',
+            opacity: agreed ? 1 : 0.5,
+            cursor: agreed ? 'pointer' : 'not-allowed'
+          }}
+          onClick={() => {
+            if (agreed) onProceed();
+          }}
+          disabled={!agreed}
         >
           Proceed <ArrowRight size={20} />
         </motion.button>

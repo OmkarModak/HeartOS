@@ -3,7 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const introSequence = [
   "HEARTOS v1.0",
-  "Initializing...",
+  "Initializing butterflies_in_stomach.exe... [SUCCESS]",
+  "Bypassing awkward_silence firewall... [OK]",
+  "Downloading terrible_pickup_lines.dll... [FAILED] (Good.)",
   "ERROR: Automated boot sequence failed.",
   "Awaiting manual QA verification..."
 ];

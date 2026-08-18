@@ -19,7 +19,7 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
       setTerminalOutput(prev => [
         ...prev, 
         '> Error: Automated run script failed.', 
-        '> Hint: The developer left a backdoor open. Press F12 or right-click -> Inspect to check the browser console for a clue! 🕵️‍♀️'
+        '> Hint: The developer left a backdoor open.  Inspect to check the browser console for a clue! 🕵️‍♀️'
       ]);
     } else {
       setTerminalOutput(prev => [
@@ -86,6 +86,12 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
 
         {/* Code Area */}
         <div style={{ padding: '20px', fontFamily: '"Fira Code", monospace', fontSize: '0.9rem', lineHeight: '1.5', color: '#d4d4d4', overflowX: 'auto' }}>
+          <div style={{ color: '#6a9955', fontStyle: 'italic' }}>
+            # TODO: Write a patch to fix my inability to act cool around her.
+          </div>
+          <div style={{ color: '#6a9955', fontStyle: 'italic', marginBottom: '10px' }}>
+            # Status: Attempted. Failed miserably.
+          </div>
           <div style={{ display: 'flex' }}>
             <span style={{ color: '#569cd6' }}>def</span>&nbsp;
             <span style={{ color: '#dcdcaa' }}>query_heart_database</span>():

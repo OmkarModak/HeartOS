@@ -39,7 +39,8 @@ export const QASignoff = ({ onComplete }: QASignoffProps) => {
           {[
             "Bug 01: System experiences unpredictable heartbeat when near QA.",
             "Bug 02: Memory leak (Can't stop thinking about you).",
-            "Bug 03: Excessively generates cheesy lines."
+            "Bug 03: Excessively generates cheesy lines.",
+            "Bug 04: Developer's heart rate spikes dangerously high when QA is looking at him."
           ].map((bug, index) => (
             <motion.div 
               key={index}
