@@ -114,6 +114,17 @@ export const BootScreen = ({ onComplete }: { onComplete: () => void }) => {
         </motion.div>
       )}
 
+      {/* Progress Counter */}
+      {showChecklist && !systemReady && checkedItems.some(Boolean) && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          style={{ marginTop: '1rem', color: 'var(--success)', fontWeight: 'bold' }}
+        >
+          > {checkedItems.filter(Boolean).length} passed...
+        </motion.div>
+      )}
+
       {/* System Ready Message */}
       <AnimatePresence>
         {systemReady && (
