@@ -11,10 +11,11 @@ export const storyChapters: Chapter[] = [
     title: "WHOAMI",
     emoji: "🧑‍💻",
     content: [
-      "I live in Goa.",
-      "My family consists of my mother, my father, and my elder sister.",
-      "I consider myself a simple person.",
-      "My interests include singing, coding, vlogging, technology, movies, and gaming."
+      "I live in Goa and consider myself a pretty simple guy.",
+      "On weekdays, I'm a Full Stack Developer. Outside of that, I'm a singer, gamer, and vlogger.",
+      "I used to work out a lot... and honestly, if you ask me to, I'll definitely start again. 🏋️‍♂️",
+      "I have an incredible amount of patience, but fair warning: once it finally runs out, I can be the most 'chidchida' person in the room.",
+      "I don't get emotional easily in real life, but put on a sad movie and I am absolutely tearing up. 🎬"
     ]
   },
   {
@@ -24,7 +25,7 @@ export const storyChapters: Chapter[] = [
     content: [
       "Family can be difficult sometimes, and we've been through some tough times together.",
       "But we have a pretty decent home - a 1 floor, 2 BHK house with an underground 1 BHK and a really nice garden.",
-      "My father is retired now. He used to be a teacher, and he is someone I deeply look up to.",
+      "My father is retired now. He used to be a teacher.",
       "My mom takes home tuitions, and I also have a pretty cool elder sister.",
       "I'm grateful for them, but I also know I don't want to repeat the ways my parents behave sometimes.",
       "I want to take the good qualities I admire in my dad, learn from their flaws, and focus on becoming the coolest version of myself."
