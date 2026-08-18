@@ -17,7 +17,7 @@ export const WelcomeScreen = ({ onAgree, onDisagree }: WelcomeScreenProps) => {
     setIsAgreed(true);
     setTimeout(() => {
       onAgree();
-    }, 1500); // Wait for the animation to finish
+    }, 2500); // Wait for the animation to finish
   };
 
   const handleDisagreeHover = () => {
@@ -112,10 +112,10 @@ export const WelcomeScreen = ({ onAgree, onDisagree }: WelcomeScreenProps) => {
           </motion.div>
         ) : (
           <motion.div
-            key="heart-animation"
+            key="heart-door-container"
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: [0, 1.2, 1, 20], opacity: [0, 1, 1, 0] }}
-            transition={{ duration: 1.5, ease: "easeInOut", times: [0, 0.4, 0.6, 1] }}
+            animate={{ scale: [0, 1.5, 1.2, 15], opacity: [0, 1, 1, 1] }}
+            transition={{ duration: 1.8, ease: "easeInOut", times: [0, 0.3, 0.5, 1] }}
             style={{
               position: 'absolute',
               top: '50%',
@@ -125,11 +125,35 @@ export const WelcomeScreen = ({ onAgree, onDisagree }: WelcomeScreenProps) => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              color: 'var(--accent-pink)',
-              zIndex: 50
+              zIndex: 9999,
+              width: '100vw',
+              height: '100vh',
+              pointerEvents: 'none'
             }}
           >
-            <Heart size={100} fill="currentColor" />
+            {/* Left Half of Heart */}
+            <motion.div 
+              initial={{ x: 0, opacity: 1 }}
+              animate={{ x: '-100vw', opacity: 0 }}
+              transition={{ delay: 1.5, duration: 1, ease: "easeInOut" }}
+              style={{ position: 'absolute', right: '50%', color: 'var(--accent-pink)' }}
+            >
+              <svg width="200" height="200" viewBox="0 0 50 100" preserveAspectRatio="none">
+                <path d="M50 85C50 85 10 55 10 30C10 15 25 5 40 10C46 12 50 18 50 18V85Z" fill="currentColor" />
+              </svg>
+            </motion.div>
+            
+            {/* Right Half of Heart */}
+            <motion.div 
+              initial={{ x: 0, opacity: 1 }}
+              animate={{ x: '100vw', opacity: 0 }}
+              transition={{ delay: 1.5, duration: 1, ease: "easeInOut" }}
+              style={{ position: 'absolute', left: '50%', color: 'var(--accent-pink)' }}
+            >
+              <svg width="200" height="200" viewBox="50 0 50 100" preserveAspectRatio="none">
+                <path d="M50 85V18C50 18 54 12 60 10C75 5 90 15 90 30C90 55 50 85 50 85Z" fill="currentColor" />
+              </svg>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

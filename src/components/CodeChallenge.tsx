@@ -9,23 +9,56 @@ interface CodeChallengeProps {
 export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
   const [terminalOutput, setTerminalOutput] = useState<string[]>(['> Ready.']);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [runClicks, setRunClicks] = useState(0);
 
   const handleRunClick = () => {
-    setTerminalOutput(prev => [...prev, '> Error: Automated run script failed.', '> Suggestion: Manual QA override required. Check the source code.']);
+    const newClicks = runClicks + 1;
+    setRunClicks(newClicks);
+
+    if (newClicks >= 3) {
+      setTerminalOutput(prev => [
+        ...prev, 
+        '> Error: Automated run script failed.', 
+        '> Hint: Look closely... the manual override is hidden in plain sight within the code.'
+      ]);
+    } else {
+      setTerminalOutput(prev => [
+        ...prev, 
+        '> Error: Automated run script failed.', 
+        '> Suggestion: Manual QA override required. Check the source code.'
+      ]);
+    }
   };
 
   const handleSecretClick = () => {
     if (isSuccess) return;
     setIsSuccess(true);
-    setTerminalOutput(prev => [...prev, '> Override triggered...', '> Compiling...', '> Success! Compatibility is Infinity.']);
+    
+    setTerminalOutput(prev => [...prev, '> Executing query...']);
     
     setTimeout(() => {
+      setTerminalOutput(prev => [...prev, '> Downloading YOU database...']);
+    }, 800);
+
+    setTimeout(() => {
+      setTerminalOutput(prev => [...prev, '> Processing results... 1 row returned.']);
+    }, 1800);
+    
+    setTimeout(() => {
+      setTerminalOutput(prev => [...prev, '> WARNING: Heart CPU Usage spiking...']);
+    }, 2800);
+
+    setTimeout(() => {
+      setTerminalOutput(prev => [...prev, '> CPU Usage: 100% ❤️']);
+    }, 4200);
+
+    setTimeout(() => {
       setTerminalOutput(prev => [...prev, '> Unlocking final sequence...']);
-    }, 1000);
+    }, 5800);
 
     setTimeout(() => {
       onComplete();
-    }, 2500);
+    }, 7500);
   };
 
   return (
@@ -43,7 +76,7 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
           <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ffbd2e' }} />
           <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#27c93f' }} />
           <div style={{ marginLeft: 'auto', color: '#888', fontSize: '0.8rem', fontFamily: 'monospace' }}>
-            compatibility_test.py
+            query_heart.py
           </div>
         </div>
 
@@ -51,18 +84,35 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
         <div style={{ padding: '20px', fontFamily: '"Fira Code", monospace', fontSize: '0.9rem', lineHeight: '1.5', color: '#d4d4d4', overflowX: 'auto' }}>
           <div style={{ display: 'flex' }}>
             <span style={{ color: '#569cd6' }}>def</span>&nbsp;
-            <span style={{ color: '#dcdcaa' }}>calculate_compatibility</span>
-            (boy, girl):
+            <span style={{ color: '#dcdcaa' }}>query_heart_database</span>():
           </div>
           <div style={{ paddingLeft: '20px', display: 'flex' }}>
-            <span style={{ color: '#c586c0' }}>if</span>&nbsp;
-            girl == <span style={{ color: '#ce9178' }}>"Shraddha"</span> <span style={{ color: '#c586c0' }}>and</span> boy == <span style={{ color: '#ce9178' }}>"Omkar"</span>:
+            <span style={{ color: '#9cdcfe' }}>sql_query</span> = <span style={{ color: '#ce9178' }}>"""</span>
           </div>
-          <div style={{ paddingLeft: '40px' }}>
-            <span style={{ color: '#c586c0' }}>return</span> <span style={{ color: '#4ec9b0' }}>float</span>(<span style={{ color: '#ce9178' }}>'inf'</span>)
+          <div style={{ paddingLeft: '40px', color: '#ce9178' }}>
+            SELECT y.name, y.beauty_level, y.cuteness_level
+          </div>
+          <div style={{ paddingLeft: '40px', color: '#ce9178' }}>
+            FROM YOU y
+          </div>
+          <div style={{ paddingLeft: '40px', color: '#ce9178' }}>
+            WHERE y.status = 0
+          </div>
+          <div style={{ paddingLeft: '60px', color: '#ce9178' }}>
+            AND y.past = ANY;
+          </div>
+          <br />
+          <div style={{ paddingLeft: '40px', color: '#ce9178' }}>
+            -- I don't care about previous versions.
+          </div>
+          <div style={{ paddingLeft: '40px', color: '#ce9178' }}>
+            -- I'm interested in the current release. 😄
+          </div>
+          <div style={{ paddingLeft: '20px', color: '#ce9178' }}>
+            """
           </div>
           <div style={{ paddingLeft: '20px' }}>
-            <span style={{ color: '#c586c0' }}>return</span> <span style={{ color: '#b5cea8' }}>0</span>
+            <span style={{ color: '#c586c0' }}>return</span> <span style={{ color: '#dcdcaa' }}>execute</span>(<span style={{ color: '#9cdcfe' }}>sql_query</span>)
           </div>
           <br />
           <div style={{ color: '#6a9955', fontStyle: 'italic' }}>
@@ -133,7 +183,7 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 style={{ 
-                  color: line.includes('Error') ? '#ff5f56' : line.includes('Success') || line.includes('Compiling') ? '#27c93f' : '#a3a3a3',
+                  color: line.includes('Error') || line.includes('WARNING') ? '#ff5f56' : line.includes('Success') || line.includes('Compiling') || line.includes('100%') ? '#27c93f' : '#a3a3a3',
                   marginBottom: '4px'
                 }}
               >

@@ -39,6 +39,7 @@ export const storyChapters: Chapter[] = [
       "I have gone through difficult relationship experiences in the past.",
       "Those experiences taught me important lessons about trust, relationships, boundaries, self-respect and what I actually want from a relationship.",
       "I went through a difficult breakup in June 2026. The experience was painful and affected me deeply, but I eventually chose to move forward and rebuild myself.",
+      "(Before you read further, take a deep breath. Drink some water if you need to! 🚰)",
       "What did the past teach me?",
       "It taught me that I have been hurt and I have made mistakes, but I learned from them.",
       "I still believe good people exist.",
@@ -65,7 +66,12 @@ export const storyChapters: Chapter[] = [
       "Maybe I got a little too curious. 😂",
       "Basically, I went into full developer debugging mode. 👀",
       "I started searching for you online and eventually found you on LinkedIn.",
-      "And well... here we are. ❤️"
+      "Please know that my intentions are not bad... I just fell in love. 🥺",
+      "And well... here we are. ❤️",
+      "Though I have noticed that we don't really talk much...",
+      "To be honest, I find myself eagerly waiting for your text every single day. 😅",
+      "If you aren't interested or don't like me, please let me know! It's completely okay and I promise I won't mind at all. 🥺",
+      "But if you are even a little bit curious... I'd really love to get to know you better. 😊"
     ]
   }
 ];

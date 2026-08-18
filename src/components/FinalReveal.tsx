@@ -51,7 +51,7 @@ export const FinalReveal = () => {
               HEARTOS ❤️
             </h1>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 400 }}>
-              Designed and developed specifically for you, Shraddha.
+              Designed and developed specifically for you.
             </h2>
           </motion.div>
         )}
@@ -65,6 +65,44 @@ export const FinalReveal = () => {
             transition={{ duration: 1, delay: 0.5 }}
             style={{ padding: '2.5rem', maxWidth: '500px', width: '100%', position: 'relative' }}
           >
+            {/* Magical Floating Background Hearts & Sparkles */}
+            {[...Array(12)].map((_, i) => {
+              const emojis = ['❤️', '💖', '✨', '💕', '💘', '🥰'];
+              const randomEmoji = emojis[i % emojis.length];
+              const randomLeft = 5 + (i * 8); // Spread them across the width
+              const randomDelay = i * 0.2;
+              const randomDuration = 2.5 + (i % 3);
+              
+              return (
+                <motion.div
+                  key={`bg-magic-${i}`}
+                  initial={{ opacity: 0, scale: 0, y: 20 }}
+                  animate={{ 
+                    opacity: [0, 0.8, 0], 
+                    scale: [0.5, 1.2, 0.8],
+                    y: [20, -150]
+                  }}
+                  transition={{
+                    duration: randomDuration,
+                    repeat: Infinity,
+                    delay: randomDelay + 1, // Start after panel fades in
+                    ease: "easeOut"
+                  }}
+                  style={{
+                    position: 'absolute',
+                    fontSize: `${1.2 + (i % 2)}rem`,
+                    left: `${randomLeft}%`,
+                    bottom: '-30px',
+                    zIndex: -1,
+                    pointerEvents: 'none',
+                    filter: 'blur(0.5px)'
+                  }}
+                >
+                  {randomEmoji}
+                </motion.div>
+              );
+            })}
+
             <Sticker src={loveSticker} alt="Love Mascot" delay={1.5} position="bottom-right" />
             
             <div style={{ marginTop: '2rem', marginBottom: '2rem', textAlign: 'left', fontFamily: 'monospace', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
@@ -73,6 +111,9 @@ export const FinalReveal = () => {
               <p>Status: Still debugging 😄</p>
               <p>Known issue: Gets a little cheesy sometimes 🧀</p>
               <p>Build: Successful ❤️</p>
+              <p style={{ marginTop: '0.5rem' }}>
+                If you wish to delete this: <span style={{ color: '#ff5f56' }}>DELETE FROM YOU;</span> 🥺
+              </p>
             </div>
             
             <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '1.1rem' }}>

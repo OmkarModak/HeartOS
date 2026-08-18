@@ -5,8 +5,11 @@ interface ClickEffect {
   id: number;
   x: number;
   y: number;
-  type: 'heart' | 'boop';
+  type: 'heart' | 'boop' | 'trail';
+  emoji?: string;
 }
+
+const TRAIL_EMOJIS = ['✨', '🌸', '🦋', '❤️', '💫'];
 
 export const ClickEffectManager = () => {
   const [effects, setEffects] = useState<ClickEffect[]>([]);
@@ -37,9 +40,41 @@ export const ClickEffectManager = () => {
       }, 1000);
     };
 
+    let lastTime = 0;
+    const handleMouseMove = (e: MouseEvent) => {
+      const now = Date.now();
+      // Throttle trail generation to every 50ms
+      if (now - lastTime < 50) return;
+      lastTime = now;
+
+      // Don't spawn trail if moving fast near buttons/links to avoid cluttering interactions
+      const target = e.target as HTMLElement;
+      if (target.closest('button, a, input')) return;
+
+      const randomEmoji = TRAIL_EMOJIS[Math.floor(Math.random() * TRAIL_EMOJIS.length)];
+      const trailEffect: ClickEffect = {
+        id: Date.now() + Math.random(),
+        x: e.clientX,
+        y: e.clientY + 10,
+        type: 'trail',
+        emoji: randomEmoji
+      };
+
+      setEffects(prev => [...prev, trailEffect]);
+
+      // Trails disappear faster
+      setTimeout(() => {
+        setEffects(prev => prev.filter(eff => eff.id !== trailEffect.id));
+      }, 600);
+    };
+
     // Use capture phase to ensure it catches everything
     window.addEventListener('click', handleClick, true);
-    return () => window.removeEventListener('click', handleClick, true);
+    window.addEventListener('mousemove', handleMouseMove, true);
+    return () => {
+      window.removeEventListener('click', handleClick, true);
+      window.removeEventListener('mousemove', handleMouseMove, true);
+    };
   }, []);
 
   return (
@@ -48,10 +83,10 @@ export const ClickEffectManager = () => {
         {effects.map((effect) => (
           <motion.div
             key={effect.id}
-            initial={{ opacity: 0, scale: 0.5, y: 0, x: '-50%' }}
-            animate={{ opacity: 1, scale: 1, y: -40, x: '-50%' }}
+            initial={{ opacity: 0, scale: effect.type === 'trail' ? 0 : 0.5, y: 0, x: '-50%' }}
+            animate={{ opacity: effect.type === 'trail' ? 0.6 : 1, scale: effect.type === 'trail' ? 0.8 : 1, y: effect.type === 'trail' ? -20 : -40, x: '-50%' }}
             exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ type: 'spring', damping: 15, stiffness: 200, opacity: { duration: 0.5 } }}
+            transition={{ type: 'spring', damping: 15, stiffness: 200, opacity: { duration: effect.type === 'trail' ? 0.6 : 0.5 } }}
             style={{
               position: 'absolute',
               left: effect.x,
@@ -60,7 +95,8 @@ export const ClickEffectManager = () => {
               fontWeight: 600,
               pointerEvents: 'none',
               textShadow: '0 2px 10px rgba(0,0,0,0.5)',
-              color: effect.type === 'boop' ? 'var(--text-secondary)' : 'inherit'
+              color: effect.type === 'boop' ? 'var(--text-secondary)' : 'inherit',
+              zIndex: effect.type === 'trail' ? -1 : 1
             }}
           >
             {effect.type === 'heart' ? (
@@ -71,7 +107,7 @@ export const ClickEffectManager = () => {
               >
                 ❤️
               </motion.div>
-            ) : (
+            ) : effect.type === 'boop' ? (
               <div style={{ 
                 fontSize: '0.9rem', 
                 background: 'rgba(255,255,255,0.1)', 
@@ -84,6 +120,10 @@ export const ClickEffectManager = () => {
                 gap: '0.25rem'
               }}>
                 boop! 🔒
+              </div>
+            ) : (
+              <div style={{ fontSize: '1rem', filter: 'hue-rotate(15deg)' }}>
+                {effect.emoji}
               </div>
             )}
           </motion.div>

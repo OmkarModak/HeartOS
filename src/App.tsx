@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { BootScreen } from './components/BootScreen';
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { SadScreen } from './components/SadScreen';
 import { StoryChapter } from './components/StoryChapter';
+import { WarningScreen } from './components/WarningScreen';
 import { PollSystem } from './components/PollSystem';
 import { FinalReveal } from './components/FinalReveal';
 import { CodeChallenge } from './components/CodeChallenge';
@@ -12,7 +13,7 @@ import { ClickEffectManager } from './components/ClickEffectManager';
 import { storyChapters } from './data/story';
 import { polls, interPoll } from './data/polls';
 
-type AppState = 'BOOT' | 'WELCOME' | 'DENIED' | 'STORY' | 'INTER_POLL' | 'POLLS' | 'CODE_CHALLENGE' | 'FINAL';
+type AppState = 'BOOT' | 'WELCOME' | 'DENIED' | 'STORY' | 'PERSONAL_WARNING' | 'INTER_POLL' | 'POLLS' | 'CODE_CHALLENGE' | 'FINAL';
 
 function App() {
   const [appState, setAppState] = useState<AppState>('BOOT');
@@ -27,13 +28,20 @@ function App() {
   }, []);
 
   const handleNextChapter = () => {
-    if (currentChapterIndex === 3) {
+    if (currentChapterIndex === 1) {
+      setAppState('PERSONAL_WARNING');
+    } else if (currentChapterIndex === 3) {
       setAppState('INTER_POLL');
     } else if (currentChapterIndex < storyChapters.length - 1) {
       setCurrentChapterIndex(prev => prev + 1);
     } else {
       setAppState('POLLS');
     }
+  };
+
+  const handleWarningProceed = () => {
+    setCurrentChapterIndex(2);
+    setAppState('STORY');
   };
 
   const handleInterPollComplete = () => {
@@ -58,6 +66,10 @@ function App() {
       </div>
       <FloatingHearts />
 
+      <div style={{ position: 'fixed', bottom: '15px', right: '20px', fontSize: '11px', color: 'rgba(255, 255, 255, 0.3)', zIndex: 50, pointerEvents: 'none', letterSpacing: '0.5px', fontFamily: 'monospace' }}>
+        Designed & Developed for you ❤️
+      </div>
+
       <div className="app-container">
         <AnimatePresence mode="wait">
           {appState === 'BOOT' && (
@@ -74,6 +86,10 @@ function App() {
 
           {appState === 'DENIED' && (
             <SadScreen key="denied" onTryAgain={() => setAppState('WELCOME')} />
+          )}
+
+          {appState === 'PERSONAL_WARNING' && (
+            <WarningScreen key="warning" onProceed={handleWarningProceed} />
           )}
 
           {appState === 'STORY' && (
