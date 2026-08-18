@@ -24,7 +24,7 @@ export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
       setVisibleCount(prev => prev + 1);
     } else {
       if (index === 3) {
-        if (clickCount < 2) {
+        if (clickCount < 3) {
           setClickCount(prev => prev + 1);
         } else {
           onNext();
@@ -82,8 +82,8 @@ export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
           alignItems: 'center', 
           gap: '0.5rem', 
           marginTop: '2rem',
-          opacity: (index === 3 && visibleCount >= chapter.content.length && clickCount > 0 && clickCount < 2) ? 0.6 : 1,
-          transform: (index === 3 && visibleCount >= chapter.content.length && clickCount > 0 && clickCount < 2) ? 'translateX(2px)' : 'none'
+          opacity: (index === 3 && visibleCount >= chapter.content.length && clickCount > 0 && clickCount < 3) ? 0.6 : 1,
+          transform: (index === 3 && visibleCount >= chapter.content.length && clickCount > 0 && clickCount < 3) ? 'translateX(2px)' : 'none'
         }}
         onClick={handleNextLine}
       >
@@ -95,7 +95,7 @@ export const StoryChapter = ({ chapter, index, onNext }: StoryChapterProps) => {
       </motion.button>
 
       <AnimatePresence>
-        {index === 3 && visibleCount >= chapter.content.length && clickCount >= 2 && (
+        {index === 3 && visibleCount >= chapter.content.length && clickCount >= 3 && (
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
