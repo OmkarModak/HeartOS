@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sticker } from './Sticker';
+import loveSticker from '../assets/sticker-love.png';
 
 export const FinalReveal = () => {
   const [phase, setPhase] = useState(0);
@@ -64,7 +65,7 @@ export const FinalReveal = () => {
             transition={{ duration: 1, delay: 0.5 }}
             style={{ padding: '2.5rem', maxWidth: '500px', width: '100%', position: 'relative' }}
           >
-            <Sticker src="/sticker-love.png" alt="Love Mascot" delay={1.5} position="bottom-right" />
+            <Sticker src={loveSticker} alt="Love Mascot" delay={1.5} position="bottom-right" />
             
             <div style={{ marginTop: '2rem', marginBottom: '2rem', textAlign: 'left', fontFamily: 'monospace', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
               <p>HEARTOS v1.0</p>

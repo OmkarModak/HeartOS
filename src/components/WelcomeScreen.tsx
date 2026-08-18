@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, X } from 'lucide-react';
 import { Sticker } from './Sticker';
+import greetingSticker from '../assets/sticker-greeting.png';
 
 interface WelcomeScreenProps {
   onAgree: () => void;
@@ -46,7 +47,7 @@ export const WelcomeScreen = ({ onAgree, onDisagree }: WelcomeScreenProps) => {
             transition={{ duration: 0.3 }}
             style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}
           >
-            <Sticker src="/sticker-greeting.png" alt="Greeting Mascot" delay={0.2} position="bottom-left" message="Hi.." />
+            <Sticker src={greetingSticker} alt="Greeting Mascot" delay={0.2} position="bottom-left" message="Hi.. 👋" />
 
             <motion.div
               initial={{ y: -20, opacity: 0 }}

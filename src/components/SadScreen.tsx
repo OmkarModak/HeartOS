@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Sticker } from './Sticker';
+import sadSticker from '../assets/sticker-sad.png';
 
 export const SadScreen = ({ onTryAgain }: { onTryAgain: () => void }) => {
   return (
@@ -10,7 +11,7 @@ export const SadScreen = ({ onTryAgain }: { onTryAgain: () => void }) => {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
     >
-      <Sticker src="/sticker-sad.png" alt="Sad Mascot" position="top-right" />
+      <Sticker src={sadSticker} alt="Sad Mascot" position="top-right" />
       <p style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>
         Aww...<br /><br />
         Looks like the test can't continue just yet.<br />
