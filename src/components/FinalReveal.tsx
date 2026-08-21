@@ -124,15 +124,14 @@ export const FinalReveal = () => {
             </div>
             
             <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '1.1rem' }}>
-              <p>I don't know where this goes.</p>
-              <p>I don't want to pretend I know the future.</p>
-              <p>I just know that I like talking to you. I like your energy.</p>
-              <p>You felt different to me.</p>
-              <p>And I'd genuinely like the chance to know you better.</p>
-              <p>If you want to, I'd like to choose you.</p>
-              <p>And if someday you want to choose me too...</p>
+              <p>You actually said yes! 🎉</p>
+              <p>I know building an entire OS update just to ask you out is a little bit extra...</p>
+              <p>But honestly, you're absolutely worth the effort.</p>
+              <p>I'm really looking forward to our date. Good food, good company, and finally getting to spend time with you.</p>
+              <p>I promise to bring my best behavior (and maybe a terrible joke or two).</p>
+              <p>Thank you for subscribing to HeartOS v2.0.</p>
               <p style={{ fontWeight: 600, color: 'var(--accent-pink)', marginTop: '1rem' }}>
-                maybe we can see where this goes. ❤️
+                I can't wait to see you. ❤️
               </p>
             </div>
 
