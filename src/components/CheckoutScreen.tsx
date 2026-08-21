@@ -46,7 +46,7 @@ export const CheckoutScreen = ({ data, onComplete }: CheckoutScreenProps) => {
           format: [canvas.width / 2, canvas.height / 2]
         });
         pdf.addImage(imgData, 'PNG', 0, 0, canvas.width / 2, canvas.height / 2);
-        pdf.save('HeartOS_Date_Invoice.pdf');
+        pdf.save(`HeartOS_Date_Invoice_${data.date}.pdf`);
       } catch (err) {
         console.error("PDF generation failed", err);
       }
