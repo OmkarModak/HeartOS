@@ -113,7 +113,7 @@ export const FinalReveal = () => {
             <Sticker src={loveSticker} alt="Love Mascot" delay={1.5} position="bottom-right" />
             
             <div style={{ marginTop: '2rem', marginBottom: '2rem', textAlign: 'left', fontFamily: 'monospace', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-              <p>HEARTOS v1.0</p>
+              <p>HEARTOS v2.0</p>
               <p>Developer: Omkar</p>
               <p>Status: Still debugging 😄</p>
               <p>Known issue: Gets a little cheesy sometimes 🧀</p>
