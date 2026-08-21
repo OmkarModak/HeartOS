@@ -5,6 +5,8 @@ import loveSticker from '../assets/sticker-love.png';
 
 export const FinalReveal = () => {
   const [phase, setPhase] = useState(0);
+  const [poll1Answer, setPoll1Answer] = useState<string | null>(null);
+  const [poll2Answer, setPoll2Answer] = useState<string | null>(null);
   const [feedback, setFeedback] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -17,14 +19,14 @@ export const FinalReveal = () => {
         body: JSON.stringify({
           access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
           subject: '❤️ She Shared Her Thoughts About You! ❤️',
-          message: `Shraddha's thoughts on you:\n\n${feedback}`
+          message: `Shraddha's Final Answers:\n\nQ1: Can I show you to my parents?\nAnswer: ${poll1Answer}\n\nQ2: Can I stalk your Insta photos?\nAnswer: ${poll2Answer}\n\nQ3: Till now, how did you find me as a person?\nAnswer:\n${feedback}`
         })
       });
     } catch (e) {
       console.error(e);
     }
     setIsSubmitting(false);
-    setPhase(4);
+    setPhase(6); // Move to Thank You screen
   };
 
   useEffect(() => {
@@ -173,6 +175,80 @@ export const FinalReveal = () => {
 
         {phase === 3 && (
           <motion.div
+            key="poll1"
+            className="glass-panel"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
+          >
+            <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
+              Wait, a few last questions...
+            </h2>
+            <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '2rem', color: 'white', fontWeight: 600 }}>
+              Can I show you to my parents? 👨‍👩‍👦
+            </p>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {['Yes, they will love me! ✨', 'Only if you promise I look good 📸', 'Wait, too soon! 🏃‍♀️💨'].map((option) => (
+                <motion.button
+                  key={option}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={poll1Answer === option ? "btn-primary glow-button" : "btn-secondary"}
+                  onClick={() => setPoll1Answer(option)}
+                  style={{ textAlign: 'left', padding: '1rem 1.5rem' }}
+                >
+                  {option}
+                </motion.button>
+              ))}
+            </div>
+
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: poll1Answer ? 1 : 0 }} style={{ marginTop: '2rem', textAlign: 'center' }}>
+              <button className="btn-primary glow-button" onClick={() => setPhase(4)}>Next ➡️</button>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {phase === 4 && (
+          <motion.div
+            key="poll2"
+            className="glass-panel"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
+          >
+            <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
+              Question 2...
+            </h2>
+            <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '2rem', color: 'white', fontWeight: 600 }}>
+              Can I stalk your Insta photos? 🕵️‍♂️📸
+            </p>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {['Yes, like all of them ❤️', 'Only the aesthetic ones ✨', 'Stalking is a crime! 🚨'].map((option) => (
+                <motion.button
+                  key={option}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={poll2Answer === option ? "btn-primary glow-button" : "btn-secondary"}
+                  onClick={() => setPoll2Answer(option)}
+                  style={{ textAlign: 'left', padding: '1rem 1.5rem' }}
+                >
+                  {option}
+                </motion.button>
+              ))}
+            </div>
+
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: poll2Answer ? 1 : 0 }} style={{ marginTop: '2rem', textAlign: 'center' }}>
+              <button className="btn-primary glow-button" onClick={() => setPhase(5)}>One More ➡️</button>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {phase === 5 && (
+          <motion.div
             key="reveal3"
             className="glass-panel"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -181,7 +257,7 @@ export const FinalReveal = () => {
             style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
           >
             <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
-              Wait, one last thing...
+              And finally...
             </h2>
             <p style={{ fontSize: '1.2rem', lineHeight: '1.6', marginBottom: '1.5rem', color: 'var(--text-secondary)' }}>
               Be completely honest...<br/><br/>
@@ -211,13 +287,13 @@ export const FinalReveal = () => {
                 disabled={!feedback.trim() || isSubmitting}
                 style={{ opacity: feedback.trim() ? 1 : 0.5, cursor: feedback.trim() ? 'pointer' : 'not-allowed' }}
               >
-                {isSubmitting ? "Sending..." : "Tell Me 💌"}
+                {isSubmitting ? "Sending..." : "Submit All 💌"}
               </motion.button>
             </div>
           </motion.div>
         )}
 
-        {phase === 4 && (
+        {phase === 6 && (
           <motion.div
             key="reveal4"
             className="glass-panel"
