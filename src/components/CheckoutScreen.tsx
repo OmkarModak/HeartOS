@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, CreditCard, Download, Loader2 } from 'lucide-react';
+import { CheckCircle2, CreditCard, Loader2, QrCode } from 'lucide-react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -93,17 +93,30 @@ export const CheckoutScreen = ({ data, onComplete }: CheckoutScreenProps) => {
                 </div>
               </div>
 
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="btn-primary glow-button"
-                onClick={handleConfirm}
-                disabled={isSubmitting}
-                style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
-              >
-                {isSubmitting ? <Loader2 size={18} className="spin" /> : <Download size={18} />}
-                {isSubmitting ? "Processing..." : "Confirm & Download Invoice"}
-              </motion.button>
+              <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem', fontSize: '0.9rem' }}>
+                  Scan (or Tap) to Pay 1 Smile ❤️
+                </p>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleConfirm}
+                  disabled={isSubmitting}
+                  style={{
+                    background: 'white', padding: '1rem', borderRadius: '16px', border: 'none',
+                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                    boxShadow: '0 0 30px rgba(255, 255, 255, 0.15)'
+                  }}
+                >
+                  {isSubmitting ? (
+                    <div style={{ width: '140px', height: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Loader2 size={48} className="spin" color="var(--accent-pink)" />
+                    </div>
+                  ) : (
+                    <QrCode size={140} color="black" />
+                  )}
+                </motion.button>
+              </div>
             </motion.div>
           ) : (
             <motion.div key="success" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} style={{ textAlign: 'center' }}>
