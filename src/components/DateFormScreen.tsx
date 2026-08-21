@@ -14,6 +14,7 @@ const foodOptions = [
 export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [amPm, setAmPm] = useState('PM');
   const [selectedFoods, setSelectedFoods] = useState<string[]>([]);
   const [otherFood, setOtherFood] = useState('');
 
@@ -28,7 +29,7 @@ export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
     if (isFormValid) {
       onNext({
         date,
-        time,
+        time: `${time} ${amPm}`,
         food: selectedFoods.map(f => f === 'Other' ? otherFood : f).join(', ')
       });
     }
@@ -69,40 +70,42 @@ export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
               <Clock size={16} /> Select Time
             </label>
-            <select 
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              style={{
-                appearance: 'none',
-                backgroundImage: `url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E")`,
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'right 1rem center',
-                backgroundSize: '1rem',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)', 
-                border: '1px solid var(--card-border)',
-                padding: '0.8rem 2.5rem 0.8rem 0.8rem', 
-                borderRadius: '8px', color: 'white', outline: 'none', cursor: 'pointer'
-              }}
-              required
-            >
-              <option value="" style={{ color: 'black' }}>Select time...</option>
-              <option value="6:00 PM" style={{ color: 'black' }}>6:00 PM</option>
-              <option value="6:30 PM" style={{ color: 'black' }}>6:30 PM</option>
-              <option value="7:00 PM" style={{ color: 'black' }}>7:00 PM</option>
-              <option value="7:30 PM" style={{ color: 'black' }}>7:30 PM</option>
-              <option value="8:00 PM" style={{ color: 'black' }}>8:00 PM</option>
-              <option value="8:30 PM" style={{ color: 'black' }}>8:30 PM</option>
-              <option value="9:00 PM" style={{ color: 'black' }}>9:00 PM</option>
-              <option value="9:30 PM" style={{ color: 'black' }}>9:30 PM</option>
-              <option value="10:00 PM" style={{ color: 'black' }}>10:00 PM</option>
-            </select>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <input 
+                type="time" 
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                style={{
+                  flex: 1,
+                  background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--card-border)',
+                  padding: '0.8rem', borderRadius: '8px', color: 'white', outline: 'none'
+                }}
+                required
+              />
+              <select
+                value={amPm}
+                onChange={(e) => setAmPm(e.target.value)}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--card-border)',
+                  padding: '0.8rem 1.5rem 0.8rem 0.8rem', borderRadius: '8px', color: 'white', outline: 'none', cursor: 'pointer',
+                  appearance: 'none',
+                  backgroundImage: `url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E")`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'right 0.3rem center',
+                  backgroundSize: '1rem',
+                }}
+              >
+                <option value="AM" style={{ color: 'black' }}>AM</option>
+                <option value="PM" style={{ color: 'black' }}>PM</option>
+              </select>
+            </div>
           </div>
         </div>
 
         {/* Food */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
           <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            <Utensils size={16} /> Cuisine Preference
+            <Utensils size={16} /> Cuisine Preference 
           </label>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '0.5rem' }}>
             {foodOptions.map((food) => (
