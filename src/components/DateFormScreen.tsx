@@ -14,7 +14,6 @@ const foodOptions = [
 export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
-  const [amPm, setAmPm] = useState('PM');
   const [selectedFood, setSelectedFood] = useState('');
   const [otherFood, setOtherFood] = useState('');
 
@@ -25,7 +24,7 @@ export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
     if (isFormValid) {
       onNext({
         date,
-        time: `${time} ${amPm}`,
+        time,
         food: selectedFood === 'Other' ? otherFood : selectedFood
       });
     }
@@ -66,31 +65,26 @@ export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
             <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
               <Clock size={16} /> Select Time
             </label>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <input 
-                type="text" 
-                placeholder="7:30"
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-                style={{
-                  flex: 1,
-                  background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--card-border)',
-                  padding: '0.8rem', borderRadius: '8px', color: 'white', outline: 'none'
-                }}
-                required
-              />
-              <select
-                value={amPm}
-                onChange={(e) => setAmPm(e.target.value)}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--card-border)',
-                  padding: '0.8rem', borderRadius: '8px', color: 'white', outline: 'none', cursor: 'pointer'
-                }}
-              >
-                <option value="AM" style={{ color: 'black' }}>AM</option>
-                <option value="PM" style={{ color: 'black' }}>PM</option>
-              </select>
-            </div>
+            <select 
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              style={{
+                background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--card-border)',
+                padding: '0.8rem', borderRadius: '8px', color: 'white', outline: 'none', cursor: 'pointer'
+              }}
+              required
+            >
+              <option value="" style={{ color: 'black' }}>Select time...</option>
+              <option value="6:00 PM" style={{ color: 'black' }}>6:00 PM</option>
+              <option value="6:30 PM" style={{ color: 'black' }}>6:30 PM</option>
+              <option value="7:00 PM" style={{ color: 'black' }}>7:00 PM</option>
+              <option value="7:30 PM" style={{ color: 'black' }}>7:30 PM</option>
+              <option value="8:00 PM" style={{ color: 'black' }}>8:00 PM</option>
+              <option value="8:30 PM" style={{ color: 'black' }}>8:30 PM</option>
+              <option value="9:00 PM" style={{ color: 'black' }}>9:00 PM</option>
+              <option value="9:30 PM" style={{ color: 'black' }}>9:30 PM</option>
+              <option value="10:00 PM" style={{ color: 'black' }}>10:00 PM</option>
+            </select>
           </div>
         </div>
 
