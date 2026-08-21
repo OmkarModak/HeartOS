@@ -1,0 +1,9 @@
+- [x] Create `VersionSelectScreen.tsx` to let her choose v1 or v2 (Skipped - routed directly)
+- [x] Create `DateAskScreen.tsx` with runaway "No" button
+- [x] Create `DateJokeScreen.tsx` with Khajoor joke
+- [x] Create `DateFormScreen.tsx` with date, time, and 8 food options
+- [x] Create `CheckoutScreen.tsx` with Rs 199 fee, secret Web3Forms POST, and txt download
+- [x] Update `App.tsx` routing and state machine
+- [x] Update `BootScreen` to route to `VersionSelectScreen` (Routed to DateAskScreen)
+- [x] Verify form submission and txt download
+- [x] Push to GitHub

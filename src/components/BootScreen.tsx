@@ -3,20 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const introSequence = [
   "HEARTOS v1.0",
-  "Initializing butterflies_in_stomach.exe... [SUCCESS]",
-  "Bypassing awkward_silence firewall... [OK]",
-  "Downloading terrible_pickup_lines.dll... [FAILED] (Good.)",
-  "ERROR: Automated boot sequence failed.",
-  "Awaiting manual QA verification..."
+  "Checking for updates...",
+  "v2.0 Update Found!",
+  "Awaiting manual installation authorization..."
 ];
 
 const checklistItems = [
-  "Mounting WHOAMI module...",
-  "Loading LIFE.EXE resources...",
-  "Running RECOVERY protocols...",
-  "Executing WHY_SHAADI() script...",
-  "Initializing YOU.EXE...",
-  "Preparing something special ❤️"
+  "Download v2.0 romance module",
+  "Extract dad-jokes repository",
+  "Compile date-planning algorithms",
+  "Verify update integrity"
 ];
 
 export const BootScreen = ({ onComplete }: { onComplete: () => void }) => {
@@ -77,7 +73,7 @@ export const BootScreen = ({ onComplete }: { onComplete: () => void }) => {
           animate={{ opacity: 1, x: 0 }}
           style={{ 
             marginBottom: '0.5rem',
-            color: line.includes('ERROR') ? '#ff5f56' : line.includes('QA') ? '#ffbd2e' : 'var(--success)'
+            color: line.includes('v2.0') ? '#ffbd2e' : 'var(--success)'
           }}
         >
           {line}
@@ -135,7 +131,7 @@ export const BootScreen = ({ onComplete }: { onComplete: () => void }) => {
             animate={{ opacity: 1, y: 0 }}
             style={{ marginTop: '2rem', fontWeight: 'bold', color: 'var(--accent-pink)', textAlign: 'center', fontSize: '1.1rem' }}
           >
-            ALL MODULES VERIFIED. SYSTEM READY ❤️
+            UPDATE COMPLETE. HEARTOS v2.0 READY ❤️
           </motion.div>
         )}
       </AnimatePresence>

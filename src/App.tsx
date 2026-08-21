@@ -10,16 +10,21 @@ import { FinalReveal } from './components/FinalReveal';
 import { CodeChallenge } from './components/CodeChallenge';
 import { FloatingHearts } from './components/FloatingHearts';
 import { ClickEffectManager } from './components/ClickEffectManager';
+import { DateAskScreen } from './components/DateAskScreen';
+import { DateJokeScreen } from './components/DateJokeScreen';
+import { DateFormScreen } from './components/DateFormScreen';
+import { CheckoutScreen } from './components/CheckoutScreen';
 import { QASignoff } from './components/QASignoff';
 import { storyChapters } from './data/story';
 import { polls, interPoll } from './data/polls';
 
-type AppState = 'BOOT' | 'WELCOME' | 'QA_SIGNOFF' | 'DENIED' | 'QUIT' | 'STORY' | 'PERSONAL_WARNING' | 'INTER_POLL' | 'POLLS' | 'CODE_CHALLENGE' | 'FINAL';
+type AppState = 'BOOT' | 'WELCOME' | 'QA_SIGNOFF' | 'DENIED' | 'QUIT' | 'STORY' | 'PERSONAL_WARNING' | 'INTER_POLL' | 'POLLS' | 'CODE_CHALLENGE' | 'DATE_ASK' | 'DATE_JOKE' | 'DATE_FORM' | 'DATE_CHECKOUT' | 'FINAL';
 
 function App() {
   const [appState, setAppState] = useState<AppState>('BOOT');
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
   const [currentPollIndex, setCurrentPollIndex] = useState(0);
+  const [dateData, setDateData] = useState({ date: '', time: '', food: '' });
 
   useEffect(() => {
     console.log(
@@ -78,7 +83,7 @@ function App() {
       <div className="app-container">
         <AnimatePresence mode="wait">
           {appState === 'BOOT' && (
-            <BootScreen key="boot" onComplete={() => setAppState('WELCOME')} />
+            <BootScreen key="boot" onComplete={() => setAppState('DATE_ASK')} />
           )}
 
           {appState === 'WELCOME' && (
@@ -149,6 +154,25 @@ function App() {
 
           {appState === 'CODE_CHALLENGE' && (
             <CodeChallenge key="code-challenge" onComplete={() => setAppState('FINAL')} />
+          )}
+
+          {appState === 'DATE_ASK' && (
+            <DateAskScreen key="date-ask" onAgree={() => setAppState('DATE_JOKE')} />
+          )}
+
+          {appState === 'DATE_JOKE' && (
+            <DateJokeScreen key="date-joke" onNext={() => setAppState('DATE_FORM')} />
+          )}
+
+          {appState === 'DATE_FORM' && (
+            <DateFormScreen key="date-form" onNext={(data) => {
+              setDateData(data);
+              setAppState('DATE_CHECKOUT');
+            }} />
+          )}
+
+          {appState === 'DATE_CHECKOUT' && (
+            <CheckoutScreen key="checkout" data={dateData} onComplete={() => setAppState('FINAL')} />
           )}
 
           {appState === 'FINAL' && (
