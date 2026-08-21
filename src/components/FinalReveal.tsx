@@ -135,94 +135,9 @@ export const FinalReveal = () => {
               </p>
             </div>
 
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 3, duration: 1 }}
-              style={{ marginTop: '3rem', textAlign: 'center' }}
-            >
-              <button 
-                className="btn-primary glow-button"
-                onClick={() => setPhase(3)}
-              >
-                One Last Question ✨
-              </button>
-            </motion.div>
           </motion.div>
         )}
 
-        {phase === 3 && (
-          <motion.div
-            key="reveal3"
-            className="glass-panel"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
-          >
-            <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
-              Wait, one more thing...
-            </h2>
-            <p style={{ fontSize: '1.2rem', lineHeight: '1.8', marginBottom: '2.5rem', color: 'var(--text-secondary)' }}>
-              Since we're going on a date, there is something very important I need to ask you...<br/><br/>
-              <span style={{ fontSize: '1.5rem', color: 'white', fontWeight: 600, display: 'inline-block', marginTop: '1rem' }}>
-                Will you come with me to Ladakh on my bike after I buy it? 🏍️⛰️
-              </span>
-            </p>
-            
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-primary glow-button"
-                onClick={() => { setTestPassed(true); setPhase(4); }}
-              >
-                Yes, absolutely! ❤️
-              </motion.button>
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-secondary"
-                onClick={() => { setTestPassed(false); setPhase(4); }}
-              >
-                Let me think about it 😅
-              </motion.button>
-            </div>
-          </motion.div>
-        )}
-
-        {phase === 4 && (
-          <motion.div
-            key="reveal4"
-            className="glass-panel"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
-          >
-            {testPassed ? (
-              <>
-                <h2 className="glow-text" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--success)' }}>
-                  IT'S A DEAL! 🎉
-                </h2>
-                <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
-                  I'll start looking for bike accessories for you. 😉<br/><br/>
-                  Thank you for taking the time to experience this little project of mine, Shraddha. ❤️
-                </p>
-              </>
-            ) : (
-              <>
-                <h2 className="glow-text" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
-                  I'LL TAKE THAT AS A MAYBE ⏳
-                </h2>
-                <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
-                  Take all the time you need! The bike isn't bought yet anyway. 😂<br/><br/>
-                  Thank you for taking the time to experience this little project of mine, Shraddha. ❤️
-                </p>
-              </>
-            )}
-          </motion.div>
-        )}
       </AnimatePresence>
     </div>
   );
