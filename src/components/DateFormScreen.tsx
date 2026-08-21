@@ -58,6 +58,7 @@ export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
             <input 
               type="date" 
               value={date}
+              min={new Date().toISOString().split('T')[0]}
               onChange={(e) => setDate(e.target.value)}
               style={{
                 background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--card-border)',
@@ -105,7 +106,7 @@ export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
         {/* Food */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
           <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            <Utensils size={16} /> Cuisine Preference 
+            <Utensils size={16} /> Cuisine Preference (Multiple Allowed)
           </label>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '0.5rem' }}>
             {foodOptions.map((food) => (
