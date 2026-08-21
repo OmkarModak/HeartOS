@@ -14,10 +14,14 @@ const foodOptions = [
 export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
-  const [selectedFood, setSelectedFood] = useState('');
+  const [selectedFoods, setSelectedFoods] = useState<string[]>([]);
   const [otherFood, setOtherFood] = useState('');
 
-  const isFormValid = date !== '' && time !== '' && (selectedFood !== '' && (selectedFood !== 'Other' || otherFood.trim() !== ''));
+  const toggleFood = (food: string) => {
+    setSelectedFoods(prev => prev.includes(food) ? prev.filter(f => f !== food) : [...prev, food]);
+  };
+
+  const isFormValid = date !== '' && time !== '' && (selectedFoods.length > 0 && (!selectedFoods.includes('Other') || otherFood.trim() !== ''));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +29,7 @@ export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
       onNext({
         date,
         time,
-        food: selectedFood === 'Other' ? otherFood : selectedFood
+        food: selectedFoods.map(f => f === 'Other' ? otherFood : f).join(', ')
       });
     }
   };
@@ -104,12 +108,12 @@ export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
             {foodOptions.map((food) => (
               <div 
                 key={food}
-                onClick={() => setSelectedFood(food)}
+                onClick={() => toggleFood(food)}
                 style={{
                   padding: '0.6rem', textAlign: 'center', borderRadius: '8px', cursor: 'pointer', fontSize: '0.9rem',
-                  background: selectedFood === food ? 'var(--accent-pink)' : 'rgba(255,255,255,0.05)',
-                  border: `1px solid ${selectedFood === food ? 'var(--accent-pink)' : 'var(--card-border)'}`,
-                  color: selectedFood === food ? 'white' : 'var(--text-primary)',
+                  background: selectedFoods.includes(food) ? 'var(--accent-pink)' : 'rgba(255,255,255,0.05)',
+                  border: `1px solid ${selectedFoods.includes(food) ? 'var(--accent-pink)' : 'var(--card-border)'}`,
+                  color: selectedFoods.includes(food) ? 'white' : 'var(--text-primary)',
                   transition: 'all 0.2s'
                 }}
               >
@@ -117,12 +121,12 @@ export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
               </div>
             ))}
             <div 
-              onClick={() => setSelectedFood('Other')}
+              onClick={() => toggleFood('Other')}
               style={{
                 padding: '0.6rem', textAlign: 'center', borderRadius: '8px', cursor: 'pointer', fontSize: '0.9rem',
-                background: selectedFood === 'Other' ? 'var(--accent-pink)' : 'rgba(255,255,255,0.05)',
-                border: `1px solid ${selectedFood === 'Other' ? 'var(--accent-pink)' : 'var(--card-border)'}`,
-                color: selectedFood === 'Other' ? 'white' : 'var(--text-primary)',
+                background: selectedFoods.includes('Other') ? 'var(--accent-pink)' : 'rgba(255,255,255,0.05)',
+                border: `1px solid ${selectedFoods.includes('Other') ? 'var(--accent-pink)' : 'var(--card-border)'}`,
+                color: selectedFoods.includes('Other') ? 'white' : 'var(--text-primary)',
                 transition: 'all 0.2s'
               }}
             >
@@ -130,7 +134,7 @@ export const DateFormScreen = ({ onNext }: DateFormScreenProps) => {
             </div>
           </div>
 
-          {selectedFood === 'Other' && (
+          {selectedFoods.includes('Other') && (
             <motion.input
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
