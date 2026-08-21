@@ -5,7 +5,27 @@ import loveSticker from '../assets/sticker-love.png';
 
 export const FinalReveal = () => {
   const [phase, setPhase] = useState(0);
-  const [testPassed, setTestPassed] = useState<boolean | null>(null);
+  const [feedback, setFeedback] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleFeedbackSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
+          subject: '❤️ She Shared Her Thoughts About You! ❤️',
+          message: `Shraddha's thoughts on you:\n\n${feedback}`
+        })
+      });
+    } catch (e) {
+      console.error(e);
+    }
+    setIsSubmitting(false);
+    setPhase(4);
+  };
 
   useEffect(() => {
     if (phase === 0) {
@@ -135,9 +155,86 @@ export const FinalReveal = () => {
               </p>
             </div>
 
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 3, duration: 1 }}
+              style={{ marginTop: '3rem', textAlign: 'center' }}
+            >
+              <button 
+                className="btn-primary glow-button"
+                onClick={() => setPhase(3)}
+              >
+                One Last Question ✨
+              </button>
+            </motion.div>
           </motion.div>
         )}
 
+        {phase === 3 && (
+          <motion.div
+            key="reveal3"
+            className="glass-panel"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
+          >
+            <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
+              Wait, one last thing...
+            </h2>
+            <p style={{ fontSize: '1.2rem', lineHeight: '1.6', marginBottom: '1.5rem', color: 'var(--text-secondary)' }}>
+              Be completely honest...<br/><br/>
+              <span style={{ fontSize: '1.3rem', color: 'white', fontWeight: 600 }}>
+                Till now, how did you find me as a person?
+              </span>
+            </p>
+            
+            <textarea
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              placeholder="Type your honest thoughts here..."
+              style={{
+                width: '100%', minHeight: '120px', padding: '1rem', borderRadius: '8px',
+                background: 'rgba(255,255,255,0.05)', border: '1px solid var(--card-border)',
+                color: 'white', fontSize: '1rem', outline: 'none', resize: 'none', marginBottom: '1.5rem',
+                fontFamily: 'inherit'
+              }}
+            />
+            
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <motion.button 
+                whileHover={feedback.trim() ? { scale: 1.05 } : {}}
+                whileTap={feedback.trim() ? { scale: 0.95 } : {}}
+                className="btn-primary glow-button"
+                onClick={handleFeedbackSubmit}
+                disabled={!feedback.trim() || isSubmitting}
+                style={{ opacity: feedback.trim() ? 1 : 0.5, cursor: feedback.trim() ? 'pointer' : 'not-allowed' }}
+              >
+                {isSubmitting ? "Sending..." : "Tell Me 💌"}
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+
+        {phase === 4 && (
+          <motion.div
+            key="reveal4"
+            className="glass-panel"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative', textAlign: 'center' }}
+          >
+            <h2 className="glow-text" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--success)' }}>
+              THANK YOU ❤️
+            </h2>
+            <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
+              I appreciate your honesty. <br/><br/>
+              I can't wait for our date. See you soon, Shraddha! ✨
+            </p>
+          </motion.div>
+        )}
       </AnimatePresence>
     </div>
   );
