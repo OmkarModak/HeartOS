@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import dateJokeImg from '../assets/date-joke.jpg';
 
 interface DateJokeScreenProps {
   onNext: () => void;
@@ -35,7 +36,7 @@ export const DateJokeScreen = ({ onNext }: DateJokeScreenProps) => {
         }}
       >
         <img 
-          src="/date-joke.jpg" 
+          src={dateJokeImg}
           alt="Literal Dates" 
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
