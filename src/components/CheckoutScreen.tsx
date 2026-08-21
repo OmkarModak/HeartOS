@@ -91,6 +91,9 @@ export const CheckoutScreen = ({ data, onComplete }: CheckoutScreenProps) => {
                   <span>Total</span>
                   <span style={{ color: 'var(--accent-pink)' }}>Rs 199.00</span>
                 </div>
+                <p style={{ textAlign: 'right', fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.3rem', fontStyle: 'italic' }}>
+                  *Same price as Netflix, but a much better investment 😉
+                </p>
               </div>
 
               <div style={{ textAlign: 'center', marginTop: '2rem' }}>
@@ -179,6 +182,9 @@ export const CheckoutScreen = ({ data, onComplete }: CheckoutScreenProps) => {
             <span>Total:</span>
             <span style={{ color: '#ff3366' }}>Rs 199.00</span>
           </div>
+          <p style={{ textAlign: 'right', fontSize: '10px', color: '#888', margin: '5px 0 0 0', fontStyle: 'italic' }}>
+            *Same price as Netflix, but a much better investment 😉
+          </p>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginTop: '15px', color: '#666' }}>
             <span>Payment Method:</span>
             <span>1 Smile 😊</span>
