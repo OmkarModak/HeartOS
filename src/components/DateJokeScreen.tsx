@@ -35,7 +35,7 @@ export const DateJokeScreen = ({ onNext }: DateJokeScreenProps) => {
         }}
       >
         <img 
-          src="https://images.unsplash.com/photo-1605389408479-58d3489115f5?q=80&w=400&auto=format&fit=crop" 
+          src="/date-joke.jpg" 
           alt="Literal Dates" 
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
