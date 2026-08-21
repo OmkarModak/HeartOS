@@ -287,7 +287,7 @@ export const FinalReveal = () => {
                 disabled={!feedback.trim() || isSubmitting}
                 style={{ opacity: feedback.trim() ? 1 : 0.5, cursor: feedback.trim() ? 'pointer' : 'not-allowed' }}
               >
-                {isSubmitting ? "Sending..." : "Submit All 💌"}
+                {isSubmitting ? "Finishing up..." : "Done ✨"}
               </motion.button>
             </div>
           </motion.div>
