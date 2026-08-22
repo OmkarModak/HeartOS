@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart } from 'lucide-react';
+import { Heart, Activity, Minus } from 'lucide-react';
 
 interface FinalRevealProps {
   userData: {
@@ -18,6 +18,7 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
   const [phase, setPhase] = useState(0);
   const [doIMatter, setDoIMatter] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [textPromise, setTextPromise] = useState<'yes' | 'no' | null>(null);
   const [friendBtnPos, setFriendBtnPos] = useState({ x: 0, y: 0 });
 
   const handleFeedbackSubmit = async () => {
@@ -176,22 +177,67 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
             transition={{ duration: 0.8 }}
             style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
           >
-            <motion.div
-              whileHover={{ scale: 1.2, transition: { repeat: Infinity, repeatType: 'reverse', duration: 0.2 } }}
-              style={{ display: 'inline-block', marginBottom: '2rem' }}
-            >
-              <Heart size={80} fill="var(--accent-pink)" color="var(--accent-pink)" style={{ filter: 'drop-shadow(0 0 20px rgba(255, 51, 102, 0.8))' }} />
-            </motion.div>
+            {textPromise === 'yes' ? (
+              <motion.div
+                whileHover={{ scale: 1.2, transition: { repeat: Infinity, repeatType: 'reverse', duration: 0.2 } }}
+                style={{ display: 'inline-block', marginBottom: '2rem' }}
+              >
+                <Activity size={80} color="var(--accent-pink)" style={{ filter: 'drop-shadow(0 0 20px rgba(255, 51, 102, 0.8))' }} />
+              </motion.div>
+            ) : textPromise === 'no' ? (
+              <motion.div
+                style={{ display: 'inline-block', marginBottom: '2rem', opacity: 0.5 }}
+              >
+                <Minus size={80} color="var(--text-secondary)" />
+              </motion.div>
+            ) : (
+              <motion.div
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                style={{ display: 'inline-block', marginBottom: '2rem' }}
+              >
+                <Heart size={80} fill="rgba(255, 51, 102, 0.5)" color="var(--accent-pink)" />
+              </motion.div>
+            )}
             
-            <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '1rem', color: 'white', fontWeight: 600 }}>
-              This is what my heart does when I see a notification from you.
-            </p>
-            <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: 'var(--text-secondary)' }}>
-              If I don't get your text in a day, it skips a beat...<br/>
-              But when you do, it just keeps on pumping. 💓
-            </p>
-
-            <button className="btn-primary glow-button" onClick={() => setPhase(4)}>Continue ❤️</button>
+            {!textPromise ? (
+              <>
+                <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '2rem', color: 'white', fontWeight: 600 }}>
+                  Before we proceed...<br/>Will you text me every day?
+                </p>
+                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+                  <button className="btn-primary glow-button" onClick={() => setTextPromise('yes')}>
+                    Yes, I promise 💬
+                  </button>
+                  <button className="btn-secondary" onClick={() => setTextPromise('no')}>
+                    No way 🙅‍♀️
+                  </button>
+                </div>
+              </>
+            ) : textPromise === 'yes' ? (
+              <>
+                <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '1rem', color: 'white', fontWeight: 600 }}>
+                  This is what my heart does when I see a notification from you.
+                </p>
+                <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: 'var(--text-secondary)' }}>
+                  If I don't get your text in a day, it skips a beat...<br/>
+                  But when you do, it just keeps on pumping. 💓
+                </p>
+                <button className="btn-primary glow-button" onClick={() => setPhase(4)}>Continue ❤️</button>
+              </>
+            ) : (
+              <>
+                <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '1rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
+                  Beep... beep... beeeeeeeep 💀
+                </p>
+                <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: 'var(--text-secondary)' }}>
+                  (My heart flatlining because you won't text me)
+                </p>
+                <button className="btn-primary glow-button" onClick={() => setTextPromise('yes')}>
+                  Okay fine, I'll text you! 🙄
+                </button>
+              </>
+            )}
           </motion.div>
         )}
 
