@@ -31,16 +31,30 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
     }
   }, [showInput]);
 
+  const [failedAttempts, setFailedAttempts] = useState(0);
+
   const handleInputSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       const val = inputValue.trim().toLowerCase();
       setTerminalOutput(prev => [...prev, `> [INPUT]: ${val}`]);
       setInputValue('');
       
-      if (val === 'love') {
+      if (val === 'love' || failedAttempts >= 2) {
         setShowInput(false);
         setIsSuccess(true);
-        setTerminalOutput(prev => [...prev, '> ACCESS GRANTED. Executing patch...', '> Downloading YOU database...']);
+        
+        if (val !== 'love') {
+          setTerminalOutput(prev => [
+            ...prev, 
+            '> ACCESS DENIED.',
+            '> SYSTEM OVERRIDE INITIATED: User is too cute to fail.',
+            '> AUTO-COMPLETING PASSWORD: "love"',
+            '> ACCESS GRANTED. Executing patch...', 
+            '> Downloading YOU database...'
+          ]);
+        } else {
+          setTerminalOutput(prev => [...prev, '> ACCESS GRANTED. Executing patch...', '> Downloading YOU database...']);
+        }
         
         setTimeout(() => {
           setTerminalOutput(prev => [...prev, '> Processing results... 1 row returned.']);
@@ -58,7 +72,8 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
           onComplete();
         }, 6000);
       } else {
-        setTerminalOutput(prev => [...prev, '> ACCESS DENIED. Incorrect password.', '> Awaiting override password...']);
+        setFailedAttempts(prev => prev + 1);
+        setTerminalOutput(prev => [...prev, '> ACCESS DENIED. Incorrect password.', `> Attempts remaining: ${2 - failedAttempts}`, '> Awaiting override password...']);
       }
     }
   };

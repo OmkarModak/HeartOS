@@ -183,8 +183,12 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
               <Heart size={80} fill="var(--accent-pink)" color="var(--accent-pink)" style={{ filter: 'drop-shadow(0 0 20px rgba(255, 51, 102, 0.8))' }} />
             </motion.div>
             
-            <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '2rem', color: 'white', fontWeight: 600 }}>
+            <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '1rem', color: 'white', fontWeight: 600 }}>
               This is what my heart does when I see a notification from you.
+            </p>
+            <p style={{ fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '2rem', color: 'var(--text-secondary)' }}>
+              If I don't get your text in a day, it skips a beat...<br/>
+              But when you do, it just keeps on pumping. 💓
             </p>
 
             <button className="btn-primary glow-button" onClick={() => setPhase(4)}>Continue ❤️</button>
