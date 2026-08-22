@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const introSequence = [
-  "HEARTOS v1.0",
-  "Checking for updates...",
-  "v2.0 Update Found!",
+  "HEARTOS v3.0 BOOTLOADER",
+  "Checking system integrity...",
+  "Applying v3.0 Update Patch...",
   "Awaiting manual installation authorization..."
 ];
 
 const checklistItems = [
-  "Download v2.0 romance module",
+  "Download v3.0 deep dive module",
   "Extract dad-jokes repository",
   "Compile date-planning algorithms",
   "Verify update integrity"
@@ -131,7 +131,7 @@ export const BootScreen = ({ onComplete }: { onComplete: () => void }) => {
             animate={{ opacity: 1, y: 0 }}
             style={{ marginTop: '2rem', fontWeight: 'bold', color: 'var(--accent-pink)', textAlign: 'center', fontSize: '1.1rem' }}
           >
-            UPDATE COMPLETE. HEARTOS v2.0 READY ❤️
+            UPDATE COMPLETE. HEARTOS v3.0 READY ❤️
           </motion.div>
         )}
       </AnimatePresence>

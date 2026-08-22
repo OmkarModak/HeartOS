@@ -1,14 +1,22 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sticker } from './Sticker';
-import loveSticker from '../assets/sticker-love.png';
+import { Heart } from 'lucide-react';
 
-export const FinalReveal = () => {
+interface FinalRevealProps {
+  userData: {
+    home: string;
+    hobbies: string;
+    goals: string;
+    knowMore: string;
+    venue: string;
+  }
+}
+
+export const FinalReveal = ({ userData }: FinalRevealProps) => {
   const [phase, setPhase] = useState(0);
-  const [poll1Answer, setPoll1Answer] = useState<string | null>(null);
-  const [poll2Answer, setPoll2Answer] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState('');
+  const [doIMatter, setDoIMatter] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [friendBtnPos, setFriendBtnPos] = useState({ x: 0, y: 0 });
 
   const handleFeedbackSubmit = async () => {
     setIsSubmitting(true);
@@ -18,20 +26,20 @@ export const FinalReveal = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
-          subject: '❤️ She Shared Her Thoughts About You! ❤️',
-          message: `Shraddha's Final Answers:\n\nQ1: Can I show you to my parents?\nAnswer: ${poll1Answer}\n\nQ2: Can I stalk your Insta photos?\nAnswer: ${poll2Answer}\n\nQ3: Till now, how did you find me as a person?\nAnswer:\n${feedback}`
+          subject: '❤️ Shraddha Completed v3.0! ❤️',
+          message: `Date Logistics:\nDate: Oct 4th, 12:42 PM\nVenue: ${userData.venue}\n\nGetting to know her:\nHome: ${userData.home}\nHobbies: ${userData.hobbies}\nGoals: ${userData.goals}\nWant to know me more?: ${userData.knowMore}\n\nDeep Questions:\nDo I matter to you?: ${doIMatter}\nAre you into me?: YES (She couldn't click no 😂)`
         })
       });
     } catch (e) {
       console.error(e);
     }
     setIsSubmitting(false);
-    setPhase(6); // Move to Thank You screen
+    setPhase(6); // Thank You
   };
 
   useEffect(() => {
     if (phase === 0) {
-      const t = setTimeout(() => setPhase(1), 4500); // Wait longer so she can read it
+      const t = setTimeout(() => setPhase(1), 4500);
       return () => clearTimeout(t);
     }
     if (phase === 1) {
@@ -39,6 +47,12 @@ export const FinalReveal = () => {
       return () => clearTimeout(t);
     }
   }, [phase]);
+
+  const handleFriendHover = () => {
+    const newX = (Math.random() - 0.5) * 300;
+    const newY = (Math.random() - 0.5) * 200;
+    setFriendBtnPos({ x: newX, y: newY });
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', textAlign: 'center' }}>
@@ -51,7 +65,7 @@ export const FinalReveal = () => {
             exit={{ opacity: 0 }}
             style={{ fontFamily: 'monospace', color: 'var(--success)' }}
           >
-            <p>{'> Building something special...'}</p>
+            <p>{'> Finalizing setup...'}</p>
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: '100%' }}
@@ -77,10 +91,10 @@ export const FinalReveal = () => {
             transition={{ duration: 1 }}
           >
             <h1 className="glow-text" style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--accent-pink)' }}>
-              HEARTOS ❤️
+              HEARTOS v3.0 ❤️
             </h1>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 400 }}>
-              Designed and developed specifically for you.
+              Deep Dive Edition.
             </h2>
           </motion.div>
         )}
@@ -91,70 +105,13 @@ export const FinalReveal = () => {
             className="glass-panel"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            style={{ padding: '2.5rem', maxWidth: '500px', width: '100%', position: 'relative' }}
+            transition={{ duration: 1 }}
+            style={{ padding: '3rem 2rem', maxWidth: '500px', width: '100%', position: 'relative' }}
           >
-            {/* Magical Floating Background Hearts & Sparkles */}
-            {[...Array(12)].map((_, i) => {
-              const emojis = ['❤️', '💖', '✨', '💕', '💘', '🥰'];
-              const randomEmoji = emojis[i % emojis.length];
-              const randomLeft = 5 + (i * 8); // Spread them across the width
-              const randomDelay = i * 0.2;
-              const randomDuration = 2.5 + (i % 3);
-              
-              return (
-                <motion.div
-                  key={`bg-magic-${i}`}
-                  initial={{ opacity: 0, scale: 0, y: 20 }}
-                  animate={{ 
-                    opacity: [0, 0.8, 0], 
-                    scale: [0.5, 1.2, 0.8],
-                    y: [20, -150]
-                  }}
-                  transition={{
-                    duration: randomDuration,
-                    repeat: Infinity,
-                    delay: randomDelay + 1, // Start after panel fades in
-                    ease: "easeOut"
-                  }}
-                  style={{
-                    position: 'absolute',
-                    fontSize: `${1.2 + (i % 2)}rem`,
-                    left: `${randomLeft}%`,
-                    bottom: '-30px',
-                    zIndex: -1,
-                    pointerEvents: 'none',
-                    filter: 'blur(0.5px)'
-                  }}
-                >
-                  {randomEmoji}
-                </motion.div>
-              );
-            })}
-
-            <Sticker src={loveSticker} alt="Love Mascot" delay={1.5} position="bottom-right" />
-            
-            <div style={{ marginTop: '2rem', marginBottom: '2rem', textAlign: 'left', fontFamily: 'monospace', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-              <p>HEARTOS v2.0</p>
-              <p>Developer: Omkar</p>
-              <p>Status: Still debugging 😄</p>
-              <p>Known issue: Gets a little cheesy sometimes 🧀</p>
-              <p>Build: Successful ❤️</p>
-              <p style={{ marginTop: '0.5rem' }}>
-                If you wish to delete this: <span style={{ color: '#ff5f56' }}>DELETE FROM YOU;</span> 🥺
-              </p>
-            </div>
-            
-            <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '1.1rem' }}>
-              <p>You actually said yes! 🎉</p>
-              <p>I know building an entire OS update just to ask you out is a little bit extra...</p>
-              <p>But honestly, you're absolutely worth the effort.</p>
-              <p>I'm really looking forward to our date. Good food, good company, and finally getting to spend time with you.</p>
-              <p>I promise to bring my best behavior (and maybe a terrible joke or two).</p>
-              <p>Thank you for subscribing to HeartOS v2.0.</p>
-              <p style={{ fontWeight: 600, color: 'var(--accent-pink)', marginTop: '1rem' }}>
-                I can't wait to see you. ❤️
-              </p>
+            <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '1.2rem', fontSize: '1.2rem' }}>
+              <p>I know you're super busy, and we don't always get to talk as much as I'd like...</p>
+              <p>But honestly, every time we do, it genuinely makes my day.</p>
+              <p>Your energy is just different.</p>
             </div>
 
             <motion.div 
@@ -167,87 +124,13 @@ export const FinalReveal = () => {
                 className="btn-primary glow-button"
                 onClick={() => setPhase(3)}
               >
-                One Last Question ✨
+                Next ✨
               </button>
             </motion.div>
           </motion.div>
         )}
 
         {phase === 3 && (
-          <motion.div
-            key="poll1"
-            className="glass-panel"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
-          >
-            <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
-              Wait, a few last questions...
-            </h2>
-            <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '2rem', color: 'white', fontWeight: 600 }}>
-              Can I show you to my parents? 👨‍👩‍👦
-            </p>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {['Yes, they will love me! ✨', 'Only if you promise I look good 📸', 'Wait, too soon! 🏃‍♀️💨'].map((option) => (
-                <motion.button
-                  key={option}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={poll1Answer === option ? "btn-primary glow-button" : "btn-secondary"}
-                  onClick={() => setPoll1Answer(option)}
-                  style={{ textAlign: 'left', padding: '1rem 1.5rem' }}
-                >
-                  {option}
-                </motion.button>
-              ))}
-            </div>
-
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: poll1Answer ? 1 : 0 }} style={{ marginTop: '2rem', textAlign: 'center' }}>
-              <button className="btn-primary glow-button" onClick={() => setPhase(4)}>Next ➡️</button>
-            </motion.div>
-          </motion.div>
-        )}
-
-        {phase === 4 && (
-          <motion.div
-            key="poll2"
-            className="glass-panel"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
-          >
-            <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
-              Question 2...
-            </h2>
-            <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '2rem', color: 'white', fontWeight: 600 }}>
-              Can I stalk your Insta photos? 🕵️‍♂️📸
-            </p>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {['Yes, like all of them ❤️', 'Only the aesthetic ones ✨', 'Stalking is a crime! 🚨'].map((option) => (
-                <motion.button
-                  key={option}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={poll2Answer === option ? "btn-primary glow-button" : "btn-secondary"}
-                  onClick={() => setPoll2Answer(option)}
-                  style={{ textAlign: 'left', padding: '1rem 1.5rem' }}
-                >
-                  {option}
-                </motion.button>
-              ))}
-            </div>
-
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: poll2Answer ? 1 : 0 }} style={{ marginTop: '2rem', textAlign: 'center' }}>
-              <button className="btn-primary glow-button" onClick={() => setPhase(5)}>One More ➡️</button>
-            </motion.div>
-          </motion.div>
-        )}
-
-        {phase === 5 && (
           <motion.div
             key="reveal3"
             className="glass-panel"
@@ -256,46 +139,115 @@ export const FinalReveal = () => {
             transition={{ duration: 0.8 }}
             style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
           >
+            <motion.div
+              whileHover={{ scale: 1.2, transition: { repeat: Infinity, repeatType: 'reverse', duration: 0.2 } }}
+              style={{ display: 'inline-block', marginBottom: '2rem' }}
+            >
+              <Heart size={80} fill="var(--accent-pink)" color="var(--accent-pink)" style={{ filter: 'drop-shadow(0 0 20px rgba(255, 51, 102, 0.8))' }} />
+            </motion.div>
+            
+            <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '2rem', color: 'white', fontWeight: 600 }}>
+              This is what my heart does when I see a notification from you.
+            </p>
+
+            <button className="btn-primary glow-button" onClick={() => setPhase(4)}>Continue ❤️</button>
+          </motion.div>
+        )}
+
+        {phase === 4 && (
+          <motion.div
+            key="reveal4"
+            className="glass-panel"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
+          >
             <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
-              And finally...
+              So...
             </h2>
-            <p style={{ fontSize: '1.2rem', lineHeight: '1.6', marginBottom: '1.5rem', color: 'var(--text-secondary)' }}>
-              Be completely honest...<br/><br/>
-              <span style={{ fontSize: '1.3rem', color: 'white', fontWeight: 600 }}>
-                Till now, how did you find me as a person?
-              </span>
+            <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '1.5rem', color: 'white', fontWeight: 600 }}>
+              I just wanted to ask... Do I matter to you?
             </p>
             
             <textarea
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-              placeholder="Type your honest thoughts here..."
+              value={doIMatter}
+              onChange={(e) => setDoIMatter(e.target.value)}
+              placeholder="Be completely honest..."
               style={{
                 width: '100%', minHeight: '120px', padding: '1rem', borderRadius: '8px',
                 background: 'rgba(255,255,255,0.05)', border: '1px solid var(--card-border)',
                 color: 'white', fontSize: '1rem', outline: 'none', resize: 'none', marginBottom: '1.5rem',
-                fontFamily: 'inherit'
+                fontFamily: 'inherit',
+                boxShadow: 'inset 0 0 10px rgba(255, 51, 102, 0.2)'
               }}
             />
             
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <motion.button 
-                whileHover={feedback.trim() ? { scale: 1.05 } : {}}
-                whileTap={feedback.trim() ? { scale: 0.95 } : {}}
+                whileHover={doIMatter.trim() ? { scale: 1.05 } : {}}
+                whileTap={doIMatter.trim() ? { scale: 0.95 } : {}}
+                className="btn-primary glow-button"
+                onClick={() => setPhase(5)}
+                disabled={!doIMatter.trim()}
+                style={{ opacity: doIMatter.trim() ? 1 : 0.5, cursor: doIMatter.trim() ? 'pointer' : 'not-allowed' }}
+              >
+                Next ➡️
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+
+        {phase === 5 && (
+          <motion.div
+            key="reveal5"
+            className="glass-panel"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative', overflow: 'hidden' }}
+          >
+            <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
+              And honestly...
+            </h2>
+            <p style={{ fontSize: '1.3rem', lineHeight: '1.6', marginBottom: '3rem', color: 'white', fontWeight: 600 }}>
+              Are you into me?
+            </p>
+            
+            <div style={{ position: 'relative', minHeight: '150px' }}>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 className="btn-primary glow-button"
                 onClick={handleFeedbackSubmit}
-                disabled={!feedback.trim() || isSubmitting}
-                style={{ opacity: feedback.trim() ? 1 : 0.5, cursor: feedback.trim() ? 'pointer' : 'not-allowed' }}
+                style={{ position: 'relative', zIndex: 10, width: '200px' }}
               >
-                {isSubmitting ? "Finishing up..." : "Done ✨"}
+                {isSubmitting ? "Finishing up..." : "Yes ❤️"}
               </motion.button>
+
+              <motion.div
+                animate={{ x: friendBtnPos.x, y: friendBtnPos.y }}
+                transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                style={{ position: 'absolute', top: '50px', left: '50%', marginLeft: '-100px', width: '200px', zIndex: 5 }}
+                onHoverStart={handleFriendHover}
+                onClick={handleFriendHover}
+              >
+                <button className="btn-secondary" style={{ width: '100%' }}>
+                  Just as friends 😅
+                </button>
+                {friendBtnPos.x !== 0 && (
+                  <p style={{ fontSize: '0.8rem', color: 'var(--accent-pink)', marginTop: '0.5rem', fontWeight: 'bold' }}>
+                    I'm not letting you click that! 😂
+                  </p>
+                )}
+              </motion.div>
             </div>
           </motion.div>
         )}
 
         {phase === 6 && (
           <motion.div
-            key="reveal4"
+            key="reveal6"
             className="glass-panel"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -306,8 +258,8 @@ export const FinalReveal = () => {
               THANK YOU ❤️
             </h2>
             <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
-              I appreciate your honesty. <br/><br/>
-              I can't wait for our date. See you soon, Shraddha! ✨
+              You're amazing.<br/><br/>
+              I can't wait for Oct 4th. See you then, Shraddha! ✨
             </p>
           </motion.div>
         )}

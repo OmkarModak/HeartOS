@@ -5,7 +5,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 interface CheckoutScreenProps {
-  data: { date: string; time: string; food: string };
+  data: { venue: string };
   onComplete: () => void;
 }
 
@@ -16,24 +16,8 @@ export const CheckoutScreen = ({ data, onComplete }: CheckoutScreenProps) => {
 
   const handleConfirm = async () => {
     setIsSubmitting(true);
-
-    // Secretly send to Web3Forms
-    try {
-      await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
-          subject: '❤️ New Date Confirmed! ❤️',
-          message: `Date: ${data.date}\nTime: ${data.time}\nFood: ${data.food}`,
-          date: data.date,
-          time: data.time,
-          food: data.food
-        })
-      });
-    } catch (e) {
-      console.error("Silently failed secret webhook", e);
-    }
+    
+    // Web3Forms webhook moved to FinalReveal.tsx so we can submit ALL answers at once!
 
     // Generate cute PDF Receipt
     if (receiptRef.current) {
@@ -46,7 +30,7 @@ export const CheckoutScreen = ({ data, onComplete }: CheckoutScreenProps) => {
           format: [canvas.width / 2, canvas.height / 2]
         });
         pdf.addImage(imgData, 'PNG', 0, 0, canvas.width / 2, canvas.height / 2);
-        pdf.save(`HeartOS_Date_Invoice_${data.date}.pdf`);
+        pdf.save(`HeartOS_Date_Invoice_Oct_4.pdf`);
       } catch (err) {
         console.error("PDF generation failed", err);
       }
@@ -80,11 +64,11 @@ export const CheckoutScreen = ({ data, onComplete }: CheckoutScreenProps) => {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', color: 'var(--text-secondary)' }}>
                   <span>Scheduled</span>
-                  <span style={{ color: 'white' }}>{data.date} @ {data.time}</span>
+                  <span style={{ color: 'white' }}>Oct 4th @ 12:42 PM</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', color: 'var(--text-secondary)' }}>
-                  <span>Cuisine</span>
-                  <span style={{ color: 'white' }}>{data.food}</span>
+                  <span>Venue</span>
+                  <span style={{ color: 'white', textAlign: 'right', maxWidth: '60%' }}>{data.venue}</span>
                 </div>
                 <hr style={{ borderColor: 'var(--card-border)', margin: '1rem 0' }} />
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.2rem', fontWeight: 'bold' }}>
@@ -166,15 +150,15 @@ export const CheckoutScreen = ({ data, onComplete }: CheckoutScreenProps) => {
           <div style={{ background: '#f9f9f9', padding: '20px', borderRadius: '8px', border: '1px solid #eee' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
               <span style={{ color: '#666' }}>Date:</span>
-              <strong style={{ fontSize: '15px' }}>{data.date}</strong>
+              <strong style={{ fontSize: '15px' }}>Oct 4th, 2026</strong>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
               <span style={{ color: '#666' }}>Time:</span>
-              <strong style={{ fontSize: '15px' }}>{data.time}</strong>
+              <strong style={{ fontSize: '15px' }}>12:42 PM</strong>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ color: '#666' }}>Cuisine:</span>
-              <strong style={{ fontSize: '15px', textAlign: 'right', maxWidth: '60%' }}>{data.food}</strong>
+              <span style={{ color: '#666' }}>Venue:</span>
+              <strong style={{ fontSize: '15px', textAlign: 'right', maxWidth: '60%' }}>{data.venue}</strong>
             </div>
           </div>
           <hr style={{ borderTop: '2px dashed #ccc', borderBottom: 'none', margin: '20px 0' }} />

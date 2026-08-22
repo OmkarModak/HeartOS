@@ -10,21 +10,21 @@ import { FinalReveal } from './components/FinalReveal';
 import { CodeChallenge } from './components/CodeChallenge';
 import { FloatingHearts } from './components/FloatingHearts';
 import { ClickEffectManager } from './components/ClickEffectManager';
-import { DateAskScreen } from './components/DateAskScreen';
-import { DateJokeScreen } from './components/DateJokeScreen';
-import { DateFormScreen } from './components/DateFormScreen';
 import { CheckoutScreen } from './components/CheckoutScreen';
 import { QASignoff } from './components/QASignoff';
 import { storyChapters } from './data/story';
 import { polls, interPoll } from './data/polls';
 
-type AppState = 'BOOT' | 'WELCOME' | 'QA_SIGNOFF' | 'DENIED' | 'QUIT' | 'STORY' | 'PERSONAL_WARNING' | 'INTER_POLL' | 'POLLS' | 'CODE_CHALLENGE' | 'DATE_ASK' | 'DATE_JOKE' | 'DATE_FORM' | 'DATE_CHECKOUT' | 'FINAL';
+import { PersonalSurveyScreen } from './components/PersonalSurveyScreen';
+import { VenueFormScreen } from './components/VenueFormScreen';
+
+type AppState = 'BOOT' | 'WELCOME' | 'QA_SIGNOFF' | 'DENIED' | 'QUIT' | 'STORY' | 'PERSONAL_WARNING' | 'INTER_POLL' | 'POLLS' | 'CODE_CHALLENGE' | 'DATE_ASK' | 'DATE_JOKE' | 'DATE_FORM' | 'DATE_CHECKOUT' | 'FINAL' | 'PERSONAL_SURVEY' | 'VENUE_FORM';
 
 function App() {
   const [appState, setAppState] = useState<AppState>('BOOT');
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
   const [currentPollIndex, setCurrentPollIndex] = useState(0);
-  const [dateData, setDateData] = useState({ date: '', time: '', food: '' });
+  const [userData, setUserData] = useState({ home: '', hobbies: '', goals: '', knowMore: '', venue: '' });
 
   useEffect(() => {
     console.log(
@@ -83,7 +83,7 @@ function App() {
       <div className="app-container">
         <AnimatePresence mode="wait">
           {appState === 'BOOT' && (
-            <BootScreen key="boot" onComplete={() => setAppState('DATE_ASK')} />
+            <BootScreen key="boot" onComplete={() => setAppState('PERSONAL_SURVEY')} />
           )}
 
           {appState === 'WELCOME' && (
@@ -156,27 +156,26 @@ function App() {
             <CodeChallenge key="code-challenge" onComplete={() => setAppState('FINAL')} />
           )}
 
-          {appState === 'DATE_ASK' && (
-            <DateAskScreen key="date-ask" onAgree={() => setAppState('DATE_JOKE')} />
+          {appState === 'PERSONAL_SURVEY' && (
+            <PersonalSurveyScreen key="survey" onComplete={(data) => {
+              setUserData(prev => ({ ...prev, ...data }));
+              setAppState('VENUE_FORM');
+            }} />
           )}
 
-          {appState === 'DATE_JOKE' && (
-            <DateJokeScreen key="date-joke" onNext={() => setAppState('DATE_FORM')} />
-          )}
-
-          {appState === 'DATE_FORM' && (
-            <DateFormScreen key="date-form" onNext={(data) => {
-              setDateData(data);
+          {appState === 'VENUE_FORM' && (
+            <VenueFormScreen key="venue" onNext={(data) => {
+              setUserData(prev => ({ ...prev, venue: data.venue }));
               setAppState('DATE_CHECKOUT');
             }} />
           )}
 
           {appState === 'DATE_CHECKOUT' && (
-            <CheckoutScreen key="checkout" data={dateData} onComplete={() => setAppState('FINAL')} />
+            <CheckoutScreen key="checkout" data={userData} onComplete={() => setAppState('FINAL')} />
           )}
 
           {appState === 'FINAL' && (
-            <FinalReveal key="final" />
+            <FinalReveal key="final" userData={userData} />
           )}
         </AnimatePresence>
       </div>
