@@ -177,28 +177,32 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
             transition={{ duration: 0.8 }}
             style={{ padding: '3rem', maxWidth: '600px', width: '100%', position: 'relative' }}
           >
-            {textPromise === 'yes' ? (
-              <motion.div
-                whileHover={{ scale: 1.2, transition: { repeat: Infinity, repeatType: 'reverse', duration: 0.2 } }}
-                style={{ display: 'inline-block', marginBottom: '2rem' }}
-              >
-                <Activity size={80} color="var(--accent-pink)" style={{ filter: 'drop-shadow(0 0 20px rgba(255, 51, 102, 0.8))' }} />
-              </motion.div>
-            ) : textPromise === 'no' ? (
-              <motion.div
-                style={{ display: 'inline-block', marginBottom: '2rem', opacity: 0.5 }}
-              >
-                <Minus size={80} color="var(--text-secondary)" />
-              </motion.div>
-            ) : (
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-                style={{ display: 'inline-block', marginBottom: '2rem' }}
-              >
-                <Heart size={80} fill="rgba(255, 51, 102, 0.5)" color="var(--accent-pink)" />
-              </motion.div>
-            )}
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+              <svg width="250" height="100" viewBox="0 0 250 100">
+                {textPromise === 'no' ? (
+                  <motion.path
+                    d="M0,50 L250,50"
+                    fill="none"
+                    stroke="var(--text-secondary)"
+                    strokeWidth="4"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  />
+                ) : (
+                  <motion.path
+                    d="M0,50 L80,50 L95,20 L115,90 L135,10 L155,70 L170,50 L250,50"
+                    fill="none"
+                    stroke="var(--accent-pink)"
+                    strokeWidth="4"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+                    style={{ filter: 'drop-shadow(0 0 8px var(--accent-pink))' }}
+                  />
+                )}
+              </svg>
+            </div>
             
             {!textPromise ? (
               <>
