@@ -53,15 +53,16 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
     if (phase !== 6) return;
     
     let keyBuffer = '';
-    const secretCode = 'iloveyou';
     
     const handleKeyDown = (e: KeyboardEvent) => {
       keyBuffer += e.key.toLowerCase();
-      if (keyBuffer.length > secretCode.length) {
-        keyBuffer = keyBuffer.slice(-secretCode.length);
+      if (keyBuffer.length > 8) {
+        keyBuffer = keyBuffer.slice(-8);
       }
-      if (keyBuffer === secretCode) {
+      if (keyBuffer === 'iloveyou') {
         setPhase(7);
+      } else if (keyBuffer === 'ilikeyou') {
+        setPhase(8);
       }
     };
     
@@ -315,6 +316,32 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
             </h2>
             <p style={{ fontSize: '1.5rem', lineHeight: '1.8', color: 'var(--accent-pink)', fontWeight: 'bold' }}>
               I love you too. ❤️
+            </p>
+          </motion.div>
+        )}
+
+        {phase === 8 && (
+          <motion.div
+            key="reveal8"
+            className="glass-panel"
+            initial={{ opacity: 0, scale: 0.5, rotate: 10 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ type: 'spring', damping: 12, stiffness: 100 }}
+            style={{ padding: '4rem 3rem', maxWidth: '600px', width: '100%', position: 'relative', textAlign: 'center', background: 'rgba(255, 51, 102, 0.1)', border: '2px solid var(--accent-pink)' }}
+          >
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              style={{ display: 'inline-block', marginBottom: '1rem' }}
+            >
+              <Heart size={100} fill="var(--accent-pink)" color="var(--accent-pink)" />
+            </motion.div>
+            
+            <h2 className="glow-text" style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'white' }}>
+              I LIKE YOU TOO! 😊
+            </h2>
+            <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--accent-pink)', fontWeight: 'bold' }}>
+              (But secretly, I was hoping for the "L" word... 😉)
             </p>
           </motion.div>
         )}
