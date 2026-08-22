@@ -11,12 +11,18 @@ export const PersonalSurveyScreen = ({ onComplete }: PersonalSurveyScreenProps) 
   const [hobbies, setHobbies] = useState('');
   const [goals, setGoals] = useState('');
   
+  const [knowMore, setKnowMore] = useState('');
+  
   const handleNext = () => {
     setStep(prev => prev + 1);
   };
 
-  const handleFinal = (knowMoreAnswer: string) => {
-    onComplete({ home, hobbies, goals, knowMore: knowMoreAnswer });
+  const handleFinal = (answer: string) => {
+    setKnowMore(answer);
+    setStep(4);
+    setTimeout(() => {
+      onComplete({ home, hobbies, goals, knowMore: answer });
+    }, 4000);
   };
 
   return (
@@ -176,6 +182,25 @@ export const PersonalSurveyScreen = ({ onComplete }: PersonalSurveyScreenProps) 
                 A little bit 😊
               </motion.button>
             </div>
+          </motion.div>
+        )}
+        {step === 4 && (
+          <motion.div
+            key="step4"
+            className="glass-panel"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            style={{ padding: '3rem 2rem', maxWidth: '500px', width: '100%', position: 'relative' }}
+          >
+            <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: 'var(--accent-pink)' }}>
+              Noted. 📝
+            </h2>
+            <p style={{ fontSize: '1.3rem', color: 'white', marginBottom: '2rem', lineHeight: '1.6' }}>
+              Because if you really want to know me...<br/><br/>
+              <span style={{ fontWeight: 'bold', color: 'var(--accent-pink)' }}>HeartOS v4.0</span> will be entirely about me. <br/><br/>
+              Currently in development. 😉
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
