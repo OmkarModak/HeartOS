@@ -10,7 +10,7 @@ export const PersonalSurveyScreen = ({ onComplete }: PersonalSurveyScreenProps) 
   const [home, setHome] = useState('');
   const [hobbies, setHobbies] = useState('');
   const [goals, setGoals] = useState('');
-  
+  const [, setKnowMore] = useState('');
 
   
   const handleNext = () => {
