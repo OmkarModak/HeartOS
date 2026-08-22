@@ -3,16 +3,17 @@ import { motion } from 'framer-motion';
 import { MapPin, Calendar, Clock } from 'lucide-react';
 
 interface VenueFormScreenProps {
-  onNext: (data: { venue: string }) => void;
+  onNext: (data: { venue: string; isRealDate: string }) => void;
 }
 
 export const VenueFormScreen = ({ onNext }: VenueFormScreenProps) => {
   const [venue, setVenue] = useState('');
+  const [isRealDate, setIsRealDate] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (venue.trim()) {
-      onNext({ venue });
+    if (venue.trim() && isRealDate) {
+      onNext({ venue, isRealDate });
     }
   };
 
@@ -41,7 +42,35 @@ export const VenueFormScreen = ({ onNext }: VenueFormScreenProps) => {
       </div>
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '1rem' }}>
+          <label style={{ fontSize: '1rem', color: 'var(--text-secondary)', textAlign: 'center', fontWeight: 'bold' }}>
+            Just to be clear... Is this a real date? 👀
+          </label>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+            <button
+              type="button"
+              onClick={() => setIsRealDate('yes')}
+              className={isRealDate === 'yes' ? "btn-primary glow-button" : "btn-secondary"}
+              style={{ flex: 1, padding: '0.8rem', fontSize: '0.9rem' }}
+            >
+              Yes, it's a date 💖
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsRealDate('no')}
+              className={isRealDate === 'no' ? "btn-primary glow-button" : "btn-secondary"}
+              style={{ flex: 1, padding: '0.8rem', fontSize: '0.9rem' }}
+            >
+              Just hanging out 😅
+            </button>
+          </div>
+        </div>
+
+        <motion.div 
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: isRealDate ? 1 : 0, height: isRealDate ? 'auto' : 0 }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', overflow: 'hidden' }}
+        >
           <label style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <MapPin size={16} />
             Where are we going?
@@ -55,9 +84,9 @@ export const VenueFormScreen = ({ onNext }: VenueFormScreenProps) => {
               background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--card-border)',
               padding: '0.8rem', borderRadius: '8px', color: 'white', outline: 'none'
             }}
-            required
+            required={isRealDate !== null}
           />
-        </div>
+        </motion.div>
 
         <motion.button
           whileHover={venue.trim() ? { scale: 1.02 } : {}}

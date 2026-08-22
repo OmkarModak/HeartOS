@@ -24,7 +24,7 @@ function App() {
   const [appState, setAppState] = useState<AppState>('BOOT');
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
   const [currentPollIndex, setCurrentPollIndex] = useState(0);
-  const [userData, setUserData] = useState({ home: '', hobbies: '', goals: '', knowMore: '', venue: '' });
+  const [userData, setUserData] = useState({ home: '', hobbies: '', goals: '', knowMore: '', venue: '', isRealDate: '' });
 
   useEffect(() => {
     console.log(
@@ -165,7 +165,7 @@ function App() {
 
           {appState === 'VENUE_FORM' && (
             <VenueFormScreen key="venue" onNext={(data) => {
-              setUserData(prev => ({ ...prev, venue: data.venue }));
+              setUserData(prev => ({ ...prev, venue: data.venue, isRealDate: data.isRealDate }));
               setAppState('DATE_CHECKOUT');
             }} />
           )}

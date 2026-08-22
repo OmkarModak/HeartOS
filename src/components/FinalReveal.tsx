@@ -9,6 +9,7 @@ interface FinalRevealProps {
     goals: string;
     knowMore: string;
     venue: string;
+    isRealDate: string;
   }
 }
 
@@ -27,7 +28,7 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
         body: JSON.stringify({
           access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
           subject: '❤️ Shraddha Completed v3.0! ❤️',
-          message: `Date Logistics:\nDate: Oct 4th, 12:42 PM\nVenue: ${userData.venue}\n\nGetting to know her:\nHome: ${userData.home}\nHobbies: ${userData.hobbies}\nGoals: ${userData.goals}\nWant to know me more?: ${userData.knowMore}\n\nDeep Questions:\nDo I matter to you?: ${doIMatter}\nAre you into me?: YES (She couldn't click no 😂)`
+          message: `Date Logistics:\nDate: Oct 4th, 12:42 PM\nReal Date?: ${userData.isRealDate.toUpperCase()}\nVenue: ${userData.venue}\n\nGetting to know her:\nHome: ${userData.home}\nHobbies: ${userData.hobbies}\nGoals: ${userData.goals}\nWant to know me more?: ${userData.knowMore}\n\nDeep Questions:\nDo I matter to you?: ${doIMatter}\nAre you into me?: YES (She couldn't click no 😂)`
         })
       });
     } catch (e) {

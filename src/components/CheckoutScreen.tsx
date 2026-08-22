@@ -82,26 +82,17 @@ export const CheckoutScreen = ({ data, onComplete }: CheckoutScreenProps) => {
 
               <div style={{ textAlign: 'center', marginTop: '2rem' }}>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem', fontSize: '0.9rem' }}>
-                  Scan (or Tap) to Pay 1 Smile ❤️
+                  Since you already paid in v2.0... 😉
                 </p>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleConfirm}
                   disabled={isSubmitting}
-                  style={{
-                    background: 'white', padding: '1rem', borderRadius: '16px', border: 'none',
-                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                    boxShadow: '0 0 30px rgba(255, 255, 255, 0.15)'
-                  }}
+                  className="btn-primary glow-button"
+                  style={{ cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
                 >
-                  {isSubmitting ? (
-                    <div style={{ width: '140px', height: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Loader2 size={48} className="spin" color="var(--accent-pink)" />
-                    </div>
-                  ) : (
-                    <QrCode size={140} color="black" />
-                  )}
+                  {isSubmitting ? "Generating..." : "Generate Official Invite ✨"}
                 </motion.button>
               </div>
             </motion.div>
