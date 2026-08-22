@@ -305,6 +305,17 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
               P.S. System locked. To unlock the final Easter egg, type the password anywhere on your screen.<br/>
               <span style={{ color: 'var(--accent-pink)', fontWeight: 'bold' }}>Hint: 3 words, 8 letters ❤️</span>
             </p>
+            <button 
+              onClick={() => {
+                setPhase(9);
+                sendEasterEggEmail('She gave up and clicked skip! 🙈');
+              }}
+              style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.8rem', marginTop: '1rem', transition: 'color 0.2s' }}
+              onMouseOver={(e) => e.currentTarget.style.color = 'var(--accent-pink)'}
+              onMouseOut={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.3)'}
+            >
+              (I give up, just skip this 🙈)
+            </button>
           </motion.div>
         )}
 
@@ -356,6 +367,24 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
             </h2>
             <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--accent-pink)', fontWeight: 'bold' }}>
               (But secretly, I was hoping for the "L" word... 😉)
+            </p>
+          </motion.div>
+        )}
+
+        {phase === 9 && (
+          <motion.div
+            key="reveal9"
+            className="glass-panel"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: 'spring', damping: 12, stiffness: 100 }}
+            style={{ padding: '4rem 3rem', maxWidth: '600px', width: '100%', position: 'relative', textAlign: 'center', background: 'rgba(255, 51, 102, 0.1)', border: '2px solid var(--accent-pink)' }}
+          >
+            <h2 className="glow-text" style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'white' }}>
+              It's okay! 😂
+            </h2>
+            <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--accent-pink)', fontWeight: 'bold' }}>
+              I still like you anyway.<br/>See you on Oct 4th! ❤️
             </p>
           </motion.div>
         )}
