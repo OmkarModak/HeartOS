@@ -24,7 +24,7 @@ function App() {
   const [appState, setAppState] = useState<AppState>('BOOT');
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
   const [currentPollIndex, setCurrentPollIndex] = useState(0);
-  const [userData, setUserData] = useState({ home: '', hobbies: '', goals: '', knowMore: '', venue: '', isRealDate: '' });
+  const [userData, setUserData] = useState({ home: '', hobbies: '', goals: '', knowMore: '', venue: '', isRealDate: '', customDate: '' });
 
   useEffect(() => {
     console.log(
@@ -165,13 +165,13 @@ function App() {
 
           {appState === 'VENUE_FORM' && (
             <VenueFormScreen key="venue" onNext={(data) => {
-              setUserData(prev => ({ ...prev, venue: data.venue, isRealDate: data.isRealDate }));
+              setUserData(prev => ({ ...prev, venue: data.venue, isRealDate: data.isRealDate, customDate: data.customDate }));
               setAppState('DATE_CHECKOUT');
             }} />
           )}
 
           {appState === 'DATE_CHECKOUT' && (
-            <CheckoutScreen key="checkout" data={userData} onComplete={() => setAppState('FINAL')} />
+            <CheckoutScreen key="checkout" data={userData} onComplete={() => setAppState('CODE_CHALLENGE')} />
           )}
 
           {appState === 'FINAL' && (

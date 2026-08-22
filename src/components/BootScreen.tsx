@@ -11,7 +11,7 @@ const introSequence = [
 const checklistItems = [
   "Initialize deep dive emotional sensors",
   "Calibrate romantic aesthetic algorithms",
-  "Lock in October 4th venue parameters",
+  "Initialize custom date scheduling module",
   "Verify Shraddha is smiling"
 ];
 

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CreditCard, Loader2 } from 'lucide-react';
 
 interface CheckoutScreenProps {
-  data: { venue: string };
+  data: { venue: string; customDate?: string };
   onComplete: () => void;
 }
 
@@ -40,7 +40,7 @@ export const CheckoutScreen = ({ data, onComplete }: CheckoutScreenProps) => {
             
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
               <span style={{ color: 'var(--text-secondary)' }}>Date</span>
-              <span style={{ color: 'white' }}>Oct 4th, 12:42 PM</span>
+              <span style={{ color: 'white' }}>{data.customDate || 'Oct 4th, 12:42 PM'}</span>
             </div>
             
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>

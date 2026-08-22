@@ -10,6 +10,7 @@ interface FinalRevealProps {
     knowMore: string;
     venue: string;
     isRealDate: string;
+    customDate?: string;
   }
 }
 
@@ -27,8 +28,8 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
-          subject: '❤️ Shraddha Completed v3.0! ❤️',
-          message: `Date Logistics:\nDate: Oct 4th, 12:42 PM\nReal Date?: ${userData.isRealDate.toUpperCase()}\nVenue: ${userData.venue}\n\nGetting to know her:\nHome: ${userData.home}\nHobbies: ${userData.hobbies}\nGoals: ${userData.goals}\nWant to know me more?: ${userData.knowMore}\n\nDeep Questions:\nDo I matter to you?: ${doIMatter}\nAre you into me?: YES (She couldn't click no 😂)`
+          subject: 'HeartOS: Shraddha Completed the Experience! 🚀',
+          message: `Date Logistics:\nDate: ${userData.customDate || 'Oct 4th, 12:42 PM'}\nReal Date?: ${userData.isRealDate.toUpperCase()}\nVenue: ${userData.venue}\n\nGetting to know her:\nHome: ${userData.home}\nHobbies: ${userData.hobbies}\nGoals: ${userData.goals}\nWant to know me more?: ${userData.knowMore}\n\nDeep Questions:\nDo I matter to you?: ${doIMatter}\nAre you into me?: YES (She couldn't click no 😂)`
         })
       });
     } catch (e) {
@@ -294,10 +295,12 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
             <h2 className="glow-text" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--success)' }}>
               THANK YOU ❤️
             </h2>
-            <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--text-secondary)', marginBottom: '2rem' }}>
-              You're amazing.<br/><br/>
-              I can't wait for Oct 4th. See you then, Shraddha! ✨
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ marginTop: '2rem', background: 'rgba(255,255,255,0.05)', padding: '1.5rem', borderRadius: '12px' }}>
+            <h3 style={{ color: 'var(--accent-pink)', marginBottom: '1rem' }}>Final Notes</h3>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+              I can't wait for {userData.customDate || 'Oct 4th'}. See you then, Shraddha! ✨
             </p>
+            </motion.div>
             
             <hr style={{ borderColor: 'rgba(255,255,255,0.1)', margin: '2rem 0' }} />
             
@@ -383,8 +386,8 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
             <h2 className="glow-text" style={{ fontSize: '2.5rem', marginBottom: '1rem', color: 'white' }}>
               It's okay! 😂
             </h2>
-            <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--accent-pink)', fontWeight: 'bold' }}>
-              I still like you anyway.<br/>See you on Oct 4th! ❤️
+            <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginTop: '1rem' }}>
+              I still like you anyway.<br/>See you on {userData.customDate || 'Oct 4th'}! ❤️
             </p>
           </motion.div>
         )}

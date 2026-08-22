@@ -1,19 +1,26 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Calendar, Clock } from 'lucide-react';
 
 interface VenueFormScreenProps {
-  onNext: (data: { venue: string; isRealDate: string }) => void;
+  onNext: (data: { venue: string; isRealDate: string; customDate: string }) => void;
 }
 
 export const VenueFormScreen = ({ onNext }: VenueFormScreenProps) => {
   const [venue, setVenue] = useState('');
   const [isRealDate, setIsRealDate] = useState<string | null>(null);
+  const [dateStatus, setDateStatus] = useState<'keep' | 'change' | null>(null);
+  const [customDate, setCustomDate] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (venue.trim() && isRealDate) {
-      onNext({ venue, isRealDate });
+    if (venue.trim() && isRealDate && dateStatus) {
+      if (dateStatus === 'change' && !customDate.trim()) return;
+      onNext({ 
+        venue, 
+        isRealDate, 
+        customDate: dateStatus === 'keep' ? 'Oct 4th, 12:42 PM' : customDate 
+      });
     }
   };
 
@@ -31,14 +38,50 @@ export const VenueFormScreen = ({ onNext }: VenueFormScreenProps) => {
       </div>
 
       <div style={{ background: 'rgba(255, 255, 255, 0.03)', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.05)', marginBottom: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-          <Calendar size={20} color="var(--accent-pink)" />
-          <span style={{ color: 'white', fontWeight: 600, fontSize: '1.1rem' }}>October 4th</span>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem', textAlign: 'center' }}>
+          Our last planned date was <strong>Oct 4th, 12:42 PM</strong>.<br/>Does that still work?
+        </p>
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: dateStatus === 'change' ? '1rem' : 0 }}>
+          <button
+            type="button"
+            onClick={() => setDateStatus('keep')}
+            className={dateStatus === 'keep' ? "btn-primary glow-button" : "btn-secondary"}
+            style={{ flex: 1, padding: '0.8rem', fontSize: '0.9rem' }}
+          >
+            Yes, keep it!
+          </button>
+          <button
+            type="button"
+            onClick={() => setDateStatus('change')}
+            className={dateStatus === 'change' ? "btn-primary glow-button" : "btn-secondary"}
+            style={{ flex: 1, padding: '0.8rem', fontSize: '0.9rem' }}
+          >
+            Change it
+          </button>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <Clock size={20} color="var(--accent-pink)" />
-          <span style={{ color: 'white', fontWeight: 600, fontSize: '1.1rem' }}>12:42 PM</span>
-        </div>
+        
+        <AnimatePresence>
+          {dateStatus === 'change' && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+            >
+              <input
+                type="text"
+                value={customDate}
+                onChange={(e) => setCustomDate(e.target.value)}
+                placeholder="When should we go? (e.g. Next Saturday)"
+                style={{
+                  width: '100%',
+                  background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--card-border)',
+                  padding: '0.8rem', borderRadius: '8px', color: 'white', outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -89,12 +132,12 @@ export const VenueFormScreen = ({ onNext }: VenueFormScreenProps) => {
         </motion.div>
 
         <motion.button
-          whileHover={venue.trim() ? { scale: 1.02 } : {}}
-          whileTap={venue.trim() ? { scale: 0.98 } : {}}
+          whileHover={venue.trim() && dateStatus && (dateStatus === 'keep' || customDate.trim()) ? { scale: 1.02 } : {}}
+          whileTap={venue.trim() && dateStatus && (dateStatus === 'keep' || customDate.trim()) ? { scale: 0.98 } : {}}
           className="btn-primary glow-button"
           type="submit"
-          disabled={!venue.trim()}
-          style={{ marginTop: '1rem', opacity: venue.trim() ? 1 : 0.5, cursor: venue.trim() ? 'pointer' : 'not-allowed' }}
+          disabled={!venue.trim() || !dateStatus || (dateStatus === 'change' && !customDate.trim()) || !isRealDate}
+          style={{ marginTop: '1rem', opacity: (venue.trim() && dateStatus && (dateStatus === 'keep' || customDate.trim()) && isRealDate) ? 1 : 0.5, cursor: (venue.trim() && dateStatus && (dateStatus === 'keep' || customDate.trim()) && isRealDate) ? 'pointer' : 'not-allowed' }}
         >
           Confirm Venue ✨
         </motion.button>
