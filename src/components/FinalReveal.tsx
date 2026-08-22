@@ -200,7 +200,8 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
                 background: 'rgba(255,255,255,0.05)', border: '1px solid var(--card-border)',
                 color: 'white', fontSize: '1rem', outline: 'none', resize: 'none', marginBottom: '1.5rem',
                 fontFamily: 'inherit',
-                boxShadow: 'inset 0 0 10px rgba(255, 51, 102, 0.2)'
+                boxShadow: 'inset 0 0 10px rgba(255, 51, 102, 0.2)',
+                position: 'relative', zIndex: 50, pointerEvents: 'auto', userSelect: 'auto'
               }}
             />
             

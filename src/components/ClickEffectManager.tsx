@@ -19,7 +19,7 @@ export const ClickEffectManager = () => {
       const target = e.target as HTMLElement;
       
       // Ignore clicks on interactive elements
-      if (target.closest('button, a, input')) return;
+      if (target.closest('button, a, input, textarea')) return;
       // Also ignore clicks on our cute sticker mascot
       if (target.closest('img') && target.closest('img')?.src.includes('sticker')) return;
 
@@ -49,7 +49,7 @@ export const ClickEffectManager = () => {
 
       // Don't spawn trail if moving fast near buttons/links to avoid cluttering interactions
       const target = e.target as HTMLElement;
-      if (target.closest('button, a, input')) return;
+      if (target.closest('button, a, input, textarea')) return;
 
       const randomEmoji = TRAIL_EMOJIS[Math.floor(Math.random() * TRAIL_EMOJIS.length)];
       const trailEffect: ClickEffect = {
