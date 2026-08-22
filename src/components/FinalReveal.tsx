@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Activity, Minus } from 'lucide-react';
+import { Heart } from 'lucide-react';
 
 interface FinalRevealProps {
   userData: {

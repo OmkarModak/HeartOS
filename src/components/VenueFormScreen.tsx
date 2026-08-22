@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Calendar, Clock } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 
 interface VenueFormScreenProps {
   onNext: (data: { venue: string; isRealDate: string; customDate: string }) => void;
