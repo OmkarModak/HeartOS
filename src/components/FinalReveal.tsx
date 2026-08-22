@@ -49,6 +49,26 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
     }
   }, [phase]);
 
+  useEffect(() => {
+    if (phase !== 6) return;
+    
+    let keyBuffer = '';
+    const secretCode = 'iloveyou';
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      keyBuffer += e.key.toLowerCase();
+      if (keyBuffer.length > secretCode.length) {
+        keyBuffer = keyBuffer.slice(-secretCode.length);
+      }
+      if (keyBuffer === secretCode) {
+        setPhase(7);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [phase]);
+
   const handleFriendHover = () => {
     const newX = (Math.random() - 0.5) * 300;
     const newY = (Math.random() - 0.5) * 200;
@@ -258,9 +278,47 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
             <h2 className="glow-text" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--success)' }}>
               THANK YOU ❤️
             </h2>
-            <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
+            <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--text-secondary)', marginBottom: '2rem' }}>
               You're amazing.<br/><br/>
               I can't wait for Oct 4th. See you then, Shraddha! ✨
+            </p>
+            
+            <hr style={{ borderColor: 'rgba(255,255,255,0.1)', margin: '2rem 0' }} />
+            
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontStyle: 'italic', marginBottom: '1rem' }}>
+              P.S. There's a hidden secret here. Try typing 'i love you' on your keyboard right now.
+            </p>
+            <button 
+              onClick={() => setPhase(7)}
+              style={{ background: 'none', border: 'none', color: 'var(--accent-pink)', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.9rem' }}
+            >
+              (Or just click here if you're lazy 😉)
+            </button>
+          </motion.div>
+        )}
+
+        {phase === 7 && (
+          <motion.div
+            key="reveal7"
+            className="glass-panel"
+            initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ type: 'spring', damping: 12, stiffness: 100 }}
+            style={{ padding: '4rem 3rem', maxWidth: '600px', width: '100%', position: 'relative', textAlign: 'center', background: 'rgba(255, 51, 102, 0.1)', border: '2px solid var(--accent-pink)' }}
+          >
+            <motion.div
+              animate={{ scale: [1, 1.2, 1], rotate: [0, 5, -5, 0] }}
+              transition={{ repeat: Infinity, duration: 1 }}
+              style={{ display: 'inline-block', marginBottom: '1rem' }}
+            >
+              <Heart size={100} fill="var(--accent-pink)" color="var(--accent-pink)" />
+            </motion.div>
+            
+            <h2 className="glow-text" style={{ fontSize: '3rem', marginBottom: '1rem', color: 'white' }}>
+              I KNEW YOU WOULD!
+            </h2>
+            <p style={{ fontSize: '1.5rem', lineHeight: '1.8', color: 'var(--accent-pink)', fontWeight: 'bold' }}>
+              I love you too. ❤️
             </p>
           </motion.div>
         )}
