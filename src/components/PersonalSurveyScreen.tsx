@@ -51,17 +51,20 @@ export const PersonalSurveyScreen = ({ onComplete }: PersonalSurveyScreenProps) 
               style={{
                 width: '100%', minHeight: '100px', padding: '1rem', borderRadius: '8px',
                 background: 'rgba(255,255,255,0.05)', border: '1px solid var(--card-border)',
-                color: 'white', fontSize: '1rem', outline: 'none', resize: 'none', marginBottom: '1.5rem',
+                color: 'white', fontSize: '1rem', outline: 'none', resize: 'none', marginBottom: '0.5rem',
                 fontFamily: 'inherit'
               }}
             />
+            <div style={{ textAlign: 'right', fontSize: '0.85rem', color: home.length < 50 ? 'rgba(255,255,255,0.5)' : 'var(--success)', marginBottom: '1.5rem' }}>
+              {home.length} / 50 min
+            </div>
             <motion.button 
-              whileHover={home.trim() ? { scale: 1.05 } : {}}
-              whileTap={home.trim() ? { scale: 0.95 } : {}}
+              whileHover={home.length >= 50 ? { scale: 1.05 } : {}}
+              whileTap={home.length >= 50 ? { scale: 0.95 } : {}}
               className="btn-primary glow-button"
               onClick={handleNext}
-              disabled={!home.trim()}
-              style={{ opacity: home.trim() ? 1 : 0.5, cursor: home.trim() ? 'pointer' : 'not-allowed', width: '100%' }}
+              disabled={home.length < 50}
+              style={{ opacity: home.length >= 50 ? 1 : 0.5, cursor: home.length >= 50 ? 'pointer' : 'not-allowed', width: '100%' }}
             >
               Next ✨
             </motion.button>
@@ -91,17 +94,20 @@ export const PersonalSurveyScreen = ({ onComplete }: PersonalSurveyScreenProps) 
               style={{
                 width: '100%', minHeight: '100px', padding: '1rem', borderRadius: '8px',
                 background: 'rgba(255,255,255,0.05)', border: '1px solid var(--card-border)',
-                color: 'white', fontSize: '1rem', outline: 'none', resize: 'none', marginBottom: '1.5rem',
+                color: 'white', fontSize: '1rem', outline: 'none', resize: 'none', marginBottom: '0.5rem',
                 fontFamily: 'inherit'
               }}
             />
+            <div style={{ textAlign: 'right', fontSize: '0.85rem', color: hobbies.length < 50 ? 'rgba(255,255,255,0.5)' : 'var(--success)', marginBottom: '1.5rem' }}>
+              {hobbies.length} / 50 min
+            </div>
             <motion.button 
-              whileHover={hobbies.trim() ? { scale: 1.05 } : {}}
-              whileTap={hobbies.trim() ? { scale: 0.95 } : {}}
+              whileHover={hobbies.length >= 50 ? { scale: 1.05 } : {}}
+              whileTap={hobbies.length >= 50 ? { scale: 0.95 } : {}}
               className="btn-primary glow-button"
               onClick={handleNext}
-              disabled={!hobbies.trim()}
-              style={{ opacity: hobbies.trim() ? 1 : 0.5, cursor: hobbies.trim() ? 'pointer' : 'not-allowed', width: '100%' }}
+              disabled={hobbies.length < 50}
+              style={{ opacity: hobbies.length >= 50 ? 1 : 0.5, cursor: hobbies.length >= 50 ? 'pointer' : 'not-allowed', width: '100%' }}
             >
               Next ✨
             </motion.button>
@@ -131,17 +137,20 @@ export const PersonalSurveyScreen = ({ onComplete }: PersonalSurveyScreenProps) 
               style={{
                 width: '100%', minHeight: '100px', padding: '1rem', borderRadius: '8px',
                 background: 'rgba(255,255,255,0.05)', border: '1px solid var(--card-border)',
-                color: 'white', fontSize: '1rem', outline: 'none', resize: 'none', marginBottom: '1.5rem',
+                color: 'white', fontSize: '1rem', outline: 'none', resize: 'none', marginBottom: '0.5rem',
                 fontFamily: 'inherit'
               }}
             />
+            <div style={{ textAlign: 'right', fontSize: '0.85rem', color: goals.length < 50 ? 'rgba(255,255,255,0.5)' : 'var(--success)', marginBottom: '1.5rem' }}>
+              {goals.length} / 50 min
+            </div>
             <motion.button 
-              whileHover={goals.trim() ? { scale: 1.05 } : {}}
-              whileTap={goals.trim() ? { scale: 0.95 } : {}}
+              whileHover={goals.length >= 50 ? { scale: 1.05 } : {}}
+              whileTap={goals.length >= 50 ? { scale: 0.95 } : {}}
               className="btn-primary glow-button"
               onClick={handleNext}
-              disabled={!goals.trim()}
-              style={{ opacity: goals.trim() ? 1 : 0.5, cursor: goals.trim() ? 'pointer' : 'not-allowed', width: '100%' }}
+              disabled={goals.length < 50}
+              style={{ opacity: goals.length >= 50 ? 1 : 0.5, cursor: goals.length >= 50 ? 'pointer' : 'not-allowed', width: '100%' }}
             >
               Almost done... ➡️
             </motion.button>
