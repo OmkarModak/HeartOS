@@ -40,7 +40,11 @@ export const CheckoutScreen = ({ data, onComplete }: CheckoutScreenProps) => {
             
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
               <span style={{ color: 'var(--text-secondary)' }}>Date</span>
-              <span style={{ color: 'white' }}>{data.customDate || 'Oct 4th, 12:42 PM'}</span>
+              <span style={{ color: 'white' }}>
+                {data.customDate && data.customDate !== 'Oct 4th, 12:42 PM'
+                  ? new Date(data.customDate).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) 
+                  : 'Oct 4th, 12:42 PM'}
+              </span>
             </div>
             
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>

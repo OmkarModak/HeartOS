@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Terminal as TerminalIcon } from 'lucide-react';
 
@@ -9,60 +9,58 @@ interface CodeChallengeProps {
 export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
   const [terminalOutput, setTerminalOutput] = useState<string[]>(['> Ready.']);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [runClicks, setRunClicks] = useState(0);
+  const [showInput, setShowInput] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleRunClick = () => {
-    const newClicks = runClicks + 1;
-    setRunClicks(newClicks);
-
-    if (newClicks >= 3) {
-      setTerminalOutput(prev => [
-        ...prev, 
-        '> Error: Automated run script failed.', 
-        '> Hint: The developer left a backdoor open. Inspect to check the browser console for a clue! 🕵️‍♀️'
-      ]);
-    } else {
-      setTerminalOutput(prev => [
-        ...prev, 
-        '> Error: Automated run script failed.', 
-        '> Suggestion: Manual QA override required. Check the source code.'
-      ]);
-    }
+    if (showInput || isSuccess) return;
+    setTerminalOutput(prev => [
+      ...prev, 
+      '> Executing patch query...',
+      '> ERROR: Authentication Required.',
+      '> SYSTEM PROMPT: I am the only system requirement you need. 4 letters. What am I?',
+      '> Awaiting override password...'
+    ]);
+    setShowInput(true);
   };
 
-  const handleSecretClick = () => {
-    if (isSuccess) return;
-    setIsSuccess(true);
-    
-    if (runClicks === 0) {
-      setTerminalOutput(prev => [...prev, '> Good eye! 😉 You found the override without even clicking Run.', '> Executing query...']);
-    } else {
-      setTerminalOutput(prev => [...prev, '> Executing query...']);
+  useEffect(() => {
+    if (showInput && inputRef.current) {
+      inputRef.current.focus();
     }
-    
-    setTimeout(() => {
-      setTerminalOutput(prev => [...prev, '> Downloading YOU database...']);
-    }, 800);
+  }, [showInput]);
 
-    setTimeout(() => {
-      setTerminalOutput(prev => [...prev, '> Processing results... 1 row returned.']);
-    }, 1800);
-    
-    setTimeout(() => {
-      setTerminalOutput(prev => [...prev, '> WARNING: Heart CPU Usage spiking...']);
-    }, 2800);
+  const handleInputSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const val = inputValue.trim().toLowerCase();
+      setTerminalOutput(prev => [...prev, `> [INPUT]: ${val}`]);
+      setInputValue('');
+      
+      if (val === 'love') {
+        setShowInput(false);
+        setIsSuccess(true);
+        setTerminalOutput(prev => [...prev, '> ACCESS GRANTED. Executing patch...', '> Downloading YOU database...']);
+        
+        setTimeout(() => {
+          setTerminalOutput(prev => [...prev, '> Processing results... 1 row returned.']);
+        }, 1500);
+        
+        setTimeout(() => {
+          setTerminalOutput(prev => [...prev, '> CPU Usage: 100% ❤️']);
+        }, 3000);
+        
+        setTimeout(() => {
+          setTerminalOutput(prev => [...prev, '> Unlocking final sequence...']);
+        }, 4500);
 
-    setTimeout(() => {
-      setTerminalOutput(prev => [...prev, '> CPU Usage: 100% ❤️']);
-    }, 4200);
-
-    setTimeout(() => {
-      setTerminalOutput(prev => [...prev, '> Unlocking final sequence...']);
-    }, 5800);
-
-    setTimeout(() => {
-      onComplete();
-    }, 7500);
+        setTimeout(() => {
+          onComplete();
+        }, 6000);
+      } else {
+        setTerminalOutput(prev => [...prev, '> ACCESS DENIED. Incorrect password.', '> Awaiting override password...']);
+      }
+    }
   };
 
   return (
@@ -94,64 +92,38 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
           </div>
           <div style={{ display: 'flex' }}>
             <span style={{ color: '#569cd6' }}>def</span>&nbsp;
-            <span style={{ color: '#dcdcaa' }}>query_heart_database</span>():
+            <span style={{ color: '#dcdcaa' }}>authenticate_user</span>():
           </div>
           <div style={{ paddingLeft: '20px', display: 'flex' }}>
-            <span style={{ color: '#9cdcfe' }}>sql_query</span> = <span style={{ color: '#ce9178' }}>"""</span>
-          </div>
-          <div style={{ paddingLeft: '40px', color: '#ce9178' }}>
-            SELECT y.name, y.beauty_level, y.cuteness_level
-          </div>
-          <div style={{ paddingLeft: '40px', color: '#ce9178' }}>
-            FROM YOU y
-          </div>
-          <div style={{ paddingLeft: '40px', color: '#ce9178' }}>
-            WHERE y.status = 0
-          </div>
-          <div style={{ paddingLeft: '60px', color: '#ce9178' }}>
-            AND y.past = ANY;
+            <span style={{ color: '#dcdcaa' }}>print</span>(<span style={{ color: '#ce9178' }}>"Initializing romantic override protocols..."</span>)
           </div>
           <br />
-          <div style={{ paddingLeft: '40px', color: '#ce9178' }}>
-            -- I don't care about previous versions.
+          <div style={{ paddingLeft: '20px', color: '#6a9955', fontStyle: 'italic' }}>
+            # SYSTEM PROMPT: I am the only system requirement you need.
           </div>
-          <div style={{ paddingLeft: '40px', color: '#ce9178' }}>
-            -- I'm interested in the current release. 😄
+          <div style={{ paddingLeft: '20px', color: '#6a9955', fontStyle: 'italic' }}>
+            # 4 letters. What am I?
           </div>
-          <div style={{ paddingLeft: '20px', color: '#ce9178' }}>
-            """
-          </div>
+          <br />
           <div style={{ paddingLeft: '20px' }}>
-            <span style={{ color: '#c586c0' }}>return</span> <span style={{ color: '#dcdcaa' }}>execute</span>(<span style={{ color: '#9cdcfe' }}>sql_query</span>)
-          </div>
-          <br />
-          <div style={{ color: '#6a9955', fontStyle: 'italic' }}>
-            # QA task: The automated 'Run' button below is currently broken.
-          </div>
-          <div style={{ color: '#6a9955', fontStyle: 'italic' }}>
-            # Manual override required to proceed.
-          </div>
-          <br />
-          <div>
-            <span style={{ color: '#dcdcaa' }}>print</span>(
-            <span 
-              onClick={handleSecretClick}
-              style={{ 
-                color: '#ce9178', 
-                cursor: 'pointer', 
-                position: 'relative',
-                display: 'inline-block'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.textShadow = '0 0 8px rgba(206, 145, 120, 0.8)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.textShadow = 'none';
-              }}
-            >
-              "click me to continue"
+            <span style={{ color: '#9cdcfe' }}>password</span> = <span style={{ color: '#dcdcaa' }}>input</span>(
+            <span style={{ color: '#ce9178' }}>
+              "Override code: "
             </span>
             )
+          </div>
+          <br />
+          <div style={{ paddingLeft: '20px' }}>
+            <span style={{ color: '#c586c0' }}>if</span> <span style={{ color: '#dcdcaa' }}>hash</span>(<span style={{ color: '#9cdcfe' }}>password</span>) == <span style={{ color: '#4fc1ff' }}>SECRET_HASH</span>:
+          </div>
+          <div style={{ paddingLeft: '40px' }}>
+            <span style={{ color: '#dcdcaa' }}>unlock_heart</span>()
+          </div>
+          <div style={{ paddingLeft: '20px' }}>
+            <span style={{ color: '#c586c0' }}>else</span>:
+          </div>
+          <div style={{ paddingLeft: '40px' }}>
+            <span style={{ color: '#c586c0' }}>raise</span> <span style={{ color: '#4ec9b0' }}>Exception</span>(<span style={{ color: '#ce9178' }}>"Access Denied"</span>)
           </div>
         </div>
 
@@ -182,7 +154,10 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
         </div>
 
         {/* Fake Terminal */}
-        <div style={{ background: '#000000', padding: '16px', minHeight: '120px', fontFamily: '"Fira Code", monospace', fontSize: '0.85rem', color: '#a3a3a3', borderTop: '1px solid #333' }}>
+        <div 
+          style={{ background: '#000000', padding: '16px', minHeight: '120px', fontFamily: '"Fira Code", monospace', fontSize: '0.85rem', color: '#a3a3a3', borderTop: '1px solid #333' }}
+          onClick={() => showInput && inputRef.current?.focus()}
+        >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', color: '#888' }}>
             <TerminalIcon size={14} /> TERMINAL
           </div>
@@ -193,7 +168,7 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 style={{ 
-                  color: line.includes('Error') || line.includes('WARNING') ? '#ff5f56' : line.includes('Success') || line.includes('Compiling') || line.includes('100%') ? '#27c93f' : '#a3a3a3',
+                  color: line.includes('ERROR') || line.includes('DENIED') || line.includes('WARNING') ? '#ff5f56' : line.includes('GRANTED') || line.includes('Success') || line.includes('Compiling') || line.includes('100%') ? '#27c93f' : '#a3a3a3',
                   marginBottom: '4px'
                 }}
               >
@@ -201,6 +176,28 @@ export const CodeChallenge = ({ onComplete }: CodeChallengeProps) => {
               </motion.div>
             ))}
           </AnimatePresence>
+          {showInput && (
+            <div style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
+              <span style={{ color: '#27c93f', marginRight: '8px' }}>$</span>
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleInputSubmit}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'white',
+                  fontFamily: '"Fira Code", monospace',
+                  fontSize: '0.85rem',
+                  outline: 'none',
+                  flex: 1
+                }}
+                autoFocus
+              />
+            </div>
+          )}
         </div>
       </div>
     </motion.div>

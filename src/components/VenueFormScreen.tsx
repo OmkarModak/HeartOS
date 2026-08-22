@@ -68,15 +68,15 @@ export const VenueFormScreen = ({ onNext }: VenueFormScreenProps) => {
               exit={{ opacity: 0, height: 0 }}
             >
               <input
-                type="text"
+                type="datetime-local"
                 value={customDate}
                 onChange={(e) => setCustomDate(e.target.value)}
-                placeholder="When should we go? (e.g. Next Saturday)"
                 style={{
                   width: '100%',
                   background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--card-border)',
                   padding: '0.8rem', borderRadius: '8px', color: 'white', outline: 'none',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  colorScheme: 'dark'
                 }}
               />
             </motion.div>
