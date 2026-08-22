@@ -359,9 +359,40 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
             <hr style={{ borderColor: 'rgba(255,255,255,0.1)', margin: '2rem 0' }} />
             
             <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', fontStyle: 'italic', marginBottom: '1rem' }}>
-              P.S. System locked. To unlock the final Easter egg, type the password anywhere on your screen.<br/>
+              P.S. System locked. To unlock the final Easter egg, enter the password below.<br/>
               <span style={{ color: 'var(--accent-pink)', fontWeight: 'bold' }}>Hint: 3 words, 8 letters ❤️</span>
             </p>
+            
+            <input 
+              type="text" 
+              placeholder="Type here..."
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '8px',
+                padding: '10px 15px',
+                color: 'white',
+                fontSize: '1.2rem',
+                textAlign: 'center',
+                outline: 'none',
+                width: '100%',
+                maxWidth: '250px',
+                marginBottom: '1rem',
+                display: 'block',
+                margin: '0 auto 1rem auto'
+              }}
+              onChange={(e) => {
+                const val = e.target.value.toLowerCase().replace(/\s/g, '');
+                if (val === 'iloveyou') {
+                  setPhase(7);
+                  sendEasterEggEmail('i love you');
+                } else if (val === 'ilikeyou') {
+                  setPhase(8);
+                  sendEasterEggEmail('i like you');
+                }
+              }}
+            />
+
             <button 
               onClick={() => {
                 setPhase(9);
