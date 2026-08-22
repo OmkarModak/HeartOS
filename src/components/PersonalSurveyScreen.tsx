@@ -11,7 +11,7 @@ export const PersonalSurveyScreen = ({ onComplete }: PersonalSurveyScreenProps) 
   const [hobbies, setHobbies] = useState('');
   const [goals, setGoals] = useState('');
   
-  const [knowMore, setKnowMore] = useState('');
+
   
   const handleNext = () => {
     setStep(prev => prev + 1);
