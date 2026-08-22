@@ -9,10 +9,10 @@ const introSequence = [
 ];
 
 const checklistItems = [
-  "Download v3.0 deep dive module",
-  "Extract dad-jokes repository",
-  "Compile date-planning algorithms",
-  "Verify update integrity"
+  "Initialize deep dive emotional sensors",
+  "Calibrate romantic aesthetic algorithms",
+  "Lock in October 4th venue parameters",
+  "Verify Shraddha is smiling"
 ];
 
 export const BootScreen = ({ onComplete }: { onComplete: () => void }) => {
