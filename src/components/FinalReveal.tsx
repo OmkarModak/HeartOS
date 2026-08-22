@@ -286,15 +286,10 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
             
             <hr style={{ borderColor: 'rgba(255,255,255,0.1)', margin: '2rem 0' }} />
             
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontStyle: 'italic', marginBottom: '1rem' }}>
-              P.S. There's a hidden secret here. Try typing 'i love you' on your keyboard right now.
+            <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', fontStyle: 'italic', marginBottom: '1rem' }}>
+              P.S. System locked. To unlock the final Easter egg, type the password anywhere on your screen.<br/>
+              <span style={{ color: 'var(--accent-pink)', fontWeight: 'bold' }}>Hint: 3 words, 8 letters ❤️</span>
             </p>
-            <button 
-              onClick={() => setPhase(7)}
-              style={{ background: 'none', border: 'none', color: 'var(--accent-pink)', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.9rem' }}
-            >
-              (Or just click here if you're lazy 😉)
-            </button>
           </motion.div>
         )}
 
