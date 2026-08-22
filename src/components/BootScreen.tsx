@@ -1,149 +1,117 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Heart, CheckCircle2, DownloadCloud, Sparkles } from 'lucide-react';
 
-const introSequence = [
-  "HEARTOS v3.0 BOOTLOADER",
-  "Checking system integrity...",
-  "Applying v3.0 Update Patch...",
-  "Awaiting manual installation authorization..."
-];
-
-const checklistItems = [
-  "Initialize deep dive emotional sensors",
-  "Calibrate romantic aesthetic algorithms",
-  "Initialize custom date scheduling module",
-  "Verify Shraddha is smiling"
+const updateSequence = [
+  "Downloading HeartOS v3.0...",
+  "Applying overnight hotfixes...",
+  "Developer log: Deployed in record time. I'm a fast bug fixer when it comes to you 😉",
+  "Optimizing romantic aesthetic algorithms...",
+  "Update Complete. Rebooting..."
 ];
 
 export const BootScreen = ({ onComplete }: { onComplete: () => void }) => {
-  const [lines, setLines] = useState<string[]>([]);
-  const [introIndex, setIntroIndex] = useState(0);
-  const [showChecklist, setShowChecklist] = useState(false);
-  const [checkedItems, setCheckedItems] = useState<boolean[]>(new Array(checklistItems.length).fill(false));
-  const [systemReady, setSystemReady] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [step, setStep] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
-    if (introIndex < introSequence.length) {
-      const timer = setTimeout(() => {
-        setLines((prev) => [...prev, introSequence[introIndex]]);
-        setIntroIndex((prev) => prev + 1);
-      }, introIndex === 0 ? 800 : introIndex === 2 ? 1200 : 800);
-      return () => clearTimeout(timer);
-    } else if (!showChecklist) {
-      const timer = setTimeout(() => {
-        setShowChecklist(true);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [introIndex, showChecklist]);
+    // Progress bar animation from 0 to 100
+    const duration = 7500; // 7.5 seconds total
+    const intervalTime = 50;
+    const increment = (100 / (duration / intervalTime));
 
-  const handleCheck = (index: number) => {
-    if (systemReady) return;
-    const newChecked = [...checkedItems];
-    newChecked[index] = true;
-    setCheckedItems(newChecked);
+    const timer = setInterval(() => {
+      setProgress(p => {
+        const next = p + increment;
+        if (next >= 100) {
+          clearInterval(timer);
+          setIsFinished(true);
+          return 100;
+        }
+        return next;
+      });
+    }, intervalTime);
 
-    if (newChecked.every(Boolean)) {
-      setTimeout(() => setSystemReady(true), 500);
-    }
-  };
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
-    if (systemReady) {
-      const timer = setTimeout(() => {
-        onComplete();
-      }, 2000);
-      return () => clearTimeout(timer);
+    // Map progress to steps for text updates
+    if (progress < 15) setStep(0);
+    else if (progress < 35) setStep(1);
+    else if (progress < 70) setStep(2);
+    else if (progress < 95) setStep(3);
+    else setStep(4);
+  }, [progress]);
+
+  useEffect(() => {
+    if (isFinished) {
+      const t = setTimeout(() => onComplete(), 1500);
+      return () => clearTimeout(t);
     }
-  }, [systemReady, onComplete]);
+  }, [isFinished, onComplete]);
 
   return (
     <motion.div
       className="glass-panel"
-      style={{ padding: '2rem', fontFamily: '"Fira Code", monospace', fontSize: '0.9rem', color: 'var(--success)' }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      style={{ padding: '3rem', maxWidth: '500px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 1.1 }}
     >
-      {/* Intro Lines */}
-      {lines.map((line, idx) => (
+      <motion.div
+        animate={{ scale: isFinished ? [1, 1.2, 1] : 1 }}
+        transition={{ duration: 0.5 }}
+        style={{ marginBottom: '2rem' }}
+      >
+        {isFinished ? (
+          <CheckCircle2 size={64} color="var(--accent-pink)" />
+        ) : step === 2 ? (
+          <Sparkles size={64} color="var(--accent-pink)" />
+        ) : step === 3 ? (
+          <Heart size={64} color="var(--accent-pink)" />
+        ) : (
+          <DownloadCloud size={64} color="var(--text-secondary)" />
+        )}
+      </motion.div>
+
+      <h2 style={{ color: 'white', marginBottom: '2rem', fontWeight: 600 }}>System Update</h2>
+
+      {/* Progress Bar Container */}
+      <div style={{ width: '100%', height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden', marginBottom: '1.5rem' }}>
         <motion.div
-          key={idx}
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          style={{ 
-            marginBottom: '0.5rem',
-            color: line.includes('v2.0') ? '#ffbd2e' : 'var(--success)'
-          }}
-        >
-          {line}
-        </motion.div>
-      ))}
+          style={{ height: '100%', background: 'var(--accent-pink)', borderRadius: '4px' }}
+          initial={{ width: '0%' }}
+          animate={{ width: `${progress}%` }}
+          transition={{ ease: "linear", duration: 0.1 }}
+        />
+      </div>
 
-      {/* Interactive Checklist */}
-      {showChecklist && (
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
-          style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}
-        >
-          {checklistItems.map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: checkedItems[idx] ? 'default' : 'pointer', opacity: checkedItems[idx] ? 0.6 : 1 }}
-              onClick={() => handleCheck(idx)}
-              whileHover={!checkedItems[idx] ? { x: 5 } : {}}
-            >
-              <span style={{ 
-                color: checkedItems[idx] ? 'var(--success)' : '#888',
-                fontWeight: 'bold',
-                fontSize: '1.1rem'
-              }}>
-                [{checkedItems[idx] ? '✓' : ' '}]
-              </span>
-              <span style={{ color: checkedItems[idx] ? 'var(--success)' : '#d4d4d4' }}>
-                {item}
-              </span>
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
-
-      {/* Progress Counter */}
-      {showChecklist && !systemReady && checkedItems.some(Boolean) && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          style={{ marginTop: '1rem', color: 'var(--success)', fontWeight: 'bold' }}
-        >
-          {'>'} {checkedItems.filter(Boolean).length} passed...
-        </motion.div>
-      )}
-
-      {/* System Ready Message */}
-      <AnimatePresence>
-        {systemReady && (
+      {/* Dynamic Text */}
+      <div style={{ height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <AnimatePresence mode="wait">
           <motion.div
+            key={step}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{ marginTop: '2rem', fontWeight: 'bold', color: 'var(--accent-pink)', textAlign: 'center', fontSize: '1.1rem' }}
+            exit={{ opacity: 0, y: -10 }}
+            style={{ 
+              color: step === 2 ? 'var(--accent-pink)' : 'var(--text-secondary)', 
+              fontSize: '1.1rem', 
+              lineHeight: '1.5', 
+              fontStyle: step === 2 ? 'italic' : 'normal',
+              fontWeight: step === 2 ? 600 : 400
+            }}
           >
-            UPDATE COMPLETE. HEARTOS v3.0 READY ❤️
+            {updateSequence[step]}
           </motion.div>
-        )}
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
 
-      {/* Blinking Cursor */}
-      {!systemReady && (
-        <motion.div
-          animate={{ opacity: [1, 0] }}
-          transition={{ repeat: Infinity, duration: 0.8 }}
-          style={{ display: 'inline-block', width: '8px', height: '16px', background: 'var(--success)', marginTop: '1rem', verticalAlign: 'middle' }}
-        />
-      )}
+      <div style={{ marginTop: '1rem', color: '#888', fontSize: '0.9rem', fontVariantNumeric: 'tabular-nums' }}>
+        {Math.round(progress)}%
+      </div>
     </motion.div>
   );
 };
