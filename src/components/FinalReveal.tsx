@@ -49,22 +49,22 @@ export const FinalReveal = ({ userData }: FinalRevealProps) => {
     }
   }, [phase]);
 
+  const sendEasterEggEmail = (word: string) => {
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
+        subject: '❤️ Shraddha Found the Easter Egg! ❤️',
+        message: `Shraddha successfully unlocked the final Easter Egg!\nShe typed: "${word}"`
+      })
+    }).catch(console.error);
+  };
+
   useEffect(() => {
     if (phase !== 6) return;
     
     let keyBuffer = '';
-    
-    const sendEasterEggEmail = (word: string) => {
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
-          subject: '❤️ Shraddha Found the Easter Egg! ❤️',
-          message: `Shraddha successfully unlocked the final Easter Egg!\nShe typed: "${word}"`
-        })
-      }).catch(console.error);
-    };
 
     const handleKeyDown = (e: KeyboardEvent) => {
       keyBuffer += e.key.toLowerCase();
