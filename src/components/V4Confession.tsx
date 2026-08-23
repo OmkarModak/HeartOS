@@ -106,6 +106,10 @@ const confessionSteps = [
   {
     title: "Until You",
     content: "And then... I saw you. After 4 years of silence and building my walls, you were the one who made me delete that app.",
+  },
+  {
+    title: "The Ultimate Choice",
+    content: "I believe in you and hope whatever happens, happens for good. Hearing everything... what do you say now? Still into me? Wanna give up? It's ok if you say no. I am fine with it. Or tell me what you feel.\n\nAlso, this is the last HeartOS version. The grand finale. After this, HeartOS will die.",
   }
 ];
 
@@ -115,6 +119,9 @@ export const V4Confession = () => {
   const [littleThingsResponse, setLittleThingsResponse] = useState<string | null>(null);
   const [commitmentResponse, setCommitmentResponse] = useState<string | null>(null);
   const [blockAnswer, setBlockAnswer] = useState<string | null>(null);
+  const [finalChoice, setFinalChoice] = useState<string | null>(null);
+  const [isDead, setIsDead] = useState(false);
+  const [isAlive, setIsAlive] = useState(false);
 
   const littleThingsOptions = [
     "Aww, you noticed! 🥺",
@@ -133,6 +140,15 @@ export const V4Confession = () => {
     "Absolutely block her! 🛑"
   ];
 
+  const handleFinalChoice = (choice: string) => {
+    setFinalChoice(choice);
+    if (choice === 'die') {
+      setIsDead(true);
+    } else {
+      setIsAlive(true);
+    }
+  };
+
   const handleNext = () => {
     if (step === 2 && jobAnswer.trim().length === 0) return;
     if (confessionSteps[step].title === "The Audacity" && !blockAnswer) return;
@@ -147,6 +163,29 @@ export const V4Confession = () => {
       setStep(prev => prev - 1);
     }
   };
+
+  if (isDead) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'black', color: 'white', flexDirection: 'column' }}>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}>
+          <h1 style={{ fontFamily: 'monospace', fontWeight: 'normal', color: 'rgba(255,255,255,0.5)' }}>HeartOS shutting down...</h1>
+          <p style={{ textAlign: 'center', marginTop: '1rem', color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace' }}>System terminated. I respect your choice.</p>
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (isAlive) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', flexDirection: 'column', padding: '2rem', textAlign: 'center' }}>
+        <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", bounce: 0.5 }}>
+          <h1 className="glow-text" style={{ fontSize: '3rem', color: 'var(--accent-pink)', marginBottom: '1rem' }}>I promise to keep making you smile. ❤️</h1>
+          <p style={{ fontSize: '1.2rem', color: 'white', opacity: 0.8 }}>Thank you for accepting me, flaws, past, and all.</p>
+          <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.5)', marginTop: '3rem', fontFamily: 'monospace' }}>HeartOS will live on forever.</p>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '80vh', padding: '1rem' }}>
@@ -277,9 +316,51 @@ export const V4Confession = () => {
                 ))}
               </motion.div>
             )}
+
+            {confessionSteps[step].title === "The Ultimate Choice" && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{ marginTop: '3rem', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}
+              >
+                <button
+                  onClick={() => handleFinalChoice('die')}
+                  style={{
+                    background: 'transparent',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    padding: '1rem 2rem',
+                    borderRadius: '50px',
+                    color: 'rgba(255,255,255,0.6)',
+                    fontSize: '1rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    width: '100%',
+                    maxWidth: '400px'
+                  }}
+                >
+                  Let HeartOS die. (I give up)
+                </button>
+                <button
+                  onClick={() => handleFinalChoice('live')}
+                  className="btn-primary glow-button"
+                  style={{
+                    padding: '1rem 2rem',
+                    borderRadius: '50px',
+                    fontSize: '1.1rem',
+                    cursor: 'pointer',
+                    width: '100%',
+                    maxWidth: '400px',
+                    marginTop: '0.5rem'
+                  }}
+                >
+                  Continue making me smile ❤️
+                </button>
+              </motion.div>
+            )}
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'auto' }}>
+          {confessionSteps[step].title !== "The Ultimate Choice" && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'auto' }}>
             <button
               onClick={handlePrev}
               style={{
@@ -299,14 +380,15 @@ export const V4Confession = () => {
               className="btn-primary glow-button"
               style={{
                 padding: '0.8rem 2rem',
-                opacity: (step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer) ? 0.5 : 1,
-                cursor: (step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer) ? 'not-allowed' : 'pointer'
+                opacity: (step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer) ? 0.5 : 1,
+                cursor: (step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer) ? 'not-allowed' : 'pointer'
               }}
-              disabled={(step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer)}
+              disabled={(step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer)}
             >
               {step === confessionSteps.length - 2 ? "Read Final Chapter" : "Next"}
             </button>
           </div>
+          )}
         </motion.div>
       </AnimatePresence>
     </div>
