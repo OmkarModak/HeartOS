@@ -36,7 +36,7 @@ const confessionSteps = [
   },
   {
     title: "The Drama & Betrayal",
-    content: "In 3rd year, a girl fell for me after I won a singing competition. But she had a toxic Ola manager ex who was aggressive. She couldn't leave him. One night, he stopped our car and threatened her. I protected her. We sorted it out, but he went mad, stalking us to college and threatening me. At a cultural event, I brought my friends to protect us. He threatened to show her naked pics. I shouted at him, made sure she wanted to leave him, and we ended it.",
+    content: "In 3rd year, a girl fell for me after I won a singing competition. But she had a toxic Ola manager ex who was aggressive. She couldn't leave him. One night, he stopped our car and threatened her. I protected her. We sorted it out, but he went mad, stalking us to college and threatening me. During a cultural event where we were the hosts, he showed up to threaten us again. I called my closest friends to protect us. He threatened to show her naked pics. I shouted at him, made sure she wanted to leave him, and we finally ended it.",
   },
   {
     title: "The Betrayal (Cont.)",
