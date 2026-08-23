@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const bootSequence = [
-  "Initializing HeartOS v4.0...",
+  "Initializing HeartOS v4.0 (FINAL VERSION)...",
   "Analyzing previous session data...",
-  "14 user responses found.",
+  "All emotional defenses disabled.",
   "Bypassing security protocols...",
-  "Loading 'The Real Me' protocol...",
+  "Initiating 'The Real Me' protocol...",
+  "Warning: Absolute Truth Module activated.",
+  "Loading the final chapter...",
   "System Ready."
 ];
 
