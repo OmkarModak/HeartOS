@@ -46,10 +46,7 @@ const confessionSteps = [
     title: "The 4-Year Silence",
     content: "For a year, I was completely broken. Then I started hitting the gym. I started my MSc in IT. I continued the gym for 2 years. I got a job where I interned. For almost 4 years, I had absolutely no girlfriend, nothing. My life was completely focused. I became the silent gym guy. People used to call me 'Mr. Consistent.'",
   },
-  {
-    title: "Until You",
-    content: "And then... I saw you. After 4 years of silence and building my walls, you were the one who made me delete that app.",
-  },
+
   {
     title: "The Illusion (Part 1)",
     content: "Wait... before you, there was one more story. After those 4 years, a new girl joined as a receptionist at my gym. She was very quiet. As a friend, I started talking to her, and I started liking her—not loving her yet, because she looked cute from the outside, but you never know the truth on the inside. She approached me first. We'd click random pictures, text each other, and go to the temple. I used to come from the office after 9 PM just to wait for her shift to end so we could spend time together.",
@@ -100,7 +97,11 @@ const confessionSteps = [
   },
   {
     title: "The Audacity",
-    content: "But here is the most insane part. Just last Thursday, out of nowhere, she called me while I was at the office. She asked if I was busy. I said yes, but asked what she wanted. She just said, 'Nothing, I just miss you.' I simply said 'OK' and cut the call. After everything she put me through, she still had the audacity to call. Shraddha, this is my entire past. This is why I built walls. This is what I survived before I met you.",
+    content: "But here is the most insane part. Just last Thursday, out of nowhere, she called me while I was at the office. She asked if I was busy. I said yes, but asked what she wanted. She just said, 'Nothing, I just miss you.' I simply said 'OK' and cut the call. After everything she put me through, she still had the audacity to call. Shraddha, this is my entire past. This is why I built walls. This is what I survived before I met you.\n\nSo I have to ask you... should I block her?",
+  },
+  {
+    title: "Until You",
+    content: "And then... I saw you. After 4 years of silence and building my walls, you were the one who made me delete that app.",
   }
 ];
 
@@ -109,6 +110,7 @@ export const V4Confession = () => {
   const [jobAnswer, setJobAnswer] = useState('');
   const [littleThingsResponse, setLittleThingsResponse] = useState<string | null>(null);
   const [commitmentResponse, setCommitmentResponse] = useState<string | null>(null);
+  const [blockAnswer, setBlockAnswer] = useState<string | null>(null);
 
   const littleThingsOptions = [
     "Aww, you noticed! 🥺",
@@ -121,9 +123,15 @@ export const V4Confession = () => {
     "Wait, seriously?! 😳",
     "I'm glad you did. 😊"
   ];
+  
+  const blockOptions = [
+    "Yes, block her right now! 🚫",
+    "Absolutely block her! 🛑"
+  ];
 
   const handleNext = () => {
     if (step === 2 && jobAnswer.trim().length === 0) return;
+    if (confessionSteps[step].title === "The Audacity" && !blockAnswer) return;
     
     if (step < confessionSteps.length - 1) {
       setStep(prev => prev + 1);
@@ -236,6 +244,35 @@ export const V4Confession = () => {
                 />
               </motion.div>
             )}
+
+            {confessionSteps[step].title === "The Audacity" && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}
+              >
+                {blockOptions.map((opt, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setBlockAnswer(opt)}
+                    style={{
+                      background: blockAnswer === opt ? 'rgba(255, 51, 102, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                      border: `1px solid ${blockAnswer === opt ? 'var(--accent-pink)' : 'rgba(255,255,255,0.2)'}`,
+                      padding: '0.8rem 1.5rem',
+                      borderRadius: '50px',
+                      color: blockAnswer === opt ? 'var(--accent-pink)' : 'white',
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      width: '100%',
+                      maxWidth: '300px'
+                    }}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </motion.div>
+            )}
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'auto' }}>
@@ -258,10 +295,10 @@ export const V4Confession = () => {
               className="btn-primary glow-button"
               style={{
                 padding: '0.8rem 2rem',
-                opacity: (step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0) ? 0.5 : 1,
-                cursor: (step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0) ? 'not-allowed' : 'pointer'
+                opacity: (step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer) ? 0.5 : 1,
+                cursor: (step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer) ? 'not-allowed' : 'pointer'
               }}
-              disabled={(step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0)}
+              disabled={(step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer)}
             >
               {step === confessionSteps.length - 2 ? "Read Final Chapter" : "Next"}
             </button>
