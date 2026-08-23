@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const bootSequence = [
   "Initializing HeartOS v4.0 (FINAL VERSION)...",

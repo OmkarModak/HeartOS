@@ -119,7 +119,6 @@ export const V4Confession = () => {
   const [littleThingsResponse, setLittleThingsResponse] = useState<string | null>(null);
   const [commitmentResponse, setCommitmentResponse] = useState<string | null>(null);
   const [blockAnswer, setBlockAnswer] = useState<string | null>(null);
-  const [finalChoice, setFinalChoice] = useState<string | null>(null);
   const [isDead, setIsDead] = useState(false);
   const [isAlive, setIsAlive] = useState(false);
 
@@ -141,7 +140,6 @@ export const V4Confession = () => {
   ];
 
   const handleFinalChoice = (choice: string) => {
-    setFinalChoice(choice);
     if (choice === 'die') {
       setIsDead(true);
     } else {

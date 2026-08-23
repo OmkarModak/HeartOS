@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { AlertTriangle, Lock } from 'lucide-react';
+import { Lock } from 'lucide-react';
 
 export const V4WarningScreen = ({ onProceed }: { onProceed: () => void }) => {
   const [acknowledged, setAcknowledged] = useState(false);
