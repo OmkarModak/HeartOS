@@ -59,8 +59,24 @@ const confessionSteps = [
     content: "She had a childhood best friend who I already knew from the gym, and we became close too. One day at the temple, she introduced me to her mom. Her best friend pulled me aside and told me, 'Don't make her sad, she went through a toxic relationship.' I promised I wouldn't. Everything was going so well... because you never know what's coming next, right?",
   },
   {
+    title: "The Red Flag",
+    content: "One day in the gym, she handed me her phone to show me something on Instagram. I saw a notification pop up: 'I love you too' from a guy—an old friend from her martial arts classes. I asked her about it. She brushed it off, saying it was 'normal' for them to talk like that and that even her parents knew. Like a fool, I trusted her and let it go. We eventually started dating, and I was intimate with her, completely trusting the situation.",
+  },
+  {
+    title: "The Trap (Part 1)",
+    content: "In early 2024, I told her I wanted a real future with her. She said her parents were complicated. I started visiting her family's rented home, thinking maybe their poor condition was the issue, and I wanted to fix it. Her parents started acting very sweet to me, and soon, they asked me to drive them in my car to a wedding in their native place, Bijapur.",
+  },
+  {
+    title: "Fighting For Her",
+    content: "My dad, being well-connected, looked into her family and warned me not to go—he said they had a very weird history and were frauds. But I fought with my own parents for her. I defended her. I convinced my family and drove them to Bijapur. It was supposed to be a 3-day trip, but it turned into 4 days in a village with no infrastructure, no proper lights, and no toilets.",
+  },
+  {
+    title: "The Disrespect",
+    content: "They treated me like nothing but a driver for those 4 days. Back home, my mom was terrified they were going to force me to marry her there. My sister was the only one who defended me, knowing I wouldn't do anything wrong. Despite how badly I was treated, I still sat down with her mom and told her I liked her daughter. Her mom cried in front of me, making it seem like a touching moment. But that wasn't the end... the main thing started from here.",
+  },
+  {
     title: "The Final Chapter",
-    content: "[...waiting for the final heartbreak...]"
+    content: "[...waiting for the rest of the story...]"
   }
 ];
 
