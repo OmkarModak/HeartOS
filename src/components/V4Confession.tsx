@@ -96,6 +96,10 @@ const confessionSteps = [
     content: "I told her we would talk when I got back. Finally, in June 2026, I ended it and told her everything. She still tried to blame me and even tried to manipulate my sister into taking her side, but my sister saw right through her. Even her female best friend (the one from the gym) is still on my side to this day because she knows the reality of what I went through. The moment it was over, I finally felt completely relieved.",
   },
   {
+    title: "My Goal Today",
+    content: "Today, I am in a much better place. Back then, they financially drained me when I was barely earning 24k. Now, I earn above 40k. My priority is my career and my stability. I've made a promise to myself: I will not get married until my income reaches above 60k. I am focused on building a secure, solid future.",
+  },
+  {
     title: "The Audacity",
     content: "But here is the most insane part. Just last Thursday, out of nowhere, she called me while I was at the office. She asked if I was busy. I said yes, but asked what she wanted. She just said, 'Nothing, I just miss you.' I simply said 'OK' and cut the call. After everything she put me through, she still had the audacity to call. Shraddha, this is my entire past. This is why I built walls. This is what I survived before I met you.\n\nSo I have to ask you... should I block her?",
   },
