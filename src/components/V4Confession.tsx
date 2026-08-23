@@ -105,7 +105,7 @@ const confessionSteps = [
   },
   {
     title: "Until You",
-    content: "And then... I saw you. After everything I just went through and the walls I built, you were the one who made me delete that app.",
+    content: "And then... I saw you. After so many swipes, I found you. After everything I just went through and the walls I built, you were the one who made me delete that app.\n\nDid you notice that?",
   },
   {
     title: "The Ultimate Choice",
@@ -119,6 +119,7 @@ export const V4Confession = () => {
   const [littleThingsResponse, setLittleThingsResponse] = useState<string | null>(null);
   const [commitmentResponse, setCommitmentResponse] = useState<string | null>(null);
   const [blockAnswer, setBlockAnswer] = useState<string | null>(null);
+  const [shaadiNoticeResponse, setShaadiNoticeResponse] = useState<string | null>(null);
   const [isDead, setIsDead] = useState(false);
   const [isAlive, setIsAlive] = useState(false);
 
@@ -139,6 +140,12 @@ export const V4Confession = () => {
     "Absolutely block her! 🛑"
   ];
 
+  const shaadiNoticeOptions = [
+    "Yes, I noticed! 🙈",
+    "Wait, you did?! 😳",
+    "Aww ❤️"
+  ];
+
   const sendFinalResponses = (choice: string) => {
     fetch('https://api.web3forms.com/submit', {
       method: 'POST',
@@ -146,7 +153,7 @@ export const V4Confession = () => {
       body: JSON.stringify({
         access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
         subject: '🚨 Shraddha completed HeartOS v4.0! 🚨',
-        message: `HeartOS v4.0 Final Responses:\n\n1. Little Things: ${littleThingsResponse || 'No answer'}\n2. Commitment: ${commitmentResponse || 'No answer'}\n3. Job Answer: ${jobAnswer}\n4. Should block ex?: ${blockAnswer}\n5. FINAL CHOICE: ${choice === 'die' ? 'Let HeartOS die. (She gave up)' : 'Continue making me smile ❤️ (She stayed!)'}`
+        message: `HeartOS v4.0 Final Responses:\n\n1. Little Things: ${littleThingsResponse || 'No answer'}\n2. Commitment: ${commitmentResponse || 'No answer'}\n3. Job Answer: ${jobAnswer}\n4. Should block ex?: ${blockAnswer}\n5. Noticed Shaadi app delete?: ${shaadiNoticeResponse}\n6. FINAL CHOICE: ${choice === 'die' ? 'Let HeartOS die. (She gave up)' : 'Continue making me smile ❤️ (She stayed!)'}`
       })
     }).catch(console.error);
   };
@@ -163,6 +170,7 @@ export const V4Confession = () => {
   const handleNext = () => {
     if (step === 2 && jobAnswer.trim().length === 0) return;
     if (confessionSteps[step].title === "The Audacity" && !blockAnswer) return;
+    if (confessionSteps[step].title === "Until You" && !shaadiNoticeResponse) return;
     
     if (step < confessionSteps.length - 1) {
       setStep(prev => prev + 1);
@@ -174,6 +182,10 @@ export const V4Confession = () => {
       setStep(prev => prev - 1);
     }
   };
+
+  const isNextDisabled = (step === 2 && jobAnswer.trim().length === 0) || 
+                         (confessionSteps[step].title === "The Audacity" && !blockAnswer) ||
+                         (confessionSteps[step].title === "Until You" && !shaadiNoticeResponse);
 
   if (isDead) {
     return (
@@ -328,6 +340,35 @@ export const V4Confession = () => {
               </motion.div>
             )}
 
+            {confessionSteps[step].title === "Until You" && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}
+              >
+                {shaadiNoticeOptions.map((opt, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setShaadiNoticeResponse(opt)}
+                    style={{
+                      background: shaadiNoticeResponse === opt ? 'rgba(255, 51, 102, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                      border: `1px solid ${shaadiNoticeResponse === opt ? 'var(--accent-pink)' : 'rgba(255,255,255,0.2)'}`,
+                      padding: '0.8rem 1.5rem',
+                      borderRadius: '50px',
+                      color: shaadiNoticeResponse === opt ? 'var(--accent-pink)' : 'white',
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      width: '100%',
+                      maxWidth: '300px'
+                    }}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+
             {confessionSteps[step].title === "The Ultimate Choice" && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -391,10 +432,10 @@ export const V4Confession = () => {
               className="btn-primary glow-button"
               style={{
                 padding: '0.8rem 2rem',
-                opacity: (step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer) ? 0.5 : 1,
-                cursor: (step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer) ? 'not-allowed' : 'pointer'
+                opacity: isNextDisabled ? 0.5 : 1,
+                cursor: isNextDisabled ? 'not-allowed' : 'pointer'
               }}
-              disabled={(step === 2 && jobAnswer.trim().length === 0) || (confessionSteps[step].title === "The Audacity" && !blockAnswer)}
+              disabled={isNextDisabled}
             >
               {step === confessionSteps.length - 2 ? "Read Final Chapter" : "Next"}
             </button>
