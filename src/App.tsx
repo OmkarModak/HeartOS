@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { V4BootScreen } from './components/V4BootScreen';
 import { V4WarningScreen } from './components/V4WarningScreen';
 import { V4Confession } from './components/V4Confession';
