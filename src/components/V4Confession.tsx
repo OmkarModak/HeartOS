@@ -36,7 +36,7 @@ const confessionSteps = [
   },
   {
     title: "The Drama & Betrayal",
-    content: "In 3rd year, a girl fell for me after I won a singing competition. But she had a toxic Ola manager ex who was aggressive. She couldn't leave him. One night, he stopped our car and threatened her. I protected her. We sorted it out, but he went mad, stalking us to college and threatening me. He even followed us during the preparations for our cultural event, where we were the hosts. The day we finally ended it, he brought his friends to threaten me, so I called my closest friends to protect us. He threatened to show her naked pics. I shouted at him, made sure she wanted to leave him, and we ended it.",
+    content: "In 3rd year, a girl fell for me after I won a singing competition. But she had a toxic Ola manager ex who was aggressive. She couldn't leave him. One night, he stopped our car and threatened her. I protected her. We sorted it out, but he went mad, stalking us to college and threatening me. He even followed us during the preparations for our cultural event, where we were the hosts. The day we finally ended it, he brought his friends to threaten me, so I called my closest friends to protect us. He threatened to show her naked pics. I shouted at him, made sure she wanted to leave him, and we ended it. I want to be completely open with you—this was the first girl I was intimate with.",
   },
   {
     title: "The Betrayal (Cont.)",
@@ -51,8 +51,16 @@ const confessionSteps = [
     content: "And then... I saw you. After 4 years of silence and building my walls, you were the one who made me delete that app.",
   },
   {
+    title: "The Illusion (Part 1)",
+    content: "Wait... before you, there was one more story. After those 4 years, a new girl joined as a receptionist at my gym. She was very quiet. As a friend, I started talking to her, and I started liking her—not loving her yet, because she looked cute from the outside, but you never know the truth on the inside. She approached me first. We'd click random pictures, text each other, and go to the temple. I used to come from the office after 9 PM just to wait for her shift to end so we could spend time together.",
+  },
+  {
+    title: "The Illusion (Part 2)",
+    content: "She had a childhood best friend who I already knew from the gym, and we became close too. One day at the temple, she introduced me to her mom. Her best friend pulled me aside and told me, 'Don't make her sad, she went through a toxic relationship.' I promised I wouldn't. Everything was going so well... because you never know what's coming next, right?",
+  },
+  {
     title: "The Final Chapter",
-    content: "[...waiting for the final story...]"
+    content: "[...waiting for the final heartbreak...]"
   }
 ];
 
