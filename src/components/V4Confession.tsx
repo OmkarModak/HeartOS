@@ -76,7 +76,7 @@ const confessionSteps = [
   },
   {
     title: "The Dice In Their Game",
-    content: "The doubts started when her mom asked me for 50k. At the time, I was only earning 24k a month. When I said I didn't have it, she told me to ask my friends or family. That's when I realized they never paid me for driving to Bijapur or for the rented car. I started feeling weird, but I was so manipulated by her words. I went to their home every day, playing Ludo with them like a fool... not realizing I was the dice in their game. I lied to my dad about going there. My sister still supported me because I hid the truth from her too.",
+    content: "The doubts started when her mom asked me for 50k. At the time, I was only earning 24k a month. When I said I didn't have it, she told me to ask my friends or family. That's when I realized they never paid me for driving to Bijapur or for the rented car. I started feeling weird, but I was so manipulated by her words. I went to their home every day, playing Ludo with them like a fool... not realizing I was the dice in their game. I lied to my dad about going there. My sister still supported me because I hid the truth from her too. Shraddha, note this: I am trusting you with my absolute full heart here. Nobody else knows this.",
   },
   {
     title: "The Financial Drain",
