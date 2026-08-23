@@ -58,8 +58,11 @@ const confessionSteps = [
 
 export const V4Confession = () => {
   const [step, setStep] = useState(0);
+  const [jobAnswer, setJobAnswer] = useState('');
 
   const handleNext = () => {
+    if (step === 2 && jobAnswer.trim().length === 0) return;
+    
     if (step < confessionSteps.length - 1) {
       setStep(prev => prev + 1);
     }
@@ -93,6 +96,26 @@ export const V4Confession = () => {
 
           <div style={{ fontSize: '1.2rem', color: 'white', lineHeight: '1.8', marginBottom: '3rem', whiteSpace: 'pre-wrap' }}>
             {confessionSteps[step].content}
+            
+            {step === 2 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{ marginTop: '2rem' }}
+              >
+                <textarea
+                  value={jobAnswer}
+                  onChange={(e) => setJobAnswer(e.target.value)}
+                  placeholder="Your honest answer..."
+                  style={{
+                    width: '100%', minHeight: '120px', padding: '1rem', borderRadius: '8px',
+                    background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255, 51, 102, 0.4)',
+                    color: 'white', fontSize: '1.1rem', outline: 'none', resize: 'none',
+                    fontFamily: 'inherit'
+                  }}
+                />
+              </motion.div>
+            )}
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'auto' }}>
@@ -115,10 +138,10 @@ export const V4Confession = () => {
               className="btn-primary glow-button"
               style={{
                 padding: '0.8rem 2rem',
-                opacity: step === confessionSteps.length - 1 ? 0.5 : 1,
-                cursor: step === confessionSteps.length - 1 ? 'not-allowed' : 'pointer'
+                opacity: (step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0) ? 0.5 : 1,
+                cursor: (step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0) ? 'not-allowed' : 'pointer'
               }}
-              disabled={step === confessionSteps.length - 1}
+              disabled={(step === confessionSteps.length - 1) || (step === 2 && jobAnswer.trim().length === 0)}
             >
               {step === confessionSteps.length - 2 ? "Read Final Chapter" : "Next"}
             </button>
