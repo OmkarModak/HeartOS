@@ -93,7 +93,7 @@ const confessionSteps = [
   },
   {
     title: "The End (June 2026)",
-    content: "I told her we would talk when I got back. Finally, in June 2026, I ended it and told her everything. She still tried to blame me. She even tried to manipulate my sister into taking her side, but my sister saw right through her and supported my decision to end the relationship. The moment it was over, I finally felt completely relieved.",
+    content: "I told her we would talk when I got back. Finally, in June 2026, I ended it and told her everything. She still tried to blame me and even tried to manipulate my sister into taking her side, but my sister saw right through her. Even her own best friend is still on my side to this day because she knows the reality of what I went through. The moment it was over, I finally felt completely relieved.",
   },
   {
     title: "The Audacity",
