@@ -59,6 +59,13 @@ const confessionSteps = [
 export const V4Confession = () => {
   const [step, setStep] = useState(0);
   const [jobAnswer, setJobAnswer] = useState('');
+  const [littleThingsResponse, setLittleThingsResponse] = useState<string | null>(null);
+
+  const littleThingsOptions = [
+    "Aww, you noticed! 🥺",
+    "Stalker vibes 👀😂",
+    "I didn't even realize! 🙈"
+  ];
 
   const handleNext = () => {
     if (step === 2 && jobAnswer.trim().length === 0) return;
@@ -97,6 +104,35 @@ export const V4Confession = () => {
           <div style={{ fontSize: '1.2rem', color: 'white', lineHeight: '1.8', marginBottom: '3rem', whiteSpace: 'pre-wrap' }}>
             {confessionSteps[step].content}
             
+            {step === 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}
+              >
+                {littleThingsOptions.map((opt, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setLittleThingsResponse(opt)}
+                    style={{
+                      background: littleThingsResponse === opt ? 'rgba(255, 51, 102, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                      border: `1px solid ${littleThingsResponse === opt ? 'var(--accent-pink)' : 'rgba(255,255,255,0.2)'}`,
+                      padding: '0.8rem 1.5rem',
+                      borderRadius: '50px',
+                      color: littleThingsResponse === opt ? 'var(--accent-pink)' : 'white',
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      width: '100%',
+                      maxWidth: '300px'
+                    }}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+
             {step === 2 && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
