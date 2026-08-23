@@ -105,7 +105,7 @@ const confessionSteps = [
   },
   {
     title: "Until You",
-    content: "And then... I saw you. After so many swipes, I found you. After everything I just went through and the walls I built, you were the one who made me delete that app.\n\nDid you notice that?",
+    content: "And then... I saw you. After so many swipes, I found you. After everything I just went through and the walls I built, you were the one who made me delete the Shaadi app.\n\nDid you notice that?",
   },
   {
     title: "The Ultimate Choice",
