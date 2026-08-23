@@ -139,7 +139,20 @@ export const V4Confession = () => {
     "Absolutely block her! 🛑"
   ];
 
+  const sendFinalResponses = (choice: string) => {
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
+        subject: '🚨 Shraddha completed HeartOS v4.0! 🚨',
+        message: `HeartOS v4.0 Final Responses:\n\n1. Little Things: ${littleThingsResponse || 'No answer'}\n2. Commitment: ${commitmentResponse || 'No answer'}\n3. Job Answer: ${jobAnswer}\n4. Should block ex?: ${blockAnswer}\n5. FINAL CHOICE: ${choice === 'die' ? 'Let HeartOS die. (She gave up)' : 'Continue making me smile ❤️ (She stayed!)'}`
+      })
+    }).catch(console.error);
+  };
+
   const handleFinalChoice = (choice: string) => {
+    sendFinalResponses(choice);
     if (choice === 'die') {
       setIsDead(true);
     } else {
