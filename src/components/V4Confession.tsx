@@ -40,7 +40,7 @@ const confessionSteps = [
   },
   {
     title: "The Betrayal (Cont.)",
-    content: "A few months later, when everything was good, there was a twist. My first ex and her boyfriend manipulated the situation. I get manipulated easily, and they took advantage. Because of that, my relationship broke, and she blocked me everywhere. Later, I found out she ended up dating the guy she always used to call 'bro'.",
+    content: "A few months later, when everything was good, there was a twist. My first ex and her boyfriend manipulated the situation. I get manipulated easily, and they took advantage. Because of that, my relationship broke, and she blocked me everywhere. Later, I found out she ended up dating the close friend she always used to call 'bro'.",
   },
   {
     title: "The 4-Year Silence",
