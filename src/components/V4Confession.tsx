@@ -91,8 +91,16 @@ const confessionSteps = [
     content: "In March 2026, I was heading to Pune for my new job training in a 3AC train. The week before, I had paid the advance for her college trip. Before I left, she demanded I drop her at the station on my day off. When I told her I couldn't and suggested her best friend, she questioned, 'Are you my boyfriend or is she?' We fought, and she cried. Still, she jumped onto my train to Pune just to see me. When the TC came, she ran. I was so pissed, but even then, she completely denied that she was in the wrong.",
   },
   {
-    title: "The Final Chapter",
-    content: "[...waiting for the absolute end of the story...]"
+    title: "The Emotional Blackmail",
+    content: "During that first weekend in Pune, she picked a fight because I hadn't asked if she got her periods. My weekend was already chaotic settling in where my sister lives, but I just took the blame to stop the fighting. It didn't work. For the next two months, we constantly fought. The breaking point came one night at 2 AM. During a fight, she swallowed 5 tablets, telling me 'let whatever is gonna happen, happen.' Thankfully they were just headache pills, but it was pure emotional blackmail. That was the exact moment whatever love I had left for her completely died.",
+  },
+  {
+    title: "The End (June 2026)",
+    content: "I told her we would talk when I got back. Finally, in June 2026, I ended it and told her everything. She still tried to blame me. She even tried to manipulate my sister into taking her side, but my sister saw right through her and supported my decision to end the relationship. The moment it was over, I finally felt completely relieved.",
+  },
+  {
+    title: "The Audacity",
+    content: "But here is the most insane part. Just last Thursday, out of nowhere, she called me while I was at the office. She asked if I was busy. I said yes, but asked what she wanted. She just said, 'Nothing, I just miss you.' I simply said 'OK' and cut the call. After everything she put me through, she still had the audacity to call. Shraddha, this is my entire past. This is why I built walls. This is what I survived before I met you.",
   }
 ];
 
