@@ -60,11 +60,18 @@ export const V4Confession = () => {
   const [step, setStep] = useState(0);
   const [jobAnswer, setJobAnswer] = useState('');
   const [littleThingsResponse, setLittleThingsResponse] = useState<string | null>(null);
+  const [commitmentResponse, setCommitmentResponse] = useState<string | null>(null);
 
   const littleThingsOptions = [
     "Aww, you noticed! 🥺",
     "Stalker vibes 👀😂",
     "I didn't even realize! 🙈"
+  ];
+  
+  const commitmentOptions = [
+    "Awww, that's so sweet! 🥺❤️",
+    "Wait, seriously?! 😳",
+    "I'm glad you did. 😊"
   ];
 
   const handleNext = () => {
@@ -120,6 +127,35 @@ export const V4Confession = () => {
                       padding: '0.8rem 1.5rem',
                       borderRadius: '50px',
                       color: littleThingsResponse === opt ? 'var(--accent-pink)' : 'white',
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      width: '100%',
+                      maxWidth: '300px'
+                    }}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+
+            {step === 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}
+              >
+                {commitmentOptions.map((opt, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCommitmentResponse(opt)}
+                    style={{
+                      background: commitmentResponse === opt ? 'rgba(255, 51, 102, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                      border: `1px solid ${commitmentResponse === opt ? 'var(--accent-pink)' : 'rgba(255,255,255,0.2)'}`,
+                      padding: '0.8rem 1.5rem',
+                      borderRadius: '50px',
+                      color: commitmentResponse === opt ? 'var(--accent-pink)' : 'white',
                       fontSize: '1rem',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease',
