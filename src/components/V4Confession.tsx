@@ -75,8 +75,24 @@ const confessionSteps = [
     content: "They treated me like nothing but a driver for those 4 days. Back home, my mom was terrified they were going to force me to marry her there. My sister was the only one who defended me, knowing I wouldn't do anything wrong. Despite how badly I was treated, I still sat down with her mom and told her I liked her daughter. Her mom cried in front of me, making it seem like a touching moment. But that wasn't the end... the main thing started from here.",
   },
   {
+    title: "The Dice In Their Game",
+    content: "The doubts started when her mom asked me for 50k. At the time, I was only earning 24k a month. When I said I didn't have it, she told me to ask my friends or family. That's when I realized they never paid me for driving to Bijapur or for the rented car. I started feeling weird, but I was so manipulated by her words. I went to their home every day, playing Ludo with them like a fool... not realizing I was the dice in their game. I lied to my dad about going there. My sister still supported me because I hid the truth from her too.",
+  },
+  {
+    title: "The Financial Drain",
+    content: "Her mom started asking me to buy groceries and vegetables. I paid half of her first-year college fees (her best friend, who loved her, paid the other half). I bought her mom a new phone she never paid me back for. I gave my girlfriend money for petrol and daily things. I was going completely out of budget. I had to take loans just to survive. Why am I telling you this? Because absolutely no one knows. I agreed to everything and suffered in silence because I thought it was love.",
+  },
+  {
+    title: "The Dark Reality",
+    content: "The truth about her family was darker than I could have imagined. Her parents weren't actually married; her father had escaped his real family to be with her mother. They were violently abusive to each other. Once, she called me crying that she had been beaten and was running away, only for them to act like nothing happened days later. She also revealed a deeply traumatic past of being assaulted when she was young. But the most twisted part? After our breakup, her best friend told me she still talks nicely to the man who did it. I couldn't understand how.",
+  },
+  {
+    title: "The Breaking Point",
+    content: "In March 2026, I was heading to Pune for my new job training in a 3AC train. The week before, I had paid the advance for her college trip. Before I left, she demanded I drop her at the station on my day off. When I told her I couldn't and suggested her best friend, she questioned, 'Are you my boyfriend or is she?' We fought, and she cried. Still, she jumped onto my train to Pune just to see me. When the TC came, she ran. I was so pissed, but even then, she completely denied that she was in the wrong.",
+  },
+  {
     title: "The Final Chapter",
-    content: "[...waiting for the rest of the story...]"
+    content: "[...waiting for the absolute end of the story...]"
   }
 ];
 
