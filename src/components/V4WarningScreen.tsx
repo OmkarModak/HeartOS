@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { AlertTriangle, Lock } from 'lucide-react';
 
 export const V4WarningScreen = ({ onProceed }: { onProceed: () => void }) => {
+  const [acknowledged, setAcknowledged] = useState(false);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '80vh', textAlign: 'center' }}>
       <motion.div
@@ -35,10 +37,23 @@ export const V4WarningScreen = ({ onProceed }: { onProceed: () => void }) => {
           </p>
         </div>
 
+        <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '2.5rem', cursor: 'pointer', textAlign: 'left' }}>
+          <input 
+            type="checkbox" 
+            checked={acknowledged} 
+            onChange={(e) => setAcknowledged(e.target.checked)} 
+            style={{ width: '20px', height: '20px', accentColor: 'var(--accent-pink)', cursor: 'pointer' }}
+          />
+          <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.05rem', userSelect: 'none' }}>
+            I acknowledge and promise to keep this trust.
+          </span>
+        </label>
+
         <motion.button
           whileHover={{ scale: 1.02, boxShadow: '0 0 20px rgba(255, 51, 102, 0.4)' }}
           whileTap={{ scale: 0.98 }}
           onClick={onProceed}
+          disabled={!acknowledged}
           className="btn-primary"
           style={{
             padding: '1.2rem 3rem',
@@ -50,8 +65,9 @@ export const V4WarningScreen = ({ onProceed }: { onProceed: () => void }) => {
             border: 'none',
             borderRadius: '50px',
             color: 'white',
-            cursor: 'pointer',
-            boxShadow: '0 4px 15px rgba(255, 51, 102, 0.2)'
+            cursor: acknowledged ? 'pointer' : 'not-allowed',
+            opacity: acknowledged ? 1 : 0.5,
+            boxShadow: acknowledged ? '0 4px 15px rgba(255, 51, 102, 0.2)' : 'none'
           }}
         >
           I Promise
