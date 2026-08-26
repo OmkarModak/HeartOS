@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const herQuestions = [
+const getHerQuestions = (chosenName: string) => [
   {
     title: "HeartOS meets YouOS",
     content: "You stayed. You actually stayed.\n\nHeartOS was built to tell you my darkest truths, and I fully expected it to end there. But you clicked 'Continue making me smile'. That means more to me than words can say.\n\nNow that you know everything about me... it's my turn to learn everything about you. Welcome to YouOS.",
@@ -15,8 +15,8 @@ const herQuestions = [
     options: ["Call me Shru 🙈", "Shraddha is fine 😊", "Whatever you want ❤️"]
   },
   {
-    title: "Little Shru",
-    content: "Let's start from the beginning. How was little Shru's childhood? Were you a quiet kid, a troublemaker, or somewhere in between? Tell me a memory you cherish.",
+    title: `Little ${chosenName}`,
+    content: `Let's start from the beginning. How was little ${chosenName}'s childhood? Were you a quiet kid, a troublemaker, or somewhere in between? Tell me a memory you cherish.`,
     type: "textarea",
     key: "childhood"
   },
@@ -34,7 +34,7 @@ const herQuestions = [
   },
   {
     title: "Your Past",
-    content: "I laid all my cards on the table. Now, if you're comfortable, I want to know about your past. What experiences made you the Shru you are today?",
+    content: `I laid all my cards on the table. Now, if you're comfortable, I want to know about your past. What experiences made you the ${chosenName} you are today?`,
     type: "textarea",
     key: "past"
   },
@@ -59,8 +59,11 @@ export const V5HerOS = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDone, setIsDone] = useState(false);
 
+  const chosenName = answers.name_pref === "Shraddha is fine 😊" ? "Shraddha" : "Shru";
+  const currentQuestions = getHerQuestions(chosenName);
+
   const handleNext = () => {
-    if (step < herQuestions.length - 1) {
+    if (step < currentQuestions.length - 1) {
       setStep(prev => prev + 1);
     }
   };
@@ -71,7 +74,7 @@ export const V5HerOS = () => {
     }
   };
 
-  const currentQ = herQuestions[step];
+  const currentQ = currentQuestions[step];
   const isAnswerMissing = currentQ.type !== 'info' && (!answers[currentQ.key as string] || answers[currentQ.key as string].trim() === '');
 
   const submitAnswers = async (finalChoice: string) => {
@@ -129,7 +132,7 @@ export const V5HerOS = () => {
           transition={{ duration: 0.5 }}
         >
           <div style={{ position: 'absolute', top: '1rem', right: '1.5rem', color: 'rgba(255,255,255,0.3)', fontSize: '0.9rem', fontFamily: 'monospace' }}>
-            {step + 1} / {herQuestions.length}
+            {step + 1} / {currentQuestions.length}
           </div>
 
           <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: '#ffb3c6' }}>
