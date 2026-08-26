@@ -6,8 +6,8 @@ const bootSequence = [
   "Override Authorized by: Shraddha.",
   "HeartOS was scheduled for termination.",
   "Termination Cancelled.",
-  "Initializing HeartOS v5.0...",
-  "Loading 'Focus On Her' Protocol...",
+  "HeartOS meets YouOS...",
+  "Initializing YouOS v1.0...",
   "Activating brighter timeline...",
   "System Ready. Welcome back."
 ];

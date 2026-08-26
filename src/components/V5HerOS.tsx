@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const herQuestions = [
   {
-    title: "The Rebirth",
-    content: "You stayed. You actually stayed.\n\nHeartOS was built to tell you my darkest truths, and I fully expected it to end there. But you clicked 'Continue making me smile'. That means more to me than words can say.\n\nNow that you know everything about me... it's my turn to learn everything about you.",
+    title: "HeartOS meets YouOS",
+    content: "You stayed. You actually stayed.\n\nHeartOS was built to tell you my darkest truths, and I fully expected it to end there. But you clicked 'Continue making me smile'. That means more to me than words can say.\n\nNow that you know everything about me... it's my turn to learn everything about you. Welcome to YouOS.",
     type: "info"
   },
   {
@@ -32,8 +32,14 @@ const herQuestions = [
     key: "past"
   },
   {
-    title: "The End... or The Beginning?",
-    content: "Thank you for sharing your world with me.\n\nI can't wait for our date on October 4th. Are you ready?",
+    title: "The Oct 4th Date",
+    content: "I want our date on October 4th to be perfect. Today I asked you for your wishlist of places rather than just a cafe, so I can finalize my office leave and plan the best day for us.\n\nSo... where do you really want to go?",
+    type: "textarea",
+    key: "wishlist"
+  },
+  {
+    title: "The Beginning",
+    content: "Thank you for sharing your world with me.\n\nAre you ready for everything that comes next?",
     type: "choice",
     key: "ready",
     options: ["I was born ready ✨", "Yes, let's do this ❤️", "I can't wait! 😊"]
@@ -63,7 +69,7 @@ export const V5HerOS = () => {
 
   const submitAnswers = async (finalChoice: string) => {
     setIsSubmitting(true);
-    const finalAnswers = { ...answers, ready: finalChoice };
+    const finalAnswers: Record<string, string> = { ...answers, ready: finalChoice };
     
     try {
       await fetch('https://api.web3forms.com/submit', {
@@ -72,7 +78,7 @@ export const V5HerOS = () => {
         body: JSON.stringify({
           access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
           subject: '🌸 Shraddha completed HeartOS v5.0 (Focus on Her)! 🌸',
-          message: `HeartOS v5.0 Responses:\n\n1. Childhood: ${finalAnswers.childhood}\n2. Family: ${finalAnswers.family}\n3. Travel/Trekking: ${finalAnswers.travel}\n4. Her Past: ${finalAnswers.past}\n5. Ready for Oct 4th?: ${finalAnswers.ready}`
+          message: `HeartOS v5.0 Responses:\n\n1. Childhood: ${finalAnswers.childhood}\n2. Family: ${finalAnswers.family}\n3. Travel/Trekking: ${finalAnswers.travel}\n4. Her Past: ${finalAnswers.past}\n5. Date Wishlist: ${finalAnswers.wishlist}\n6. Ready?: ${finalAnswers.ready}`
         })
       });
       setIsDone(true);
