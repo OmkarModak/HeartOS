@@ -76,7 +76,7 @@ const getHerQuestions = (chosenName: string) => [
   },
   {
     title: "SECURITY CLEARANCE",
-    content: "SYSTEM OVERRIDE REQUIRED.\n\nTo prove you are truly ready to submit your answers... What is the exact distance in kilometers from Nashik to Quepem?",
+    content: "SYSTEM OVERRIDE REQUIRED.\n\nTo prove you are truly ready to submit your answers... What is the exact distance in kilometers between us?",
     type: "passcode",
     key: "passcode",
     expectedAnswer: "693"
@@ -242,7 +242,7 @@ export const V5HerOS = () => {
             )}
 
             {currentQ.type === 'passcode' && (
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '1rem' }}>
                 <input
                   type="text"
                   value={answers[currentQ.key as string] || ''}
@@ -263,6 +263,16 @@ export const V5HerOS = () => {
                     outline: 'none'
                   }}
                 />
+                
+                {answers[currentQ.key as string] && answers[currentQ.key as string].trim() !== currentQ.expectedAnswer && (
+                  <motion.div 
+                    initial={{ opacity: 0 }} 
+                    animate={{ opacity: 1 }} 
+                    style={{ marginTop: '1rem', color: '#ff4d6d', fontSize: '0.9rem', fontFamily: 'monospace' }}
+                  >
+                    ACCESS DENIED. (Hint: Google the distance between Quepem and Nashik)
+                  </motion.div>
+                )}
               </div>
             )}
 
