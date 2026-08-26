@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import marshmallowMeet from '../assets/marshmallow-meet.jpg';
 import loveSticker from '../assets/sticker-love.png';
 
-const getHerQuestions = (chosenName: string) => [
+const getHerQuestions = (chosenName: string, answers: Record<string, string> = {}) => [
   {
     title: "HeartOS meets YouOS",
     content: "You stayed. You actually stayed.\n\nHeartOS was built to tell you my darkest truths, and I fully expected it to end there. But you clicked 'Continue making me smile'. That means more to me than words can say.\n\nNow that you know everything about me... it's my turn to learn everything about you. Welcome to YouOS.",
@@ -24,6 +24,12 @@ const getHerQuestions = (chosenName: string) => [
     key: "status",
     options: ["Nope, I'm single! 😊", "It's complicated 🫣", "Yes, sorry! 😅"]
   },
+  ...(answers.status === "Yes, sorry! 😅" ? [{
+    title: "Wait, what? 💔",
+    content: "You just said you have a boyfriend... then why are we talking about shaadi? Explain yourself young lady! 🤨",
+    type: "textarea",
+    key: "why_shaadi"
+  }] : []),
   {
     title: `Little ${chosenName}`,
     content: `Let's start from the beginning. How was little ${chosenName}'s childhood? Were you a quiet kid, a troublemaker, or somewhere in between? Tell me a memory you cherish.`,
@@ -114,7 +120,7 @@ export const V5HerOS = () => {
   }, [step]);
 
   const chosenName = answers.name_pref === "Shraddha is fine 😊" ? "Shraddha" : "Shru";
-  const currentQuestions = getHerQuestions(chosenName);
+  const currentQuestions = getHerQuestions(chosenName, answers);
 
   const handleNext = () => {
     if (currentQuestions[step].type === 'passcode') {
@@ -153,7 +159,7 @@ export const V5HerOS = () => {
         body: JSON.stringify({
           access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
           subject: '🌸 Shraddha completed YouOS! 🌸',
-          message: `YouOS Responses:\n\n1. Name Pref: ${finalAnswers.name_pref}\n2. Childhood: ${finalAnswers.childhood}\n3. Family: ${finalAnswers.family}\n4. Travel/Trekking: ${finalAnswers.travel}\n5. Her Past: ${finalAnswers.past || 'Skipped'}\n6. Date Wishlist: ${finalAnswers.wishlist}\n7. Vibe: ${finalAnswers.vibe}\n8. Food: ${finalAnswers.food}\n9. Flags: ${finalAnswers.flags}\n10. Meet Loc: ${finalAnswers.meet_location}\n11. Ready?: ${finalAnswers.ready}`
+          message: `YouOS Responses:\n\n1. Name Pref: ${finalAnswers.name_pref}\n2. Childhood: ${finalAnswers.childhood}\n3. Family: ${finalAnswers.family}\n4. Travel/Trekking: ${finalAnswers.travel}\n5. Her Past: ${finalAnswers.past || 'Skipped'}\n6. Date Wishlist: ${finalAnswers.wishlist}\n7. Vibe: ${finalAnswers.vibe}\n8. Food: ${finalAnswers.food}\n9. Flags: ${finalAnswers.flags}\n10. Meet Loc: ${finalAnswers.meet_location}\n11. Ready?: ${finalAnswers.ready}\n\n[Status]: ${finalAnswers.status}\n[Why Shaadi?]: ${finalAnswers.why_shaadi || 'N/A'}`
         })
       });
       setIsDone(true);
