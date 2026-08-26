@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const confessionSteps = [
+interface V4ConfessionProps {
+  onSurvive?: () => void;
+}
+
+export const V4Confession = ({ onSurvive }: V4ConfessionProps) => {
+  const confessionSteps = [
   {
     title: "The Little Things",
     content: "I know you have a mole on the side of your neck. It's the little things I notice about you.",
@@ -113,7 +118,6 @@ const confessionSteps = [
   }
 ];
 
-export const V4Confession = () => {
   const [step, setStep] = useState(0);
   const [jobAnswer, setJobAnswer] = useState('');
   const [littleThingsResponse, setLittleThingsResponse] = useState<string | null>(null);
@@ -205,6 +209,29 @@ export const V4Confession = () => {
           <h1 className="glow-text" style={{ fontSize: '3rem', color: 'var(--accent-pink)', marginBottom: '1rem' }}>I promise to keep making you smile. ❤️</h1>
           <p style={{ fontSize: '1.2rem', color: 'white', opacity: 0.8 }}>Thank you for accepting me, flaws, past, and all.</p>
           <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.5)', marginTop: '3rem', fontFamily: 'monospace' }}>HeartOS will live on forever.</p>
+          
+          {onSurvive && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2, duration: 1 }}
+              onClick={onSurvive}
+              style={{
+                marginTop: '3rem',
+                background: 'linear-gradient(45deg, #ffb3c6, #ff8fab)',
+                border: 'none',
+                padding: '1rem 2rem',
+                borderRadius: '50px',
+                color: '#2b0014',
+                fontWeight: 'bold',
+                fontSize: '1.2rem',
+                cursor: 'pointer',
+                boxShadow: '0 4px 15px rgba(255, 179, 198, 0.4)'
+              }}
+            >
+              Wait... what is YouOS? ✨
+            </motion.button>
+          )}
         </motion.div>
       </div>
     );
