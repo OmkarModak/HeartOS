@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import heartosMeetsYouos from '../assets/heartos-meets-youos.jpg';
+import marshmallowMeet from '../assets/marshmallow-meet.jpg';
 import loveSticker from '../assets/sticker-love.png';
 
 const getHerQuestions = (chosenName: string) => [
@@ -8,7 +8,7 @@ const getHerQuestions = (chosenName: string) => [
     title: "HeartOS meets YouOS",
     content: "You stayed. You actually stayed.\n\nHeartOS was built to tell you my darkest truths, and I fully expected it to end there. But you clicked 'Continue making me smile'. That means more to me than words can say.\n\nNow that you know everything about me... it's my turn to learn everything about you. Welcome to YouOS.",
     type: "info",
-    image: heartosMeetsYouos
+    image: marshmallowMeet
   },
   {
     title: "The Name Game",
