@@ -3,13 +3,15 @@ import { AnimatePresence } from 'framer-motion';
 import { V4BootScreen } from './components/V4BootScreen';
 import { V4WarningScreen } from './components/V4WarningScreen';
 import { V4Confession } from './components/V4Confession';
+import { V5BootScreen } from './components/V5BootScreen';
+import { V5HerOS } from './components/V5HerOS';
 import { FloatingHearts } from './components/FloatingHearts';
 import { ClickEffectManager } from './components/ClickEffectManager';
 
-type AppState = 'V4_BOOT' | 'V4_WARNING' | 'V4_CONFESSION';
+type AppState = 'V4_BOOT' | 'V4_WARNING' | 'V4_CONFESSION' | 'V5_BOOT' | 'V5_HER_OS';
 
 function App() {
-  const [appState, setAppState] = useState<AppState>('V4_BOOT');
+  const [appState, setAppState] = useState<AppState>('V5_BOOT');
 
   return (
     <>
@@ -36,6 +38,14 @@ function App() {
 
           {appState === 'V4_CONFESSION' && (
             <V4Confession key="v4_confession" />
+          )}
+
+          {appState === 'V5_BOOT' && (
+            <V5BootScreen key="v5_boot" onComplete={() => setAppState('V5_HER_OS')} />
+          )}
+
+          {appState === 'V5_HER_OS' && (
+            <V5HerOS key="v5_her_os" />
           )}
         </AnimatePresence>
       </div>
