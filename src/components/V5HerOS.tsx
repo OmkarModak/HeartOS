@@ -312,6 +312,21 @@ export const V5HerOS = () => {
 
                     {q.type === 'passcode' && (
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '100%' }}>
+                        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+                          {[0, 1, 2].map((i) => (
+                            <motion.span 
+                              key={i} 
+                              animate={{ 
+                                scale: i < (3 - passcodeAttempts) ? 1 : 0.8, 
+                                opacity: i < (3 - passcodeAttempts) ? 1 : 0.2 
+                              }}
+                              transition={{ duration: 0.3 }}
+                              style={{ fontSize: '1.5rem', filter: i < (3 - passcodeAttempts) ? 'drop-shadow(0 0 5px rgba(255,0,0,0.5))' : 'grayscale(100%)' }}
+                            >
+                              ❤️
+                            </motion.span>
+                          ))}
+                        </div>
                         <input
                           type="text"
                           value={answers[q.key as string] || ''}
