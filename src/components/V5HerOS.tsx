@@ -49,6 +49,39 @@ const getHerQuestions = (chosenName: string) => [
     key: "wishlist"
   },
   {
+    title: "The Vibe Check",
+    content: "What is your exact mood right now about this whole October 4th thing?",
+    type: "single-choice",
+    key: "vibe",
+    options: ["Excited but nervous 🦋", "Still thinking about it 🤔", "Not finalized yet, let's see how you behave 👀", "Already planning my outfit 👗"]
+  },
+  {
+    title: "The Food Priority",
+    content: "Oct 4th is locked in (hopefully). But let's get to the most critical question... What kind of food vibe are we going for? (Coffee, street food, fancy dinner, or just list your absolute favorite foods!)",
+    type: "textarea",
+    key: "food"
+  },
+  {
+    title: "The Flag Assessment",
+    content: "Okay, let's be real. After surviving the intense rollercoaster of HeartOS, tell me honestly...\n\nWhat are my green flags? And what are my red flags?",
+    type: "textarea",
+    key: "flags"
+  },
+  {
+    title: "The Distance",
+    content: "The distance from Nashik to Quepem is 693 kms. Since we are meeting up on October 4th... where should we meet?",
+    type: "single-choice",
+    key: "meet_location",
+    options: ["Central point 📍", "You come to Goa 🏖️", "I come to Nashik 🍷", "Let's figure it out together 🤝"]
+  },
+  {
+    title: "SECURITY CLEARANCE",
+    content: "SYSTEM OVERRIDE REQUIRED.\n\nTo prove you are truly ready to submit your answers... What is the exact distance in kilometers from Nashik to Quepem?",
+    type: "passcode",
+    key: "passcode",
+    expectedAnswer: "693"
+  },
+  {
     title: "The Beginning",
     content: "Thank you for sharing your world with me.\n\nAre you ready for everything that comes next?",
     type: "choice",
@@ -80,7 +113,14 @@ export const V5HerOS = () => {
   };
 
   const currentQ = currentQuestions[step];
-  const isAnswerMissing = currentQ.type !== 'info' && currentQ.required !== false && (!answers[currentQ.key as string] || answers[currentQ.key as string].trim() === '');
+  let isAnswerMissing = false;
+  if (currentQ.type !== 'info') {
+    if (currentQ.type === 'passcode') {
+      isAnswerMissing = answers[currentQ.key as string]?.trim() !== currentQ.expectedAnswer;
+    } else if (currentQ.required !== false) {
+      isAnswerMissing = !answers[currentQ.key as string] || answers[currentQ.key as string].trim() === '';
+    }
+  }
 
   const submitAnswers = async (finalChoice: string) => {
     setIsSubmitting(true);
@@ -93,7 +133,7 @@ export const V5HerOS = () => {
         body: JSON.stringify({
           access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
           subject: '🌸 Shraddha completed YouOS! 🌸',
-          message: `YouOS Responses:\n\n1. Name Pref: ${finalAnswers.name_pref}\n2. Childhood: ${finalAnswers.childhood}\n3. Family: ${finalAnswers.family}\n4. Travel/Trekking: ${finalAnswers.travel}\n5. Her Past: ${finalAnswers.past || 'Skipped'}\n6. Date Wishlist: ${finalAnswers.wishlist}\n7. Ready?: ${finalAnswers.ready}`
+          message: `YouOS Responses:\n\n1. Name Pref: ${finalAnswers.name_pref}\n2. Childhood: ${finalAnswers.childhood}\n3. Family: ${finalAnswers.family}\n4. Travel/Trekking: ${finalAnswers.travel}\n5. Her Past: ${finalAnswers.past || 'Skipped'}\n6. Date Wishlist: ${finalAnswers.wishlist}\n7. Vibe: ${finalAnswers.vibe}\n8. Food: ${finalAnswers.food}\n9. Flags: ${finalAnswers.flags}\n10. Meet Loc: ${finalAnswers.meet_location}\n11. Ready?: ${finalAnswers.ready}`
         })
       });
       setIsDone(true);
@@ -198,6 +238,31 @@ export const V5HerOS = () => {
                     {opt}
                   </button>
                 ))}
+              </div>
+            )}
+
+            {currentQ.type === 'passcode' && (
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+                <input
+                  type="text"
+                  value={answers[currentQ.key as string] || ''}
+                  onChange={(e) => setAnswers({ ...answers, [currentQ.key as string]: e.target.value })}
+                  placeholder="Enter passcode..."
+                  style={{
+                    background: 'rgba(255, 0, 50, 0.1)',
+                    border: '1px solid #ff0033',
+                    padding: '1rem 2rem',
+                    borderRadius: '8px',
+                    color: '#ffb3c6',
+                    fontSize: '1.5rem',
+                    textAlign: 'center',
+                    fontFamily: 'monospace',
+                    letterSpacing: '5px',
+                    width: '100%',
+                    maxWidth: '300px',
+                    outline: 'none'
+                  }}
+                />
               </div>
             )}
 
