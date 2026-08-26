@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import greetingSticker from '../assets/sticker-greeting.png';
+import loveSticker from '../assets/sticker-love.png';
 
 const getHerQuestions = (chosenName: string) => [
   {
     title: "HeartOS meets YouOS",
     content: "You stayed. You actually stayed.\n\nHeartOS was built to tell you my darkest truths, and I fully expected it to end there. But you clicked 'Continue making me smile'. That means more to me than words can say.\n\nNow that you know everything about me... it's my turn to learn everything about you. Welcome to YouOS.",
-    type: "info"
+    type: "info",
+    image: greetingSticker
   },
   {
     title: "The Name Game",
@@ -50,7 +53,8 @@ const getHerQuestions = (chosenName: string) => [
     content: "Thank you for sharing your world with me.\n\nAre you ready for everything that comes next?",
     type: "choice",
     key: "ready",
-    options: ["I was born ready ✨", "Yes, let's do this ❤️", "I can't wait! 😊"]
+    options: ["I was born ready ✨", "Yes, let's do this ❤️", "I can't wait! 😊"],
+    image: loveSticker
   }
 ];
 
@@ -140,6 +144,12 @@ export const V5HerOS = () => {
             {currentQ.title}
           </h2>
           
+          {currentQ.image && (
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+              <img src={currentQ.image} alt="cute sticker" style={{ width: '150px', height: '150px', objectFit: 'contain' }} />
+            </div>
+          )}
+
           <div style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.9)', whiteSpace: 'pre-line' }}>
             {currentQ.content}
           </div>
