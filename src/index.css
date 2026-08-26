@@ -242,7 +242,8 @@ button {
   }
   .chat-container {
     max-width: 420px;
-    height: 85vh;
+    height: 850px;
+    max-height: 85vh;
     border: 8px solid rgba(255, 255, 255, 0.05); /* sleek phone bezel */
     border-radius: 40px;
     box-shadow: 0 30px 60px rgba(0,0,0,0.6);
