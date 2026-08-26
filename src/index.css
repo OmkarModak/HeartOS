@@ -20,19 +20,19 @@
 }
 
 body.theme-you {
-  /* YouOS Theme (Dark & Romantic) */
-  --bg-color: #1a0b14;
-  --text-primary: #ffffff;
-  --text-secondary: #f472b6;
+  /* YouOS Theme (Light & Airy) */
+  --bg-color: #fdf2f8; /* Very light pink background */
+  --text-primary: #831843; /* Deep burgundy/rose text */
+  --text-secondary: #be185d; /* Medium pink */
   
-  --accent-primary: #f472b6; /* Soft Pink */
-  --accent-glow: rgba(244, 114, 182, 0.6);
-  --accent-blob-1: rgba(244, 114, 182, 0.4);
-  --accent-blob-2: rgba(139, 92, 246, 0.3); /* Soft Purple */
+  --accent-primary: #ec4899; /* Vibrant pink accent */
+  --accent-glow: rgba(236, 72, 153, 0.2);
+  --accent-blob-1: rgba(253, 164, 175, 0.5); /* Soft rose */
+  --accent-blob-2: rgba(249, 168, 212, 0.4); /* Soft pink */
   
-  --card-bg: rgba(255, 255, 255, 0.06);
-  --card-border: rgba(244, 114, 182, 0.3);
-  --card-hover: rgba(255, 255, 255, 0.12);
+  --card-bg: rgba(255, 255, 255, 0.6); /* White frosted glass */
+  --card-border: rgba(255, 255, 255, 0.9);
+  --card-hover: rgba(255, 255, 255, 0.85);
 }
 
 * {
@@ -76,6 +76,7 @@ body {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--card-border);
   border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08); /* Added shadow for contrast */
 }
 
 .glow-text {

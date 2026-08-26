@@ -203,7 +203,7 @@ export const V5HerOS = () => {
             </div>
           )}
 
-          <div style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'rgba(255,255,255,0.9)', whiteSpace: 'pre-line' }}>
+          <div style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'var(--text-primary)', whiteSpace: 'pre-line' }}>
             {currentQ.content}
           </div>
 
@@ -216,11 +216,11 @@ export const V5HerOS = () => {
                 style={{
                   width: '100%',
                   minHeight: '150px',
-                  background: 'rgba(0,0,0,0.2)',
-                  border: '1px solid rgba(255, 179, 198, 0.3)',
+                  background: 'var(--card-bg)',
+                  border: '1px solid var(--card-border)',
                   borderRadius: '12px',
                   padding: '1rem',
-                  color: 'white',
+                  color: 'var(--text-primary)',
                   fontSize: '1rem',
                   resize: 'none',
                   outline: 'none',
@@ -241,11 +241,11 @@ export const V5HerOS = () => {
                         setAnswers({ ...answers, [currentQ.key as string]: newAns });
                       }}
                       style={{
-                        background: 'rgba(255, 179, 198, 0.1)',
-                        border: '1px solid #ffb3c6',
+                        background: 'transparent',
+                        border: '1px solid var(--accent-primary)',
                         padding: '0.5rem 1rem',
                         borderRadius: '20px',
-                        color: '#ffb3c6',
+                        color: 'var(--accent-primary)',
                         cursor: 'pointer',
                         fontSize: '0.9rem',
                         transition: 'all 0.2s ease'
@@ -262,11 +262,11 @@ export const V5HerOS = () => {
                   style={{
                     width: '100%',
                     minHeight: '100px',
-                    background: 'rgba(0,0,0,0.2)',
-                    border: '1px solid rgba(255, 179, 198, 0.3)',
+                    background: 'var(--card-bg)',
+                    border: '1px solid var(--card-border)',
                     borderRadius: '12px',
                     padding: '1rem',
-                    color: 'white',
+                    color: 'var(--text-primary)',
                     fontSize: '1rem',
                     resize: 'none',
                     outline: 'none',
@@ -283,11 +283,11 @@ export const V5HerOS = () => {
                     key={i}
                     onClick={() => setAnswers({ ...answers, [currentQ.key as string]: opt })}
                     style={{
-                      background: answers[currentQ.key as string] === opt ? 'rgba(255, 179, 198, 0.3)' : 'rgba(255, 179, 198, 0.1)',
-                      border: `1px solid ${answers[currentQ.key as string] === opt ? '#ffb3c6' : 'rgba(255, 179, 198, 0.3)'}`,
+                      background: answers[currentQ.key as string] === opt ? 'var(--accent-primary)' : 'transparent',
+                      border: `1px solid var(--accent-primary)`,
                       padding: '1rem 2rem',
                       borderRadius: '50px',
-                      color: answers[currentQ.key as string] === opt ? 'white' : '#ffb3c6',
+                      color: answers[currentQ.key as string] === opt ? '#ffffff' : 'var(--accent-primary)',
                       fontSize: '1.1rem',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease',
@@ -309,11 +309,11 @@ export const V5HerOS = () => {
                   onChange={(e) => setAnswers({ ...answers, [currentQ.key as string]: e.target.value })}
                   placeholder="Enter passcode..."
                   style={{
-                    background: 'rgba(255, 0, 50, 0.1)',
-                    border: '1px solid #ff0033',
+                    background: 'var(--card-bg)',
+                    border: '1px solid var(--error)',
                     padding: '1rem 2rem',
                     borderRadius: '8px',
-                    color: '#ffb3c6',
+                    color: 'var(--error)',
                     fontSize: '1.5rem',
                     textAlign: 'center',
                     fontFamily: 'monospace',
@@ -336,7 +336,7 @@ export const V5HerOS = () => {
                       <div style={{ marginTop: '1rem' }}>
                         <button 
                           onClick={() => setShowHint(true)} 
-                          style={{ background: 'transparent', color: '#ffb3c6', border: '1px solid #ffb3c6', padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', fontFamily: 'monospace' }}
+                          style={{ background: 'transparent', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', fontFamily: 'monospace' }}
                         >
                           Need a hint?
                         </button>
@@ -344,7 +344,7 @@ export const V5HerOS = () => {
                     )}
                     
                     {showHint && (
-                      <div style={{ marginTop: '1rem', color: '#ffb3c6', lineHeight: '1.5' }}>
+                      <div style={{ marginTop: '1rem', color: 'var(--text-primary)', lineHeight: '1.5' }}>
                         (Hint: Google the distance between your city Quepem and my city Nashik... yes, I know! 😉)
                       </div>
                     )}
@@ -361,11 +361,11 @@ export const V5HerOS = () => {
                     onClick={() => submitAnswers(opt)}
                     disabled={isSubmitting}
                     style={{
-                      background: 'rgba(255, 179, 198, 0.1)',
-                      border: '1px solid #ffb3c6',
+                      background: 'transparent',
+                      border: '1px solid var(--accent-primary)',
                       padding: '1rem 2rem',
                       borderRadius: '50px',
-                      color: '#ffb3c6',
+                      color: 'var(--accent-primary)',
                       fontSize: '1.1rem',
                       cursor: isSubmitting ? 'wait' : 'pointer',
                       transition: 'all 0.2s ease',
