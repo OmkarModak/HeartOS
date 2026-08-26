@@ -131,11 +131,6 @@ export const V5HerOS = () => {
     }
   };
 
-  const handlePrev = () => {
-    if (step > 0) {
-      setStep(prev => prev - 1);
-    }
-  };
 
   const currentQ = currentQuestions[step];
   let isAnswerMissing = false;
