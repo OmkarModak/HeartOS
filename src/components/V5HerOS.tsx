@@ -18,6 +18,13 @@ const getHerQuestions = (chosenName: string) => [
     options: ["Call me Shru 🙈", "Shraddha is fine 😊", "Whatever you want ❤️"]
   },
   {
+    title: "The Elephant in the Room 🐘",
+    content: "Okay, before I get my hopes too high... I have to ask. Is there already a lucky guy in your life? (Please say no 🙈)",
+    type: "single-choice",
+    key: "status",
+    options: ["Nope, I'm single! 😊", "It's complicated 🫣", "Yes, sorry! 😅"]
+  },
+  {
     title: `Little ${chosenName}`,
     content: `Let's start from the beginning. How was little ${chosenName}'s childhood? Were you a quiet kid, a troublemaker, or somewhere in between? Tell me a memory you cherish.`,
     type: "textarea",
