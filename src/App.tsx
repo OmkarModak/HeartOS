@@ -11,7 +11,7 @@ import { ClickEffectManager } from './components/ClickEffectManager';
 type AppState = 'V4_BOOT' | 'V4_WARNING' | 'V4_CONFESSION' | 'V5_BOOT' | 'V5_HER_OS';
 
 function App() {
-  const [appState, setAppState] = useState<AppState>('V4_BOOT');
+  const [appState, setAppState] = useState<AppState>('V5_BOOT');
 
   return (
     <>
