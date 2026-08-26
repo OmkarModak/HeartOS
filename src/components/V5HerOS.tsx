@@ -8,8 +8,8 @@ const herQuestions = [
     type: "info"
   },
   {
-    title: "Little Shraddha",
-    content: "Let's start from the beginning. How was your childhood? Were you a quiet kid, a troublemaker, or somewhere in between? Tell me a memory you cherish.",
+    title: "Little Shru",
+    content: "Let's start from the beginning. How was little Shru's childhood? Were you a quiet kid, a troublemaker, or somewhere in between? Tell me a memory you cherish.",
     type: "textarea",
     key: "childhood"
   },
@@ -27,7 +27,7 @@ const herQuestions = [
   },
   {
     title: "Your Past",
-    content: "I laid all my cards on the table. Now, if you're comfortable, I want to know about your past. What experiences made you the Shraddha you are today?",
+    content: "I laid all my cards on the table. Now, if you're comfortable, I want to know about your past. What experiences made you the Shru you are today?",
     type: "textarea",
     key: "past"
   },
