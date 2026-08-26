@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { V4BootScreen } from './components/V4BootScreen';
 import { V4WarningScreen } from './components/V4WarningScreen';
@@ -12,6 +12,14 @@ type AppState = 'V4_BOOT' | 'V4_WARNING' | 'V4_CONFESSION' | 'V5_BOOT' | 'V5_HER
 
 function App() {
   const [appState, setAppState] = useState<AppState>('V5_BOOT');
+
+  useEffect(() => {
+    if (appState === 'V5_BOOT' || appState === 'V5_HER_OS') {
+      document.body.classList.add('theme-you');
+    } else {
+      document.body.classList.remove('theme-you');
+    }
+  }, [appState]);
 
   return (
     <>
