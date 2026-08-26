@@ -8,6 +8,13 @@ const herQuestions = [
     type: "info"
   },
   {
+    title: "The Name Game",
+    content: "Before we go any further, I have a very important question.\n\nShould I call you Shru or Shraddha?",
+    type: "single-choice",
+    key: "name_pref",
+    options: ["Call me Shru 🙈", "Shraddha is fine 😊", "Whatever you want ❤️"]
+  },
+  {
     title: "Little Shru",
     content: "Let's start from the beginning. How was little Shru's childhood? Were you a quiet kid, a troublemaker, or somewhere in between? Tell me a memory you cherish.",
     type: "textarea",
@@ -77,8 +84,8 @@ export const V5HerOS = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
-          subject: '🌸 Shraddha completed HeartOS v5.0 (Focus on Her)! 🌸',
-          message: `YouOS Responses:\n\n1. Childhood: ${finalAnswers.childhood}\n2. Family: ${finalAnswers.family}\n3. Travel/Trekking: ${finalAnswers.travel}\n4. Her Past: ${finalAnswers.past}\n5. Date Wishlist: ${finalAnswers.wishlist}\n6. Ready?: ${finalAnswers.ready}`
+          subject: '🌸 Shraddha completed YouOS! 🌸',
+          message: `YouOS Responses:\n\n1. Name Pref: ${finalAnswers.name_pref}\n2. Childhood: ${finalAnswers.childhood}\n3. Family: ${finalAnswers.family}\n4. Travel/Trekking: ${finalAnswers.travel}\n5. Her Past: ${finalAnswers.past}\n6. Date Wishlist: ${finalAnswers.wishlist}\n7. Ready?: ${finalAnswers.ready}`
         })
       });
       setIsDone(true);
@@ -153,6 +160,31 @@ export const V5HerOS = () => {
                   fontFamily: 'inherit'
                 }}
               />
+            )}
+
+            {currentQ.type === 'single-choice' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', marginTop: '1rem' }}>
+                {currentQ.options?.map((opt, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setAnswers({ ...answers, [currentQ.key as string]: opt })}
+                    style={{
+                      background: answers[currentQ.key as string] === opt ? 'rgba(255, 179, 198, 0.3)' : 'rgba(255, 179, 198, 0.1)',
+                      border: `1px solid ${answers[currentQ.key as string] === opt ? '#ffb3c6' : 'rgba(255, 179, 198, 0.3)'}`,
+                      padding: '1rem 2rem',
+                      borderRadius: '50px',
+                      color: answers[currentQ.key as string] === opt ? 'white' : '#ffb3c6',
+                      fontSize: '1.1rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      width: '100%',
+                      maxWidth: '400px'
+                    }}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
             )}
 
             {currentQ.type === 'choice' && (
