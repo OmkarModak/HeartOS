@@ -30,25 +30,20 @@ export const V4BootScreen = ({ onComplete }: { onComplete: () => void }) => {
   }, [index, onComplete]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '80vh' }}>
-      <motion.div
-        className="glass-panel"
-        style={{ padding: '3rem', width: '100%', maxWidth: '600px', fontFamily: '"Fira Code", monospace', textAlign: 'left' }}
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
-        transition={{ duration: 0.8 }}
-      >
+    <div className="chat-container" style={{ minHeight: '80vh', justifyContent: 'center' }}>
+      <AnimatePresence>
         {lines.map((line, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            className="chat-bubble-left"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             style={{ 
               color: i === bootSequence.length - 1 ? 'var(--accent-pink)' : 'var(--text-secondary)',
-              marginBottom: '0.8rem',
-              fontSize: '1.1rem',
-              fontWeight: i === bootSequence.length - 1 ? 'bold' : 'normal'
+              fontSize: '1rem',
+              fontWeight: i === bootSequence.length - 1 ? 'bold' : 'normal',
+              fontFamily: '"Fira Code", monospace',
+              border: i === bootSequence.length - 1 ? '1px solid var(--accent-pink)' : '1px solid var(--card-border)'
             }}
           >
             {line}
@@ -56,12 +51,17 @@ export const V4BootScreen = ({ onComplete }: { onComplete: () => void }) => {
         ))}
         {index < bootSequence.length && (
           <motion.div
-            animate={{ opacity: [1, 0] }}
-            transition={{ repeat: Infinity, duration: 0.8 }}
-            style={{ display: 'inline-block', width: '10px', height: '20px', background: 'var(--accent-pink)', marginTop: '0.5rem', verticalAlign: 'middle' }}
-          />
+            className="chat-bubble-left"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            style={{ width: '60px', display: 'flex', justifyContent: 'center', gap: '4px' }}
+          >
+            <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.4, delay: 0 }} style={{ width: 8, height: 8, background: 'var(--text-secondary)', borderRadius: '50%' }} />
+            <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.4, delay: 0.2 }} style={{ width: 8, height: 8, background: 'var(--text-secondary)', borderRadius: '50%' }} />
+            <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.4, delay: 0.4 }} style={{ width: 8, height: 8, background: 'var(--text-secondary)', borderRadius: '50%' }} />
+          </motion.div>
         )}
-      </motion.div>
+      </AnimatePresence>
     </div>
   );
 };

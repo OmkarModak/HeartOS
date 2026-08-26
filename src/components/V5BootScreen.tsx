@@ -30,34 +30,21 @@ export const V5BootScreen = ({ onComplete }: { onComplete: () => void }) => {
   }, [index, onComplete]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '80vh' }}>
-      <motion.div
-        className="glass-panel"
-        style={{ 
-          padding: '3rem', 
-          width: '100%', 
-          maxWidth: '600px', 
-          fontFamily: '"Fira Code", monospace', 
-          textAlign: 'left',
-          border: '2px solid rgba(255, 107, 107, 0.3)',
-          background: 'rgba(255, 255, 255, 0.05)'
-        }}
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
-        transition={{ duration: 0.8 }}
-      >
+    <div className="chat-container" style={{ minHeight: '80vh', justifyContent: 'center' }}>
+      <AnimatePresence>
         {lines.map((line, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            className="chat-bubble-left"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             style={{ 
-              color: i === bootSequence.length - 1 ? '#ffb3c6' : (i < 4 ? 'var(--text-secondary)' : 'var(--accent-pink)'),
-              marginBottom: '0.8rem',
-              fontSize: '1.1rem',
+              color: i === bootSequence.length - 1 ? '#ffb3c6' : 'var(--text-secondary)',
+              fontSize: '1rem',
               fontWeight: i === bootSequence.length - 1 ? 'bold' : 'normal',
-              textShadow: i === bootSequence.length - 1 ? '0 0 10px rgba(255, 179, 198, 0.5)' : 'none'
+              fontFamily: '"Fira Code", monospace',
+              border: i === bootSequence.length - 1 ? '1px solid #ffb3c6' : '1px solid var(--card-border)',
+              background: i === bootSequence.length - 1 ? 'rgba(255, 179, 198, 0.1)' : 'var(--card-bg)'
             }}
           >
             {line}
@@ -65,12 +52,17 @@ export const V5BootScreen = ({ onComplete }: { onComplete: () => void }) => {
         ))}
         {index < bootSequence.length && (
           <motion.div
-            animate={{ opacity: [1, 0] }}
-            transition={{ repeat: Infinity, duration: 0.8 }}
-            style={{ display: 'inline-block', width: '10px', height: '20px', background: 'var(--accent-pink)', marginTop: '0.5rem', verticalAlign: 'middle' }}
-          />
+            className="chat-bubble-left"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            style={{ width: '60px', display: 'flex', justifyContent: 'center', gap: '4px' }}
+          >
+            <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.4, delay: 0 }} style={{ width: 8, height: 8, background: 'var(--text-secondary)', borderRadius: '50%' }} />
+            <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.4, delay: 0.2 }} style={{ width: 8, height: 8, background: 'var(--text-secondary)', borderRadius: '50%' }} />
+            <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1.4, delay: 0.4 }} style={{ width: 8, height: 8, background: 'var(--text-secondary)', borderRadius: '50%' }} />
+          </motion.div>
         )}
-      </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
