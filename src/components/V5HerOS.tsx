@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import marshmallowMeet from '../assets/marshmallow-meet.jpg';
 import loveSticker from '../assets/sticker-love.png';
 
