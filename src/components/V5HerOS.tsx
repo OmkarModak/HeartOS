@@ -57,15 +57,17 @@ const getHerQuestions = (chosenName: string) => [
   },
   {
     title: "The Food Priority",
-    content: "Oct 4th is locked in (hopefully). But let's get to the most critical question... What kind of food vibe are we going for? (Coffee, street food, fancy dinner, or just list your absolute favorite foods!)",
-    type: "textarea",
-    key: "food"
+    content: "Oct 4th is locked in (hopefully). But let's get to the most critical question... What kind of food vibe are we going for?",
+    type: "choice-with-text",
+    key: "food",
+    options: ["Coffee & deep conversations ☕", "Something sweet 🍰", "Proper food, I'm always hungry 🍔", "Street food adventures 🌮"]
   },
   {
     title: "The Flag Assessment",
     content: "Okay, let's be real. After surviving the intense rollercoaster of HeartOS, tell me honestly...\n\nWhat are my green flags? And what are my red flags?",
-    type: "textarea",
-    key: "flags"
+    type: "choice-with-text",
+    key: "flags",
+    options: ["Green Flag: Honest 🟩", "Green Flag: Cares a lot 🟩", "Red Flag: Overthinks 🚩", "Red Flag: Too protective 🚩"]
   },
   {
     title: "The Distance",
@@ -96,13 +98,24 @@ export const V5HerOS = () => {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDone, setIsDone] = useState(false);
+  const [passcodeAttempts, setPasscodeAttempts] = useState(0);
+  const [showHint, setShowHint] = useState(false);
 
   const chosenName = answers.name_pref === "Shraddha is fine 😊" ? "Shraddha" : "Shru";
   const currentQuestions = getHerQuestions(chosenName);
 
   const handleNext = () => {
+    if (currentQuestions[step].type === 'passcode') {
+      if (answers['passcode']?.trim() !== currentQuestions[step].expectedAnswer) {
+        setPasscodeAttempts(prev => prev + 1);
+        return; // Don't proceed to next step
+      }
+    }
+
     if (step < currentQuestions.length - 1) {
       setStep(prev => prev + 1);
+      setPasscodeAttempts(0);
+      setShowHint(false);
     }
   };
 
@@ -116,7 +129,7 @@ export const V5HerOS = () => {
   let isAnswerMissing = false;
   if (currentQ.type !== 'info') {
     if (currentQ.type === 'passcode') {
-      isAnswerMissing = answers[currentQ.key as string]?.trim() !== currentQ.expectedAnswer;
+      isAnswerMissing = !answers[currentQ.key as string] || answers[currentQ.key as string].trim() === '';
     } else if (currentQ.required !== false) {
       isAnswerMissing = !answers[currentQ.key as string] || answers[currentQ.key as string].trim() === '';
     }
@@ -216,6 +229,53 @@ export const V5HerOS = () => {
               />
             )}
 
+            {currentQ.type === 'choice-with-text' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem', width: '100%' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}>
+                  {currentQ.options?.map((opt, i) => (
+                    <button
+                      key={i}
+                      onClick={() => {
+                        const currentAns = answers[currentQ.key as string] || '';
+                        const newAns = currentAns ? `${currentAns}\n- ${opt}` : `- ${opt}`;
+                        setAnswers({ ...answers, [currentQ.key as string]: newAns });
+                      }}
+                      style={{
+                        background: 'rgba(255, 179, 198, 0.1)',
+                        border: '1px solid #ffb3c6',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '20px',
+                        color: '#ffb3c6',
+                        cursor: 'pointer',
+                        fontSize: '0.9rem',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      + {opt}
+                    </button>
+                  ))}
+                </div>
+                <textarea
+                  value={answers[currentQ.key as string] || ''}
+                  onChange={(e) => setAnswers({ ...answers, [currentQ.key as string]: e.target.value })}
+                  placeholder="Type your own answer or click the options above to add them..."
+                  style={{
+                    width: '100%',
+                    minHeight: '100px',
+                    background: 'rgba(0,0,0,0.2)',
+                    border: '1px solid rgba(255, 179, 198, 0.3)',
+                    borderRadius: '12px',
+                    padding: '1rem',
+                    color: 'white',
+                    fontSize: '1rem',
+                    resize: 'none',
+                    outline: 'none',
+                    fontFamily: 'inherit'
+                  }}
+                />
+              </div>
+            )}
+
             {currentQ.type === 'single-choice' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', marginTop: '1rem' }}>
                 {currentQ.options?.map((opt, i) => (
@@ -264,13 +324,30 @@ export const V5HerOS = () => {
                   }}
                 />
                 
-                {answers[currentQ.key as string] && answers[currentQ.key as string].trim() !== currentQ.expectedAnswer && (
+                {passcodeAttempts > 0 && (
                   <motion.div 
                     initial={{ opacity: 0 }} 
                     animate={{ opacity: 1 }} 
                     style={{ marginTop: '1rem', color: '#ff4d6d', fontSize: '0.9rem', fontFamily: 'monospace', textAlign: 'center' }}
                   >
-                    ACCESS DENIED. <br/> (Hint: Google the distance between your city Quepem and my city Nashik... yes, I know! 😉)
+                    ACCESS DENIED.
+                    
+                    {passcodeAttempts >= 3 && !showHint && (
+                      <div style={{ marginTop: '1rem' }}>
+                        <button 
+                          onClick={() => setShowHint(true)} 
+                          style={{ background: 'transparent', color: '#ffb3c6', border: '1px solid #ffb3c6', padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', fontFamily: 'monospace' }}
+                        >
+                          Need a hint?
+                        </button>
+                      </div>
+                    )}
+                    
+                    {showHint && (
+                      <div style={{ marginTop: '1rem', color: '#ffb3c6', lineHeight: '1.5' }}>
+                        (Hint: Google the distance between your city Quepem and my city Nashik... yes, I know! 😉)
+                      </div>
+                    )}
                   </motion.div>
                 )}
               </div>
