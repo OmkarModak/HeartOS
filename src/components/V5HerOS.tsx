@@ -78,7 +78,7 @@ export const V5HerOS = () => {
         body: JSON.stringify({
           access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
           subject: '🌸 Shraddha completed HeartOS v5.0 (Focus on Her)! 🌸',
-          message: `HeartOS v5.0 Responses:\n\n1. Childhood: ${finalAnswers.childhood}\n2. Family: ${finalAnswers.family}\n3. Travel/Trekking: ${finalAnswers.travel}\n4. Her Past: ${finalAnswers.past}\n5. Date Wishlist: ${finalAnswers.wishlist}\n6. Ready?: ${finalAnswers.ready}`
+          message: `YouOS Responses:\n\n1. Childhood: ${finalAnswers.childhood}\n2. Family: ${finalAnswers.family}\n3. Travel/Trekking: ${finalAnswers.travel}\n4. Her Past: ${finalAnswers.past}\n5. Date Wishlist: ${finalAnswers.wishlist}\n6. Ready?: ${finalAnswers.ready}`
         })
       });
       setIsDone(true);
