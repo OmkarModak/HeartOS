@@ -167,71 +167,57 @@ export const V5HerOS = () => {
     );
   }
 
+  const progress = ((step + 1) / currentQuestions.length) * 100;
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '80vh', padding: '1rem' }}>
+    <div className="immersive-container">
+      {/* Sleek Progress Bar */}
+      <div style={{ position: 'absolute', top: 0, left: 0, height: '4px', background: 'var(--card-bg)', width: '100%' }}>
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.5 }}
+          style={{ height: '100%', background: 'var(--accent-primary)' }}
+        />
+      </div>
+
       <AnimatePresence mode="wait">
         <motion.div
           key={step}
-          className="glass-panel"
-          style={{ 
-            padding: '3rem', 
-            width: '100%', 
-            maxWidth: '600px', 
-            minHeight: '400px',
-            display: 'flex',
-            flexDirection: 'column',
-            position: 'relative',
-            background: 'rgba(255, 179, 198, 0.05)',
-            border: '1px solid rgba(255, 179, 198, 0.2)'
-          }}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.5 }}
+          className="immersive-content"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -30 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
         >
-          <div style={{ position: 'absolute', top: '1rem', right: '1.5rem', color: 'rgba(255,255,255,0.3)', fontSize: '0.9rem', fontFamily: 'monospace' }}>
-            {step + 1} / {currentQuestions.length}
-          </div>
-
-          <h2 className="glow-text" style={{ fontSize: '2rem', marginBottom: '1.5rem', color: '#ffb3c6' }}>
-            {currentQ.title}
-          </h2>
           
           {currentQ.image && (
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
-              <img src={currentQ.image} alt="cute illustration" style={{ width: '100%', maxWidth: '200px', height: 'auto', objectFit: 'contain', borderRadius: '12px' }} />
+            <div style={{ marginBottom: '2rem' }}>
+              <img src={currentQ.image} alt="illustration" style={{ width: '100%', maxWidth: '250px', height: 'auto', objectFit: 'contain', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }} />
             </div>
           )}
 
-          <div style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'var(--text-primary)', whiteSpace: 'pre-line' }}>
+          <div style={{ fontSize: '1rem', color: 'var(--accent-primary)', textTransform: 'uppercase', letterSpacing: '3px', marginBottom: '1rem', fontWeight: 600 }}>
+            {currentQ.title}
+          </div>
+
+          <div className="hero-question" style={{ whiteSpace: 'pre-line', marginBottom: '2rem' }}>
             {currentQ.content}
           </div>
 
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginTop: '2rem' }}>
+          <div style={{ width: '100%', marginTop: '1rem' }}>
             {currentQ.type === 'textarea' && (
               <textarea
+                className="immersive-textarea"
                 value={answers[currentQ.key as string] || ''}
                 onChange={(e) => setAnswers({ ...answers, [currentQ.key as string]: e.target.value })}
                 placeholder="Type your answer here..."
-                style={{
-                  width: '100%',
-                  minHeight: '150px',
-                  background: 'var(--card-bg)',
-                  border: '1px solid var(--card-border)',
-                  borderRadius: '12px',
-                  padding: '1rem',
-                  color: 'var(--text-primary)',
-                  fontSize: '1rem',
-                  resize: 'none',
-                  outline: 'none',
-                  fontFamily: 'inherit'
-                }}
               />
             )}
 
             {currentQ.type === 'choice-with-text' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem', width: '100%' }}>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'flex-start' }}>
                   {currentQ.options?.map((opt, i) => (
                     <button
                       key={i}
@@ -256,28 +242,16 @@ export const V5HerOS = () => {
                   ))}
                 </div>
                 <textarea
+                  className="immersive-textarea"
                   value={answers[currentQ.key as string] || ''}
                   onChange={(e) => setAnswers({ ...answers, [currentQ.key as string]: e.target.value })}
                   placeholder="Type your own answer or click the options above to add them..."
-                  style={{
-                    width: '100%',
-                    minHeight: '100px',
-                    background: 'var(--card-bg)',
-                    border: '1px solid var(--card-border)',
-                    borderRadius: '12px',
-                    padding: '1rem',
-                    color: 'var(--text-primary)',
-                    fontSize: '1rem',
-                    resize: 'none',
-                    outline: 'none',
-                    fontFamily: 'inherit'
-                  }}
                 />
               </div>
             )}
 
             {currentQ.type === 'single-choice' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', marginTop: '1rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
                 {currentQ.options?.map((opt, i) => (
                   <button
                     key={i}
@@ -288,40 +262,29 @@ export const V5HerOS = () => {
                       padding: '1rem 2rem',
                       borderRadius: '50px',
                       color: answers[currentQ.key as string] === opt ? '#ffffff' : 'var(--accent-primary)',
-                      fontSize: '1.1rem',
+                      fontSize: '1.2rem',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease',
                       width: '100%',
-                      maxWidth: '400px'
+                      maxWidth: '400px',
+                      textAlign: 'left'
                     }}
                   >
-                    {opt}
+                    {String.fromCharCode(65 + i)}. {opt}
                   </button>
                 ))}
               </div>
             )}
 
             {currentQ.type === 'passcode' && (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '1rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 <input
+                  className="immersive-input"
                   type="text"
                   value={answers[currentQ.key as string] || ''}
                   onChange={(e) => setAnswers({ ...answers, [currentQ.key as string]: e.target.value })}
                   placeholder="Enter passcode..."
-                  style={{
-                    background: 'var(--card-bg)',
-                    border: '1px solid var(--error)',
-                    padding: '1rem 2rem',
-                    borderRadius: '8px',
-                    color: 'var(--error)',
-                    fontSize: '1.5rem',
-                    textAlign: 'center',
-                    fontFamily: 'monospace',
-                    letterSpacing: '5px',
-                    width: '100%',
-                    maxWidth: '300px',
-                    outline: 'none'
-                  }}
+                  style={{ letterSpacing: '5px' }}
                 />
                 
                 {passcodeAttempts > 0 && (
@@ -354,7 +317,7 @@ export const V5HerOS = () => {
             )}
 
             {currentQ.type === 'choice' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', marginTop: '1rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
                 {currentQ.options?.map((opt, i) => (
                   <button
                     key={i}
@@ -366,55 +329,49 @@ export const V5HerOS = () => {
                       padding: '1rem 2rem',
                       borderRadius: '50px',
                       color: 'var(--accent-primary)',
-                      fontSize: '1.1rem',
+                      fontSize: '1.2rem',
                       cursor: isSubmitting ? 'wait' : 'pointer',
                       transition: 'all 0.2s ease',
                       width: '100%',
-                      maxWidth: '400px'
+                      maxWidth: '400px',
+                      textAlign: 'left'
                     }}
                   >
-                    {isSubmitting ? 'Sending...' : opt}
+                    {isSubmitting ? 'Sending to Omkar...' : opt}
                   </button>
                 ))}
               </div>
             )}
           </div>
 
-          {currentQ.type !== 'choice' && (
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2rem' }}>
-              <button
-                onClick={handlePrev}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: step === 0 ? 'transparent' : 'rgba(255,255,255,0.5)',
-                  cursor: step === 0 ? 'default' : 'pointer',
-                  fontSize: '1rem',
-                  textDecoration: 'underline'
-                }}
-                disabled={step === 0}
-              >
+          <div style={{ marginTop: '3rem', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {step > 0 && currentQ.type !== 'choice' && (
+              <button onClick={() => setStep(prev => prev - 1)} style={{ background: 'transparent', color: 'var(--text-secondary)', border: 'none', textDecoration: 'underline', cursor: 'pointer' }}>
                 Previous
               </button>
-              <button
-                onClick={handleNext}
+            )}
+            <div style={{ flex: 1 }}></div>
+            {currentQ.type !== 'choice' && (
+              <button 
+                onClick={handleNext} 
+                disabled={isAnswerMissing}
                 style={{
-                  background: 'linear-gradient(45deg, #ffb3c6, #ff8fab)',
-                  border: 'none',
-                  padding: '0.8rem 2rem',
+                  background: isAnswerMissing ? 'transparent' : 'var(--accent-primary)',
+                  color: isAnswerMissing ? 'var(--text-secondary)' : '#fff',
+                  border: `1px solid ${isAnswerMissing ? 'var(--card-border)' : 'var(--accent-primary)'}`,
+                  padding: '1rem 3rem',
                   borderRadius: '50px',
-                  color: '#2b0014',
-                  fontWeight: 'bold',
+                  fontSize: '1.2rem',
+                  fontWeight: '600',
                   opacity: isAnswerMissing ? 0.5 : 1,
                   cursor: isAnswerMissing ? 'not-allowed' : 'pointer',
-                  boxShadow: isAnswerMissing ? 'none' : '0 4px 15px rgba(255, 179, 198, 0.3)'
+                  transition: 'all 0.3s ease'
                 }}
-                disabled={isAnswerMissing}
               >
-                Next
+                Next ➔
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </motion.div>
       </AnimatePresence>
     </div>

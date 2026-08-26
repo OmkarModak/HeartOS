@@ -195,3 +195,74 @@ button {
   0% { transform: scale(1); opacity: 0.3; }
   100% { transform: scale(1.2); opacity: 0.5; }
 }
+
+/* Immersive UI (Typeform Style) */
+.immersive-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  z-index: 20;
+}
+
+.immersive-content {
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Left-aligned for elegant reading */
+}
+
+.hero-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  margin-bottom: 2rem;
+  line-height: 1.3;
+}
+
+@media (min-width: 768px) {
+  .hero-question {
+    font-size: 3.5rem;
+  }
+}
+
+.immersive-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--card-border);
+  color: var(--text-primary);
+  font-size: 2rem;
+  padding: 1rem 0;
+  outline: none;
+  font-family: 'Playfair Display', serif;
+  transition: border-color 0.3s ease;
+}
+
+.immersive-input:focus {
+  border-bottom: 2px solid var(--accent-primary);
+}
+
+.immersive-textarea {
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  border-left: 3px solid var(--accent-primary);
+  padding: 1rem 1.5rem;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  resize: vertical;
+  min-height: 150px;
+  outline: none;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0 12px 12px 0;
+}
