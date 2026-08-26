@@ -69,7 +69,7 @@ const getHerQuestions = (chosenName: string) => [
   },
   {
     title: "The Distance",
-    content: "The distance from Nashik to Quepem is 693 kms. Since we are meeting up on October 4th... where should we meet?",
+    content: "Since we live in two different cities... where should we meet on October 4th?",
     type: "single-choice",
     key: "meet_location",
     options: ["Central point 📍", "You come to Goa 🏖️", "I come to Nashik 🍷", "Let's figure it out together 🤝"]
@@ -268,9 +268,9 @@ export const V5HerOS = () => {
                   <motion.div 
                     initial={{ opacity: 0 }} 
                     animate={{ opacity: 1 }} 
-                    style={{ marginTop: '1rem', color: '#ff4d6d', fontSize: '0.9rem', fontFamily: 'monospace' }}
+                    style={{ marginTop: '1rem', color: '#ff4d6d', fontSize: '0.9rem', fontFamily: 'monospace', textAlign: 'center' }}
                   >
-                    ACCESS DENIED. (Hint: Google the distance between Quepem and Nashik)
+                    ACCESS DENIED. <br/> (Hint: Google the distance between your city Quepem and my city Nashik... yes, I know! 😉)
                   </motion.div>
                 )}
               </div>
