@@ -20,8 +20,8 @@
 }
 
 body.theme-you {
-  /* YouOS Theme (Dark & Romantic) */
-  --bg-color: #1a0b14;
+  /* YouOS Theme (Dark & Romantic + QA Environment) */
+  --bg-color: #0d060a;
   --text-primary: #ffffff;
   --text-secondary: #f472b6;
   
@@ -33,6 +33,13 @@ body.theme-you {
   --card-bg: rgba(255, 255, 255, 0.06);
   --card-border: rgba(244, 114, 182, 0.3);
   --card-hover: rgba(255, 255, 255, 0.12);
+  
+  /* QA Testing Grid Background */
+  background-color: var(--bg-color);
+  background-image: 
+    linear-gradient(rgba(244, 114, 182, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 114, 182, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 * {
