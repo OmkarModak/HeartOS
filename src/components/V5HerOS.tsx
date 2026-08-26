@@ -26,7 +26,7 @@ const getHerQuestions = (chosenName: string, answers: Record<string, string> = {
   },
   ...(answers.status === "Yes, sorry! 😅" ? [{
     title: "Wait, what? 💔",
-    content: "You just said you have a boyfriend... then why are we talking about shaadi? Explain yourself young lady! 🤨",
+    content: "You just said you have a boyfriend... then why were you on the Shaadi app? Explain yourself young lady! 🤨",
     type: "textarea",
     key: "why_shaadi"
   }] : []),
