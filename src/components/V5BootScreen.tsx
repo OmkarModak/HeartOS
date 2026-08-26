@@ -42,7 +42,6 @@ export const V5BootScreen = ({ onComplete }: { onComplete: () => void }) => {
                 animate={{ opacity: 1, y: 0 }}
                 style={{ 
                   color: i === bootSequence.length - 1 ? '#ffb3c6' : 'var(--text-secondary)',
-                  fontSize: '1rem',
                   fontWeight: i === bootSequence.length - 1 ? 'bold' : 'normal',
                   fontFamily: '"Fira Code", monospace',
                   border: i === bootSequence.length - 1 ? '1px solid #ffb3c6' : '1px solid var(--card-border)',
