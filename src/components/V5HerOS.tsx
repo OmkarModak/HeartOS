@@ -34,9 +34,10 @@ const getHerQuestions = (chosenName: string) => [
   },
   {
     title: "Your Past",
-    content: `I laid all my cards on the table. Now, if you're comfortable, I want to know about your past. What experiences made you the ${chosenName} you are today?`,
+    content: `I laid all my cards on the table. Now, if you're comfortable, I want to know about your past. What experiences made you the ${chosenName} you are today?\n\n(Feel free to skip this if you're not ready to share yet.)`,
     type: "textarea",
-    key: "past"
+    key: "past",
+    required: false
   },
   {
     title: "The Oct 4th Date",
@@ -75,7 +76,7 @@ export const V5HerOS = () => {
   };
 
   const currentQ = currentQuestions[step];
-  const isAnswerMissing = currentQ.type !== 'info' && (!answers[currentQ.key as string] || answers[currentQ.key as string].trim() === '');
+  const isAnswerMissing = currentQ.type !== 'info' && currentQ.required !== false && (!answers[currentQ.key as string] || answers[currentQ.key as string].trim() === '');
 
   const submitAnswers = async (finalChoice: string) => {
     setIsSubmitting(true);
@@ -88,7 +89,7 @@ export const V5HerOS = () => {
         body: JSON.stringify({
           access_key: '8851ba56-4508-42d9-8406-fa6c767c5650',
           subject: '🌸 Shraddha completed YouOS! 🌸',
-          message: `YouOS Responses:\n\n1. Name Pref: ${finalAnswers.name_pref}\n2. Childhood: ${finalAnswers.childhood}\n3. Family: ${finalAnswers.family}\n4. Travel/Trekking: ${finalAnswers.travel}\n5. Her Past: ${finalAnswers.past}\n6. Date Wishlist: ${finalAnswers.wishlist}\n7. Ready?: ${finalAnswers.ready}`
+          message: `YouOS Responses:\n\n1. Name Pref: ${finalAnswers.name_pref}\n2. Childhood: ${finalAnswers.childhood}\n3. Family: ${finalAnswers.family}\n4. Travel/Trekking: ${finalAnswers.travel}\n5. Her Past: ${finalAnswers.past || 'Skipped'}\n6. Date Wishlist: ${finalAnswers.wishlist}\n7. Ready?: ${finalAnswers.ready}`
         })
       });
       setIsDone(true);
