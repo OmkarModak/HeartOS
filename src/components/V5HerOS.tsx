@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import marshmallowMeet from '../assets/marshmallow-meet.jpg';
 import loveSticker from '../assets/sticker-love.png';
@@ -100,6 +100,11 @@ export const V5HerOS = () => {
   const [isDone, setIsDone] = useState(false);
   const [passcodeAttempts, setPasscodeAttempts] = useState(0);
   const [showHint, setShowHint] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [step]);
 
   const chosenName = answers.name_pref === "Shraddha is fine 😊" ? "Shraddha" : "Shru";
   const currentQuestions = getHerQuestions(chosenName);
@@ -167,213 +172,248 @@ export const V5HerOS = () => {
     );
   }
 
-  const progress = ((step + 1) / currentQuestions.length) * 100;
-
   return (
-    <div className="immersive-container">
-      {/* Sleek Progress Bar */}
-      <div style={{ position: 'absolute', top: 0, left: 0, height: '4px', background: 'var(--card-bg)', width: '100%' }}>
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.5 }}
-          style={{ height: '100%', background: 'var(--accent-primary)' }}
-        />
-      </div>
+    <div className="chat-container">
+      {currentQuestions.slice(0, step + 1).map((q, index) => {
+        const isCurrent = index === step;
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={step}
-          className="immersive-content"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -30 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-        >
-          
-          {currentQ.image && (
-            <div style={{ marginBottom: '2rem' }}>
-              <img src={currentQ.image} alt="illustration" style={{ width: '100%', maxWidth: '250px', height: 'auto', objectFit: 'contain', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }} />
-            </div>
-          )}
+        return (
+          <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+            {/* Omkar's Question Bubble */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="chat-bubble-left"
+            >
+              {q.image && (
+                <img src={q.image} alt="pic" style={{ width: '100%', maxWidth: '250px', borderRadius: '12px', marginBottom: '1rem', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }} />
+              )}
+              {q.title && <div style={{ fontWeight: 'bold', marginBottom: '0.5rem', fontSize: '0.9rem', opacity: 0.7, textTransform: 'uppercase', letterSpacing: '1px' }}>{q.title}</div>}
+              <div style={{ whiteSpace: 'pre-line' }}>{q.content}</div>
+            </motion.div>
 
-          <div style={{ fontSize: '1rem', color: 'var(--accent-primary)', textTransform: 'uppercase', letterSpacing: '3px', marginBottom: '1rem', fontWeight: 600 }}>
-            {currentQ.title}
-          </div>
-
-          <div className="hero-question" style={{ whiteSpace: 'pre-line', marginBottom: '2rem' }}>
-            {currentQ.content}
-          </div>
-
-          <div style={{ width: '100%', marginTop: '1rem' }}>
-            {currentQ.type === 'textarea' && (
-              <textarea
-                className="immersive-textarea"
-                value={answers[currentQ.key as string] || ''}
-                onChange={(e) => setAnswers({ ...answers, [currentQ.key as string]: e.target.value })}
-                placeholder="Type your answer here..."
-              />
+            {/* Shraddha's Past Answer Bubble */}
+            {!isCurrent && answers[q.key as string] && (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="chat-bubble-right" 
+                style={{ whiteSpace: 'pre-line' }}
+              >
+                {answers[q.key as string]}
+              </motion.div>
             )}
 
-            {currentQ.type === 'choice-with-text' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'flex-start' }}>
-                  {currentQ.options?.map((opt, i) => (
-                    <button
-                      key={i}
-                      onClick={() => {
-                        const currentAns = answers[currentQ.key as string] || '';
-                        const newAns = currentAns ? `${currentAns}\n- ${opt}` : `- ${opt}`;
-                        setAnswers({ ...answers, [currentQ.key as string]: newAns });
-                      }}
+            {/* Current Question Input Controls */}
+            {isCurrent && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%', alignItems: 'flex-end', marginTop: '1rem' }}
+              >
+                {q.type === 'textarea' && (
+                  <textarea
+                    value={answers[q.key as string] || ''}
+                    onChange={(e) => setAnswers({ ...answers, [q.key as string]: e.target.value })}
+                    placeholder="Type your reply here..."
+                    style={{
+                      width: '100%',
+                      minHeight: '120px',
+                      background: 'rgba(255,255,255,0.05)',
+                      border: '1px solid var(--card-border)',
+                      borderRadius: '12px',
+                      padding: '1rem',
+                      color: 'var(--text-primary)',
+                      fontSize: '1rem',
+                      resize: 'vertical',
+                      outline: 'none',
+                      fontFamily: 'inherit'
+                    }}
+                  />
+                )}
+
+                {q.type === 'choice-with-text' && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                      {q.options?.map((opt, i) => (
+                        <button
+                          key={i}
+                          onClick={() => {
+                            const currentAns = answers[q.key as string] || '';
+                            const newAns = currentAns ? `${currentAns}\n- ${opt}` : `- ${opt}`;
+                            setAnswers({ ...answers, [q.key as string]: newAns });
+                          }}
+                          style={{
+                            background: 'transparent',
+                            border: '1px solid var(--accent-primary)',
+                            padding: '0.5rem 1rem',
+                            borderRadius: '20px',
+                            color: 'var(--accent-primary)',
+                            cursor: 'pointer',
+                            fontSize: '0.9rem',
+                            transition: 'all 0.2s ease'
+                          }}
+                        >
+                          + {opt}
+                        </button>
+                      ))}
+                    </div>
+                    <textarea
+                      value={answers[q.key as string] || ''}
+                      onChange={(e) => setAnswers({ ...answers, [q.key as string]: e.target.value })}
+                      placeholder="Type your own answer or click the options above..."
                       style={{
-                        background: 'transparent',
-                        border: '1px solid var(--accent-primary)',
-                        padding: '0.5rem 1rem',
-                        borderRadius: '20px',
-                        color: 'var(--accent-primary)',
-                        cursor: 'pointer',
-                        fontSize: '0.9rem',
-                        transition: 'all 0.2s ease'
+                        width: '100%',
+                        minHeight: '100px',
+                        background: 'rgba(255,255,255,0.05)',
+                        border: '1px solid var(--card-border)',
+                        borderRadius: '12px',
+                        padding: '1rem',
+                        color: 'var(--text-primary)',
+                        fontSize: '1rem',
+                        resize: 'vertical',
+                        outline: 'none',
+                        fontFamily: 'inherit'
+                      }}
+                    />
+                  </div>
+                )}
+
+                {q.type === 'single-choice' && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-end', width: '100%' }}>
+                    {q.options?.map((opt, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setAnswers({ ...answers, [q.key as string]: opt })}
+                        style={{
+                          background: answers[q.key as string] === opt ? 'var(--accent-primary)' : 'transparent',
+                          border: `1px solid var(--accent-primary)`,
+                          padding: '0.8rem 1.5rem',
+                          borderRadius: '20px',
+                          color: answers[q.key as string] === opt ? '#ffffff' : 'var(--accent-primary)',
+                          fontSize: '1rem',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          maxWidth: '85%',
+                          textAlign: 'right'
+                        }}
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {q.type === 'passcode' && (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', width: '100%' }}>
+                    <input
+                      type="text"
+                      value={answers[q.key as string] || ''}
+                      onChange={(e) => setAnswers({ ...answers, [q.key as string]: e.target.value })}
+                      placeholder="Enter passcode..."
+                      style={{
+                        background: 'rgba(255, 0, 50, 0.1)',
+                        border: '1px solid var(--error)',
+                        padding: '1rem 2rem',
+                        borderRadius: '12px',
+                        color: 'var(--error)',
+                        fontSize: '1.2rem',
+                        textAlign: 'center',
+                        fontFamily: 'monospace',
+                        letterSpacing: '5px',
+                        width: '100%',
+                        maxWidth: '250px',
+                        outline: 'none'
+                      }}
+                    />
+                    
+                    {passcodeAttempts > 0 && (
+                      <motion.div 
+                        initial={{ opacity: 0 }} 
+                        animate={{ opacity: 1 }} 
+                        style={{ marginTop: '1rem', color: 'var(--error)', fontSize: '0.9rem', fontFamily: 'monospace', textAlign: 'right' }}
+                      >
+                        ACCESS DENIED.
+                        
+                        {passcodeAttempts >= 3 && !showHint && (
+                          <div style={{ marginTop: '0.5rem' }}>
+                            <button 
+                              onClick={() => setShowHint(true)} 
+                              style={{ background: 'transparent', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', padding: '0.4rem 0.8rem', borderRadius: '8px', cursor: 'pointer', fontFamily: 'monospace' }}
+                            >
+                              Need a hint?
+                            </button>
+                          </div>
+                        )}
+                        
+                        {showHint && (
+                          <div style={{ marginTop: '0.5rem', color: 'var(--text-primary)', lineHeight: '1.5' }}>
+                            (Hint: Google the distance between your city Quepem and my city Nashik... yes, I know! 😉)
+                          </div>
+                        )}
+                      </motion.div>
+                    )}
+                  </div>
+                )}
+
+                {q.type === 'choice' && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-end', width: '100%' }}>
+                    {q.options?.map((opt, i) => (
+                      <button
+                        key={i}
+                        onClick={() => submitAnswers(opt)}
+                        disabled={isSubmitting}
+                        style={{
+                          background: 'var(--accent-primary)',
+                          border: 'none',
+                          padding: '1rem 2rem',
+                          borderRadius: '20px',
+                          color: '#ffffff',
+                          fontSize: '1.1rem',
+                          cursor: isSubmitting ? 'wait' : 'pointer',
+                          transition: 'all 0.2s ease',
+                          boxShadow: '0 4px 15px var(--accent-glow)'
+                        }}
+                      >
+                        {isSubmitting ? 'Sending to Omkar...' : opt}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Send / Next Button for non-final questions */}
+                {q.type !== 'choice' && (
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%', marginTop: '1rem' }}>
+                    <button 
+                      onClick={handleNext} 
+                      disabled={isAnswerMissing}
+                      style={{
+                        background: isAnswerMissing ? 'transparent' : 'var(--accent-primary)',
+                        color: isAnswerMissing ? 'var(--text-secondary)' : '#fff',
+                        border: `1px solid ${isAnswerMissing ? 'var(--card-border)' : 'var(--accent-primary)'}`,
+                        padding: '0.8rem 2.5rem',
+                        borderRadius: '50px',
+                        fontSize: '1rem',
+                        fontWeight: '600',
+                        opacity: isAnswerMissing ? 0.5 : 1,
+                        cursor: isAnswerMissing ? 'not-allowed' : 'pointer',
+                        transition: 'all 0.3s ease',
+                        boxShadow: isAnswerMissing ? 'none' : '0 4px 15px var(--accent-glow)'
                       }}
                     >
-                      + {opt}
+                      Send ➔
                     </button>
-                  ))}
-                </div>
-                <textarea
-                  className="immersive-textarea"
-                  value={answers[currentQ.key as string] || ''}
-                  onChange={(e) => setAnswers({ ...answers, [currentQ.key as string]: e.target.value })}
-                  placeholder="Type your own answer or click the options above to add them..."
-                />
-              </div>
-            )}
-
-            {currentQ.type === 'single-choice' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
-                {currentQ.options?.map((opt, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setAnswers({ ...answers, [currentQ.key as string]: opt })}
-                    style={{
-                      background: answers[currentQ.key as string] === opt ? 'var(--accent-primary)' : 'transparent',
-                      border: `1px solid var(--accent-primary)`,
-                      padding: '1rem 2rem',
-                      borderRadius: '50px',
-                      color: answers[currentQ.key as string] === opt ? '#ffffff' : 'var(--accent-primary)',
-                      fontSize: '1.2rem',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      width: '100%',
-                      maxWidth: '400px',
-                      textAlign: 'left'
-                    }}
-                  >
-                    {String.fromCharCode(65 + i)}. {opt}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {currentQ.type === 'passcode' && (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                <input
-                  className="immersive-input"
-                  type="text"
-                  value={answers[currentQ.key as string] || ''}
-                  onChange={(e) => setAnswers({ ...answers, [currentQ.key as string]: e.target.value })}
-                  placeholder="Enter passcode..."
-                  style={{ letterSpacing: '5px' }}
-                />
-                
-                {passcodeAttempts > 0 && (
-                  <motion.div 
-                    initial={{ opacity: 0 }} 
-                    animate={{ opacity: 1 }} 
-                    style={{ marginTop: '1rem', color: '#ff4d6d', fontSize: '0.9rem', fontFamily: 'monospace', textAlign: 'center' }}
-                  >
-                    ACCESS DENIED.
-                    
-                    {passcodeAttempts >= 3 && !showHint && (
-                      <div style={{ marginTop: '1rem' }}>
-                        <button 
-                          onClick={() => setShowHint(true)} 
-                          style={{ background: 'transparent', color: 'var(--accent-primary)', border: '1px solid var(--accent-primary)', padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', fontFamily: 'monospace' }}
-                        >
-                          Need a hint?
-                        </button>
-                      </div>
-                    )}
-                    
-                    {showHint && (
-                      <div style={{ marginTop: '1rem', color: 'var(--text-primary)', lineHeight: '1.5' }}>
-                        (Hint: Google the distance between your city Quepem and my city Nashik... yes, I know! 😉)
-                      </div>
-                    )}
-                  </motion.div>
+                  </div>
                 )}
-              </div>
-            )}
-
-            {currentQ.type === 'choice' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
-                {currentQ.options?.map((opt, i) => (
-                  <button
-                    key={i}
-                    onClick={() => submitAnswers(opt)}
-                    disabled={isSubmitting}
-                    style={{
-                      background: 'transparent',
-                      border: '1px solid var(--accent-primary)',
-                      padding: '1rem 2rem',
-                      borderRadius: '50px',
-                      color: 'var(--accent-primary)',
-                      fontSize: '1.2rem',
-                      cursor: isSubmitting ? 'wait' : 'pointer',
-                      transition: 'all 0.2s ease',
-                      width: '100%',
-                      maxWidth: '400px',
-                      textAlign: 'left'
-                    }}
-                  >
-                    {isSubmitting ? 'Sending to Omkar...' : opt}
-                  </button>
-                ))}
-              </div>
+              </motion.div>
             )}
           </div>
-
-          <div style={{ marginTop: '3rem', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            {step > 0 && currentQ.type !== 'choice' && (
-              <button onClick={() => setStep(prev => prev - 1)} style={{ background: 'transparent', color: 'var(--text-secondary)', border: 'none', textDecoration: 'underline', cursor: 'pointer' }}>
-                Previous
-              </button>
-            )}
-            <div style={{ flex: 1 }}></div>
-            {currentQ.type !== 'choice' && (
-              <button 
-                onClick={handleNext} 
-                disabled={isAnswerMissing}
-                style={{
-                  background: isAnswerMissing ? 'transparent' : 'var(--accent-primary)',
-                  color: isAnswerMissing ? 'var(--text-secondary)' : '#fff',
-                  border: `1px solid ${isAnswerMissing ? 'var(--card-border)' : 'var(--accent-primary)'}`,
-                  padding: '1rem 3rem',
-                  borderRadius: '50px',
-                  fontSize: '1.2rem',
-                  fontWeight: '600',
-                  opacity: isAnswerMissing ? 0.5 : 1,
-                  cursor: isAnswerMissing ? 'not-allowed' : 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                Next ➔
-              </button>
-            )}
-          </div>
-        </motion.div>
-      </AnimatePresence>
+        );
+      })}
+      
+      <div ref={bottomRef} style={{ height: '20px' }} />
     </div>
   );
 };
