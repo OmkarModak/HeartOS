@@ -100,7 +100,7 @@ export const ShutdownScreen = () => {
                 fontFamily: 'monospace',
                 letterSpacing: '0.5px',
               }}>
-                — HeartOS, 2024
+                — HeartOS, 2026
               </p>
             </motion.div>
           )}
