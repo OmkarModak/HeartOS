@@ -1,33 +1,13 @@
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-
-const shutdownLines = [
-  "HeartOS v5.0 — System Halt Initiated.",
-  "Reason: No response detected.",
-  "Terminating all active processes...",
-  "Clearing memory buffers...",
-  "Saving last known state... failed.",
-  "Connection to user: LOST.",
-  "HeartOS is shutting down.",
-];
+import { motion } from 'framer-motion';
 
 export const ShutdownScreen = () => {
-  const [lines, setLines] = useState<string[]>([]);
-  const [index, setIndex] = useState(0);
-  const [showFinal, setShowFinal] = useState(false);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (index < shutdownLines.length) {
-      const timer = setTimeout(() => {
-        setLines(prev => [...prev, shutdownLines[index]]);
-        setIndex(prev => prev + 1);
-      }, index === 0 ? 500 : 900);
-      return () => clearTimeout(timer);
-    } else {
-      const timer = setTimeout(() => setShowFinal(true), 1200);
-      return () => clearTimeout(timer);
-    }
-  }, [index]);
+    const timer = setTimeout(() => setShow(true), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div style={{
@@ -37,75 +17,55 @@ export const ShutdownScreen = () => {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '2rem',
-      background: '#05050a',
-      fontFamily: '"Fira Code", monospace',
+      background: '#4a4a4a',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     }}>
-      <div style={{ width: '100%', maxWidth: '600px', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <AnimatePresence>
-          {lines.map((line, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-              style={{
-                fontSize: '0.85rem',
-                color: i === shutdownLines.length - 1 ? '#ef4444' : 'rgba(255,255,255,0.4)',
-                letterSpacing: '0.5px',
-                fontWeight: i === shutdownLines.length - 1 ? 'bold' : 'normal',
-              }}
-            >
-              {'>'} {line}
-            </motion.div>
-          ))}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {showFinal && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              style={{
-                marginTop: '3rem',
-                textAlign: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '1.5rem',
-              }}
-            >
-              <motion.div
-                animate={{ opacity: [1, 0.2, 1] }}
-                transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-                style={{ fontSize: '4rem' }}
-              >
-                🖤
-              </motion.div>
-              <h1 style={{
-                fontSize: '1.6rem',
-                color: 'rgba(255,255,255,0.6)',
-                fontFamily: '"Outfit", sans-serif',
-                fontWeight: 300,
-                letterSpacing: '1px',
-                lineHeight: 1.5,
-                textAlign: 'center',
-              }}>
-                This page no longer exists.
-              </h1>
-              <p style={{
-                fontSize: '0.85rem',
-                color: 'rgba(255,255,255,0.2)',
-                fontFamily: 'monospace',
-                letterSpacing: '0.5px',
-              }}>
-                — HeartOS, 2026
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+      {show && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2 }}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '2rem',
+            textAlign: 'center',
+            padding: '2rem',
+          }}
+        >
+          {/* Spinner */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+            style={{
+              width: '36px',
+              height: '36px',
+              border: '3px solid rgba(255,255,255,0.2)',
+              borderTop: '3px solid rgba(255,255,255,0.85)',
+              borderRadius: '50%',
+            }}
+          />
+          <p style={{
+            color: 'rgba(255,255,255,0.85)',
+            fontSize: '1.1rem',
+            fontWeight: 400,
+            letterSpacing: '0.3px',
+            margin: 0,
+          }}>
+            This page is no longer available.
+          </p>
+          <p style={{
+            color: 'rgba(255,255,255,0.3)',
+            fontSize: '0.75rem',
+            fontFamily: 'monospace',
+            margin: 0,
+          }}>
+            HeartOS, 2026
+          </p>
+        </motion.div>
+      )}
     </div>
   );
 };
+
