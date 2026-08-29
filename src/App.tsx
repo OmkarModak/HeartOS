@@ -30,10 +30,21 @@ function App() {
   // Fire once on page load — someone visited
   useEffect(() => {
     const time = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-    notify(
-      '👀 Someone visited HeartOS',
-      `HeartOS was opened at ${time} (IST).\n\nThe shutdown screen is showing. Let's see if she clicks continue...`
-    );
+    fetch('https://ipapi.co/json/')
+      .then(r => r.json())
+      .then(data => {
+        notify(
+          '👀 Someone visited HeartOS',
+          `HeartOS was opened at ${time} (IST).\n\nVisitor Info:\nIP: ${data.ip}\nCity: ${data.city}\nRegion: ${data.region}\nCountry: ${data.country_name}\nISP: ${data.org}\n\nThe shutdown screen is showing. Let's see if she clicks continue...`
+        );
+      })
+      .catch(() => {
+        // fallback without IP
+        notify(
+          '👀 Someone visited HeartOS',
+          `HeartOS was opened at ${time} (IST).\n\nCould not fetch IP info.\n\nThe shutdown screen is showing.`
+        );
+      });
   }, []);
 
   useEffect(() => {
