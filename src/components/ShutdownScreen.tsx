@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-export const ShutdownScreen = () => {
+export const ShutdownScreen = ({ onContinue }: { onContinue: () => void }) => {
   const [show, setShow] = useState(false);
+  const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShow(true), 600);
-    return () => clearTimeout(timer);
+    const t1 = setTimeout(() => setShow(true), 600);
+    const t2 = setTimeout(() => setShowButton(true), 3000);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
   return (
@@ -63,9 +65,31 @@ export const ShutdownScreen = () => {
           }}>
             HeartOS, 2026
           </p>
+
+          {/* Subtle continue button — only visible if you're looking */}
+          {showButton && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 2 }}
+              onClick={onContinue}
+              style={{
+                marginTop: '2rem',
+                background: 'transparent',
+                border: 'none',
+                color: 'rgba(255,255,255,0.12)',
+                fontSize: '0.7rem',
+                fontFamily: 'monospace',
+                cursor: 'pointer',
+                letterSpacing: '1px',
+                padding: '0.5rem 1rem',
+              }}
+            >
+              continue anyway
+            </motion.button>
+          )}
         </motion.div>
       )}
     </div>
   );
 };
-

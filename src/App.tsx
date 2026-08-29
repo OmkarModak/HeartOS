@@ -7,19 +7,25 @@ import { V5BootScreen } from './components/V5BootScreen';
 import { V5HerOS } from './components/V5HerOS';
 import { FloatingHearts } from './components/FloatingHearts';
 import { ClickEffectManager } from './components/ClickEffectManager';
+import { ShutdownScreen } from './components/ShutdownScreen';
 
 type AppState = 'V4_BOOT' | 'V4_WARNING' | 'V4_CONFESSION' | 'V5_BOOT' | 'V5_HER_OS';
 
 function App() {
+  const [isShutdown, setIsShutdown] = useState(true);
   const [appState, setAppState] = useState<AppState>('V5_BOOT');
 
   useEffect(() => {
-    if (appState === 'V5_BOOT' || appState === 'V5_HER_OS') {
+    if (!isShutdown && (appState === 'V5_BOOT' || appState === 'V5_HER_OS')) {
       document.body.classList.add('theme-you');
     } else {
       document.body.classList.remove('theme-you');
     }
-  }, [appState]);
+  }, [appState, isShutdown]);
+
+  if (isShutdown) {
+    return <ShutdownScreen onContinue={() => setIsShutdown(false)} />;
+  }
 
   return (
     <>
